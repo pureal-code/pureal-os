@@ -1,0 +1,33 @@
+<modules>
+    <!-- Module script for production -->
+    <module name="traits" outputDir="/home/stefan/prj/pureal-os/out/production/traits">
+        <sources path="/home/stefan/prj/pureal-os/traits/src/net/pureal/traits/Interactive.kt"/>
+        <sources path="/home/stefan/prj/pureal-os/traits/src/net/pureal/traits/graphics/Text.kt"/>
+        <sources path="/home/stefan/prj/pureal-os/traits/src/net/pureal/traits/graphics/Group.kt"/>
+        <sources path="/home/stefan/prj/pureal-os/traits/src/net/pureal/traits/graphics/Element.kt"/>
+        <!-- Classpath -->
+        <classpath path="/usr/lib/jvm/java-7-openjdk/jre/lib/management-agent.jar"/>
+        <classpath path="/usr/lib/jvm/java-7-openjdk/jre/lib/jce.jar"/>
+        <classpath path="/usr/lib/jvm/java-7-openjdk/jre/lib/charsets.jar"/>
+        <classpath path="/usr/lib/jvm/java-7-openjdk/jre/lib/rt.jar"/>
+        <classpath path="/usr/lib/jvm/java-7-openjdk/jre/lib/resources.jar"/>
+        <classpath path="/usr/lib/jvm/java-7-openjdk/jre/lib/jsse.jar"/>
+        <classpath path="/usr/lib/jvm/java-7-openjdk/jre/lib/rhino.jar"/>
+        <classpath path="/usr/lib/jvm/java-7-openjdk/jre/lib/ext/sunpkcs11.jar"/>
+        <classpath path="/usr/lib/jvm/java-7-openjdk/jre/lib/ext/dnsns.jar"/>
+        <classpath path="/usr/lib/jvm/java-7-openjdk/jre/lib/ext/localedata.jar"/>
+        <classpath path="/usr/lib/jvm/java-7-openjdk/jre/lib/ext/sunjce_provider.jar"/>
+        <classpath path="/usr/lib/jvm/java-7-openjdk/jre/lib/ext/zipfs.jar"/>
+        <classpath path="/usr/lib/jvm/java-7-openjdk/jre/lib/ext/pulse-java.jar"/>
+        <!-- Output directory, commented out -->
+        <!-- 
+            <classpath path="/home/stefan/prj/pureal-os/out/production/traits"/>
+        -->
+        <classpath path="/home/stefan/prj/pureal-os/lib/kotlin-runtime.jar"/>
+        <!-- Java Source Roots -->
+        <classpath path="/home/stefan/prj/pureal-os/traits/src"/>
+        <!-- External annotations -->
+        <externalAnnotations path= "/usr/share/intellijidea-ce/lib/jdkAnnotations.jar"/>
+        <externalAnnotations path= "/home/stefan/.IdeaIC13/config/plugins/Kotlin/kotlinc/lib/kotlin-jdk-annotations.jar"/>
+    </module>
+</modules>
