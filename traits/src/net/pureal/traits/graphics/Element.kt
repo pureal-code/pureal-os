@@ -1,5 +1,8 @@
 package net.pureal.traits.graphics
 
-public trait Element {
-    val map : Map
+import net.pureal.traits.Observable
+
+trait Element {
+    val transform: Transform
+    val changed : Observable<Unit>
 }
