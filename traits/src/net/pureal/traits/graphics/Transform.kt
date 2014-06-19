@@ -11,7 +11,7 @@ trait Transform {
 fun transformOf(translation : Vector2 = vectorOf(0, 0),
                 rotation : Number = 0,
                 scale : Vector2 = vectorOf(1, 1)) = object : Transform {
-    override val translation: Vector2 = translation
-    override val rotation: Number = rotation
-    override val scale: Vector2 = scale
+    override val translation : Vector2 = translation
+    override val rotation : Number = rotation
+    override val scale : Vector2 = scale
 }

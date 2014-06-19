@@ -7,10 +7,10 @@ trait Element {
     val changed : Observable<Unit>
 }
 
-trait Container {
+trait Composed {
     val elements : Set<Element>
     val added : Observable<Element>
     val removed : Observable<Element>
 }
 
-trait Composed : Element, Container
+trait ComposedElement : Composed, Element

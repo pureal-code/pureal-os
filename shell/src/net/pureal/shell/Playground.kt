@@ -34,33 +34,30 @@ class Playground {
 
     }
 
-    class Label : Composed {
+    class Example : ComposedElement {
         override var transform by Delegates.observable(initial=transformOf()) { (meta, old, new) -> changed() }
         override val changed = triggerOf<Unit>()
 
-        var size by Delegates.observable(initial=vectorOf(1,1)) { (meta, old, new) -> rectChanged() }
-        var content by Delegates.observable(initial="Button") { (meta, old, new) -> textChanged() }
-
-        private val rectChanged = triggerOf<Unit>()
-        private val textChanged = triggerOf<Unit>()
-        private val label = this
-        private val rect = object : Rectangle {
-            override val size : Vector2 get() = label.size
+        private val rectangle = object : Rectangle {
+            override var size by Delegates.observable(initial=vectorOf(1,1)) { (meta, old, new) -> changed() }
             override val fill = object : Gradient {
                 override val stops = mapOf(Pair(0, Colors.gray), Pair(1, Colors.white))
                 override val transform  = transformOf()
             }
             override val stroke = object : InvisibleStroke {}
             override val transform = transformOf()
-            override val changed = rectChanged
+            override val changed : Trigger<Unit> = triggerOf()
         }
         private val text = object : Text {
-            override val content : String get() = label.content
+            override var content by Delegates.observable(initial="Button") { (meta, old, new) -> changed() }
             override val transform = transformOf()
-            override val changed = textChanged
+            override val changed : Trigger<Unit> = triggerOf()
         }
 
-        override val elements = setOf(rect, text)
+        var size = rectangle.size
+        var content = text.content
+
+        override val elements = setOf(rectangle, text)
         override val added = observableOf<Element>()
         override val removed = observableOf<Element>()
     }
