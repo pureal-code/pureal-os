@@ -7,3 +7,6 @@ trait Shape : Element {
     val fill : Fill
     val stroke : Stroke
 }
+
+trait Ellipse : Shape
+trait Rectangle : Shape

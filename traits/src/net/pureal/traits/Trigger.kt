@@ -8,4 +8,4 @@ fun triggerOf<T>() = object : Trigger<T> {
     override val observers = hashSetOf<(T) -> Unit>()
 }
 
-fun Trigger<Unit>.invoke() { this.invoke(Unit.VALUE) }
+fun Trigger<Unit>.invoke() { invoke(Unit.VALUE) }

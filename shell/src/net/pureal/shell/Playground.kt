@@ -46,7 +46,10 @@ class Playground {
         private val label = this
         private val rect = object : Rectangle {
             override val size : Vector2 get() = label.size
-            override val fill = object : SolidFill { override val color = colorOf(r=.5, g=.5, b=.5) }
+            override val fill = object : Gradient {
+                override val stops = mapOf(Pair(0, Colors.gray), Pair(1, Colors.white))
+                override val transform  = transformOf()
+            }
             override val stroke = object : InvisibleStroke {}
             override val transform = transformOf()
             override val changed = rectChanged

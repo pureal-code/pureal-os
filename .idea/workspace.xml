@@ -2,34 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="10d902c6-392f-4db4-b231-22256ed7604a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Color.kt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Composed.kt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Container.kt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Ellipse.kt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Fill.kt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Gradient.kt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/InvisibleFill.kt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/InvisibleStroke.kt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/LinearGradient.kt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/traits/src/net/pureal/traits/Observable.kt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/shell/src/net/pureal/shell/Playground.kt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/RadialGradient.kt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Rectangle.kt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Screen.kt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Shape.kt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/SolidFill.kt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Stroke.kt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Transform.kt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/traits/src/net/pureal/traits/Trigger.kt" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Group.kt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Map.kt" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Element.kt" afterPath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Element.kt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/traits/src/net/pureal/traits/Interactive.kt" afterPath="$PROJECT_DIR$/traits/src/net/pureal/traits/Interactive.kt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Text.kt" afterPath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Text.kt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/traits/src/net/pureal/traits/Vector2.kt" afterPath="$PROJECT_DIR$/traits/src/net/pureal/traits/Vector2.kt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shell/shell.iml" afterPath="$PROJECT_DIR$/shell/shell.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Composed.kt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Container.kt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Element.kt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Gradient.kt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/InvisibleFill.kt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/InvisibleStroke.kt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/LinearGradient.kt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/RadialGradient.kt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Rectangle.kt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/SolidFill.kt" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Ellipse.kt" afterPath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Structure.kt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Color.kt" afterPath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Color.kt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Fill.kt" afterPath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Fill.kt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shell/src/net/pureal/shell/Playground.kt" afterPath="$PROJECT_DIR$/shell/src/net/pureal/shell/Playground.kt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Shape.kt" afterPath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Shape.kt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Stroke.kt" afterPath="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Stroke.kt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/traits/src/net/pureal/traits/Trigger.kt" afterPath="$PROJECT_DIR$/traits/src/net/pureal/traits/Trigger.kt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="pureal-os.iws" />
@@ -53,31 +42,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Vector2.kt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/Vector2.kt">
+      <file leaf-file-name="Structure.kt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Structure.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="525">
-              <caret line="29" column="1" selection-start-line="29" selection-start-column="1" selection-end-line="29" selection-end-column="1" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="315">
+              <caret line="15" column="35" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Shape.kt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Shape.kt">
+      <file leaf-file-name="Fill.kt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Fill.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
-              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="330">
+              <caret line="16" column="31" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SolidFill.kt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/SolidFill.kt">
+      <file leaf-file-name="Collections.kt" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$APPLICATION_PLUGINS_DIR$/Kotlin/lib/kotlin-plugin.jar!/kotlin/Collections.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="150">
-              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1443" max-vertical-offset="2355">
+              <caret line="128" column="13" selection-start-line="128" selection-start-column="13" selection-end-line="128" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -86,30 +75,8 @@
       <file leaf-file-name="Stroke.kt" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Stroke.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="150">
-              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Playground.kt" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/shell/src/net/pureal/shell/Playground.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.34210527" vertical-offset="123" max-vertical-offset="1035">
-              <caret line="29" column="13" selection-start-line="29" selection-start-column="13" selection-end-line="29" selection-end-column="13" />
-              <folding>
-                <element signature="e#26#123#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Text.kt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Text.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="150">
-              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="270">
+              <caret line="11" column="19" selection-start-line="11" selection-start-column="19" selection-end-line="11" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -119,18 +86,20 @@
         <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/Observable.kt">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="480">
-              <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+              <caret line="5" column="31" selection-start-line="5" selection-start-column="31" selection-end-line="5" selection-end-column="31" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Transform.kt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Transform.kt">
+      <file leaf-file-name="Playground.kt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/shell/src/net/pureal/shell/Playground.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="330">
-              <caret line="12" column="16" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
-              <folding />
+            <state vertical-scroll-proportion="0.0" vertical-offset="168" max-vertical-offset="1080">
+              <caret line="66" column="1" selection-start-line="66" selection-start-column="1" selection-end-line="66" selection-end-column="1" />
+              <folding>
+                <element signature="e#26#123#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -139,17 +108,37 @@
         <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/Trigger.kt">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
-              <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
+              <caret line="10" column="49" selection-start-line="10" selection-start-column="49" selection-end-line="10" selection-end-column="49" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Interactive.kt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/Interactive.kt">
+      <file leaf-file-name="Shape.kt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Shape.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="120">
-              <caret line="2" column="20" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="20" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
+              <caret line="11" column="23" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Transform.kt" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Transform.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.19736843" vertical-offset="0" max-vertical-offset="912">
+              <caret line="12" column="16" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Color.kt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Color.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="450">
+              <caret line="24" column="1" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -161,6 +150,9 @@
     <FindUsagesManager>
       <setting name="OPEN_NEW_TAB" value="true" />
     </FindUsagesManager>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
@@ -181,28 +173,29 @@
         <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/impl/Container.kt" />
         <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/impl/Color.kt" />
         <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/Vector2.kt" />
-        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Color.kt" />
-        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Composed.kt" />
-        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Container.kt" />
-        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Element.kt" />
-        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Ellipse.kt" />
-        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Fill.kt" />
-        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Gradient.kt" />
-        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/InvisibleFill.kt" />
-        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/InvisibleStroke.kt" />
-        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/LinearGradient.kt" />
-        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/RadialGradient.kt" />
-        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Rectangle.kt" />
         <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Screen.kt" />
-        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Shape.kt" />
-        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/SolidFill.kt" />
-        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Stroke.kt" />
         <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Text.kt" />
         <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Transform.kt" />
         <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/Interactive.kt" />
-        <option value="$PROJECT_DIR$/shell/src/net/pureal/shell/Playground.kt" />
         <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/Observable.kt" />
+        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Element.kt" />
+        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Container.kt" />
+        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Composed.kt" />
+        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Structure.kt" />
+        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Ellipse.kt" />
+        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Rectangle.kt" />
+        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Shape.kt" />
+        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/LinearGradient.kt" />
+        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/RadialGradient.kt" />
+        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/InvisibleFill.kt" />
+        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/InvisibleStroke.kt" />
+        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/SolidFill.kt" />
+        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Gradient.kt" />
+        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Stroke.kt" />
+        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Color.kt" />
+        <option value="$PROJECT_DIR$/shell/src/net/pureal/shell/Playground.kt" />
         <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/Trigger.kt" />
+        <option value="$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Fill.kt" />
       </list>
     </option>
   </component>
@@ -243,7 +236,7 @@
     <OptionsSetting value="true" id="Update" />
     <OptionsSetting value="true" id="Status" />
     <OptionsSetting value="true" id="Edit" />
-    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="2" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectReloadState">
@@ -632,11 +625,16 @@
       <created>1403130900133</created>
       <updated>1403130900133</updated>
     </task>
+    <task id="LOCAL-00001" summary="lots of graphics traits">
+      <created>1403189363792</created>
+      <updated>1403189363792</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="29" width="1920" height="1051" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -658,7 +656,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25559106" sideWeight="0.49946752" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25559106" sideWeight="0.49946752" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -681,6 +679,8 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
+    <MESSAGE value="lots of graphics traits" />
+    <option name="LAST_COMMIT_MESSAGE" value="lots of graphics traits" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -690,14 +690,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Rectangle.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="120">
-          <caret line="2" column="10" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Screen.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="150">
@@ -710,14 +702,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="135">
           <caret line="3" column="1" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Element.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="150">
-          <caret line="3" column="17" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
           <folding />
         </state>
       </provider>
@@ -754,14 +738,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Composed.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="135">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_PLUGINS_DIR$/Kotlin/lib/kotlin-plugin.jar!/kotlin/Numbers.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6900">
@@ -774,14 +750,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1770">
           <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_PLUGINS_DIR$/Kotlin/lib/kotlin-plugin.jar!/kotlin/Collections.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33233532" vertical-offset="1098" max-vertical-offset="2355">
-          <caret line="102" column="13" selection-start-line="102" selection-start-column="13" selection-end-line="102" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -896,103 +864,15 @@
     <entry file="jar://$PROJECT_DIR$/lib/kotlin-runtime-sources.jar!/kotlin/properties/Delegation.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2715">
-          <caret line="52" column="52" selection-start-line="52" selection-start-column="52" selection-end-line="52" selection-end-column="52" />
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Color.kt">
+    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/Vector2.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="300">
-          <caret line="14" column="1" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Composed.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="120">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Container.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Element.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="195">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Ellipse.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="120">
-          <caret line="2" column="21" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Fill.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="120">
-          <caret line="2" column="10" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Gradient.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="180">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/InvisibleFill.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="120">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/InvisibleStroke.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="150">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/LinearGradient.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="120">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/RadialGradient.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="120">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Rectangle.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="120">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="525">
+          <caret line="28" column="22" selection-start-line="28" selection-start-column="22" selection-end-line="28" selection-end-column="22" />
           <folding />
         </state>
       </provider>
@@ -1005,46 +885,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Shape.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/SolidFill.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="150">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Stroke.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="150">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Text.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="150">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Transform.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="330">
-          <caret line="12" column="16" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/Interactive.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="120">
@@ -1053,37 +893,101 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$APPLICATION_PLUGINS_DIR$/Kotlin/lib/kotlin-plugin.jar!/kotlin/Annotations.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="668">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Text.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="150">
+          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_PLUGINS_DIR$/Kotlin/lib/kotlin-plugin.jar!/kotlin/Collections.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1443" max-vertical-offset="2355">
+          <caret line="128" column="13" selection-start-line="128" selection-start-column="13" selection-end-line="128" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/Observable.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="480">
-          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/Vector2.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="525">
-          <caret line="29" column="1" selection-start-line="29" selection-start-column="1" selection-end-line="29" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/Trigger.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
-          <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
+          <caret line="5" column="31" selection-start-line="5" selection-start-column="31" selection-end-line="5" selection-end-column="31" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/shell/src/net/pureal/shell/Playground.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.34210527" vertical-offset="123" max-vertical-offset="1035">
-          <caret line="29" column="13" selection-start-line="29" selection-start-column="13" selection-end-line="29" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="168" max-vertical-offset="1080">
+          <caret line="66" column="1" selection-start-line="66" selection-start-column="1" selection-end-line="66" selection-end-column="1" />
           <folding>
             <element signature="e#26#123#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/Trigger.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
+          <caret line="10" column="49" selection-start-line="10" selection-start-column="49" selection-end-line="10" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Shape.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
+          <caret line="11" column="23" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Color.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="450">
+          <caret line="24" column="1" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Structure.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="315">
+          <caret line="15" column="35" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Stroke.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="270">
+          <caret line="11" column="19" selection-start-line="11" selection-start-column="19" selection-end-line="11" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Fill.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="330">
+          <caret line="16" column="31" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/traits/src/net/pureal/traits/graphics/Transform.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.19736843" vertical-offset="0" max-vertical-offset="912">
+          <caret line="12" column="16" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
+          <folding />
         </state>
       </provider>
     </entry>
