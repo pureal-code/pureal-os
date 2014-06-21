@@ -1,6 +1,6 @@
 package net.pureal.tests.traits
 
-import org.spek.Spek
+import org.spek.*
 import net.pureal.traits.*
 
 class Matrix3Specs : Spek() {{
@@ -13,17 +13,48 @@ class Matrix3Specs : Spek() {{
         on("getting the determinant") {
             val d = m.determinant
 
-            it("should be correct") {
-                assert(0 == d)
+            it("should be 0") {
+                shouldEqual(0.0, d)
             }
         }
 
         on("getting the inverse") {
-            val i = m.inverse
+            it("should fail") {
+                shouldThrow<ArithmeticException> { m.inverse() }
+            }
+        }
+    }
+
+    given("a square matrix") {
+        val m = matrixOf(
+                1,-1,4,
+                3,4,-5,
+                -2,0,1)
+
+        on("getting the determinant") {
+            val d = m.determinant
+
+            it("should be correct") {
+                shouldEqual(29.0, d)
+            }
+        }
+
+        on("getting the inverse") {
+            val i = m.inverse()
 
             it("should fail") {
-                assert(false)
+                shouldEqual(false, true)
             }
         }
     }
 }}
+
+fun shouldThrow<E : Exception>(exceptionAssertion : (E) -> Unit = {}, action : () -> Unit) {
+    try {
+        action()
+        throw AssertionError("No exception thrown.")
+    }
+    catch(ex : E) {
+        exceptionAssertion(ex)
+    }
+}

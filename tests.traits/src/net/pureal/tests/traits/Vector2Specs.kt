@@ -1,6 +1,6 @@
 package net.pureal.tests.traits
 
-import org.spek.Spek
+import org.spek.*
 import net.pureal.traits.*
 
 class Vector2Specs : Spek() {{
@@ -12,7 +12,7 @@ class Vector2Specs : Spek() {{
             val p = eX * eY
 
             it("should be 0.") {
-                assert(zeroVector2 == p)
+                shouldEqual(zeroVector2, p)
             }
         }
     }

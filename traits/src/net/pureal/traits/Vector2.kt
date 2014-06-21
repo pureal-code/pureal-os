@@ -29,6 +29,10 @@ trait Vector2 {
     val argument : Number get() = Math.atan2(y.toDouble(), x.toDouble())
 
     fun times(other : Vector2) : Number = x.toDouble() * other.x.toDouble() + y.toDouble() * other.y.toDouble()
+
+    override fun equals(other : Any?) = other is Vector2 && (x == other.x && y == other.y)
+
+    override fun toString() = "[${x}, ${y}]"
 }
 
 fun vectorOf(x : Number, y : Number) = object : Vector2 {

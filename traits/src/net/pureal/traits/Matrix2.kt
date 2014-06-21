@@ -21,6 +21,10 @@ trait Matrix2 {
 
     fun row(x : Int) = vectorOf(get(x,0), get(x,1))
     fun column(y : Int) = vectorOf(get(0,y), get(1,y))
+
+    override fun equals(other : Any?) = other is Matrix2 && (a == other.a && b == other.b && c == other.c && d == other.d)
+
+    override fun toString() = "[[${a}, ${b}], [${c}, ${d}]]"
 }
 
 fun matrixOf(a : Number, b : Number, c : Number, d : Number) = object : Matrix2 {

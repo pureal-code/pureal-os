@@ -24,7 +24,7 @@ trait Matrix3 {
     (a.toDouble() * e.toDouble() * i.toDouble() + b.toDouble() * f.toDouble() * g.toDouble() + c.toDouble() * d.toDouble() * h.toDouble()) -
     (c.toDouble() * e.toDouble() * g.toDouble() + a.toDouble() * f.toDouble() * h.toDouble() + b.toDouble() * d.toDouble() * i.toDouble())
 
-    val inverse : Matrix3 get() = identityMatrix3
+    fun inverse() : Matrix3 = identityMatrix3
 
     fun row(x : Int) = vectorOf(get(x,0), get(x,1), get(x,2))
     fun column(y : Int) = vectorOf(get(0,y), get(1,y), get(2, y))

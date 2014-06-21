@@ -1,6 +1,6 @@
 package net.pureal.tests.traits
 
-import org.spek.Spek
+import org.spek.*
 import net.pureal.traits.*
 
 class Transform2Specs : Spek() {{
@@ -11,7 +11,7 @@ class Transform2Specs : Spek() {{
             val applied = t(vectorOf(1,3))
 
             it("should be translated accordingly") {
-                assert(vectorOf(3,0) == applied)
+                shouldEqual(vectorOf(3,0), applied)
             }
         }
     }

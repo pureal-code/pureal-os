@@ -11,7 +11,7 @@ trait Transform2 {
 
     fun at(location : Vector2) = Transforms2.translation(-location).before(this).before(Transforms2.translation(location))
 
-    val inverse : Transform2 get() = transformOf(matrix.inverse)
+    val inverse : Transform2 get() = transformOf(matrix.inverse())
 }
 
 object Transforms2 {

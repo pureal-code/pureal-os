@@ -1,6 +1,6 @@
 package net.pureal.tests.traits
 
-import org.spek.Spek
+import org.spek.*
 import net.pureal.traits.*
 
 class Matrix2Specs : Spek() {{
@@ -11,7 +11,7 @@ class Matrix2Specs : Spek() {{
             val d = m.determinant()
 
             it("should be correct") {
-                assert(-8.0 == d)
+                shouldEqual(11.0, d)
             }
         }
 
@@ -19,7 +19,7 @@ class Matrix2Specs : Spek() {{
             val i = m.inverse()
 
             it("should be correct") {
-                assert(matrixOf(-3/8, 1/4, -1/2, -1/8) == i)
+                shouldEqual(matrixOf(3.0/11, -2.0/11, 4.0/11, 1.0/11), i)
             }
         }
     }
