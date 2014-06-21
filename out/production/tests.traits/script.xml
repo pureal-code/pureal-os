@@ -2,6 +2,7 @@
     <!-- Module script for production -->
     <module name="tests.traits" outputDir="C:/Projects/Pureal/out/production/tests.traits">
         <sources path="C:/Projects/Pureal/tests.traits/src/net/pureal/tests/traits/Transform2Specs.kt"/>
+        <sources path="C:/Projects/Pureal/tests.traits/src/net/pureal/tests/traits/Vector2Specs.kt"/>
         <!-- Classpath -->
         <classpath path="C:/Program Files/Java/jdk1.7.0_60/jre/lib/charsets.jar"/>
         <classpath path="C:/Program Files/Java/jdk1.7.0_60/jre/lib/deploy.jar"/>
@@ -28,6 +29,7 @@
         -->
         <classpath path="C:/Projects/Pureal/lib/kotlin-runtime.jar"/>
         <classpath path="C:/Projects/Pureal/lib/spek-0.1.122.jar"/>
+        <classpath path="C:/Projects/Pureal/out/production/traits"/>
         <!-- Java Source Roots -->
         <classpath path="C:/Projects/Pureal/tests.traits/src"/>
         <!-- External annotations -->

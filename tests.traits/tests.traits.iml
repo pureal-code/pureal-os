@@ -9,6 +9,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="KotlinJavaRuntime" level="project" />
     <orderEntry type="library" name="Spek" level="project" />
+    <orderEntry type="module" module-name="traits" />
   </component>
 </module>
 
