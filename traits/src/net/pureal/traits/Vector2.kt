@@ -17,7 +17,6 @@ trait Vector2 {
         else -> {throw IllegalArgumentException()}
     }
 
-
     val x : Number
     val y : Number
 
