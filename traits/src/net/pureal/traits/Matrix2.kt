@@ -10,6 +10,7 @@ trait Matrix2 {
         other[it].toDouble() * (c[0].toDouble() + c[1].toDouble())
     }
     fun times(other : Number) = matrix2Of({(x,y) -> other.toDouble() * get(x, y).toDouble()})
+    fun div(other : Number) = times(1.0/other.toDouble())
 
     fun get(x : Int, y : Int) : Number = when(x) {
         0 -> when(y) {0 -> a; 1 -> b; else -> throw IllegalArgumentException()}

@@ -30,7 +30,7 @@ trait Vector2 {
 
     fun times(other : Vector2) : Number = x.toDouble() * other.x.toDouble() + y.toDouble() * other.y.toDouble()
 
-    override fun equals(other : Any?) = other is Vector2 && (x == other.x && y == other.y)
+    override fun equals(other : Any?) = other is Vector2 && (x.toDouble() == other.x.toDouble() && y.toDouble() == other.y.toDouble())
 
     override fun toString() = "[${x}, ${y}]"
 }

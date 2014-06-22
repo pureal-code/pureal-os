@@ -12,7 +12,7 @@ class Vector2Specs : Spek() {{
             val p = eX * eY
 
             it("should be 0.") {
-                shouldEqual(zeroVector2, p)
+                shouldEqual(0.0, p)
             }
         }
     }
