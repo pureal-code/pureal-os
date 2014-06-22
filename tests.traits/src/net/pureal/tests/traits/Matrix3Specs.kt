@@ -1,14 +1,15 @@
-package net.pureal.tests.traits
+package net.pureal.tests.traits.math
 
 import org.spek.*
 import net.pureal.traits.*
+import net.pureal.tests.traits.*
 
 class Matrix3Specs : Spek() {{
-    given("a square matrix") {
-        val m = matrixOf(
-                1,-1,4,
-                3,4,-5,
-                -2,0,1)
+    given("an arbitrary 3 square matrix") {
+        val m = matrix(
+            1,-1,4,
+            3,4,-5,
+            -2,0,1)
 
         on("getting the determinant") {
             val x = m.determinant
@@ -22,7 +23,7 @@ class Matrix3Specs : Spek() {{
             val x = m.subMatrix(1,2)
 
             it("should be correct") {
-                shouldEqual(matrixOf(1,-1,-2,0), x)
+                shouldEqual(matrix(1,-1,-2,0), x)
             }
         }
 
@@ -30,7 +31,7 @@ class Matrix3Specs : Spek() {{
             val x = m.transpose()
 
             it("should be correct") {
-                shouldEqual(matrixOf(
+                shouldEqual(matrix(
                         1,3,-2,
                         -1,4,0,
                         4,-5,1), x)
@@ -41,31 +42,63 @@ class Matrix3Specs : Spek() {{
             val x = m.adjugate()
 
             it("should be correct") {
-                shouldEqual(matrixOf(
-                        1,1,4,
-                        -3,4,5,
-                        -2,0,1), x)
+                shouldEqual(matrix(
+                        4 , 1 , -11,
+                        7 , 9 , 17,
+                        8 , 2 , 7), x)
 
             }
         }
 
-        on("getting the inverse") {
-            val i = m.inverse()
+        on("getting a row") {
+            val x = m.row(2)
 
-            it("should fail") {
-                shouldEqual(matrixOf(
-                        4 , 1 , -11,
-                        7 , 9 , 17,
-                        8 , 2 , 7) / 29, i)
+            it("should be correct") {
+                shouldEqual(vector(-2,0,1), x)
+            }
+        }
+
+        on("getting a column") {
+            val x = m.column(1)
+
+            it("should be correct") {
+                shouldEqual(vector(-1,4,0), x)
+            }
+        }
+
+        on("getting the inverse") {
+            val i = m.inverse()!!
+
+            it("should be correct") {
+                shouldEqual(matrix(
+                    4 , 1 , -11,
+                    7 , 9 , 17,
+                    8 , 2 , 7) / 29, i)
+            }
+        }
+
+        on("getting the string representation") {
+            val x = m.toString()
+
+            it("should be correct") {
+                shouldEqual("matrix(1.0, -1.0, 4.0, 3.0, 4.0, -5.0, -2.0, 0.0, 1.0)",x)
+            }
+        }
+
+        on("multiplying it with a vector") {
+            val x = m * vector(1,2,3)
+
+            it("should be correct") {
+                shouldEqual(vector(11,-4,1), x)
             }
         }
     }
 
     given("a 3 square matrix with determinant 0") {
-        val m = matrixOf(
-                1,2,3,
-                4,5,6,
-                7,8,9)
+        val m = matrix(
+            1,2,3,
+            4,5,6,
+            7,8,9)
 
         on("getting the determinant") {
             val d = m.determinant
@@ -76,19 +109,21 @@ class Matrix3Specs : Spek() {{
         }
 
         on("getting the inverse") {
-            it("should fail") {
-                shouldThrow<ArithmeticException>({shouldEqual(it.getMessage(), "The matrix has no inverse.")}) {m.inverse()}
+            it("should return null") {
+                shouldEqual(m.inverse(), null)
+            }
+        }
+    }
+
+    given("the 3 identity matrix") {
+        val m = identityMatrix3
+
+        on("multiplying it with an arbitrary vector") {
+            val x = vector(0,1,-2.5)
+
+            it("should result in an unchanged vector") {
+                shouldEqual(vector(0,1,-2.5), x)
             }
         }
     }
 }}
-
-fun shouldThrow<E : Exception>(exceptionAssertion : (E) -> Unit = {}, action : () -> Unit) {
-    try {
-        action()
-        throw AssertionError("No exception thrown.")
-    }
-    catch(ex : E) {
-        exceptionAssertion(ex)
-    }
-}

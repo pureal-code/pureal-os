@@ -7,7 +7,7 @@ trait Color {
     val a : Number
 }
 
-fun colorOf(r: Number = 0, g: Number = 0, b: Number = 0, a: Number = 1) = object : Color {
+fun color(r: Number = 0, g: Number = 0, b: Number = 0, a: Number = 1) = object : Color {
     override val r = r
     override val g = g
     override val b = b
@@ -15,11 +15,11 @@ fun colorOf(r: Number = 0, g: Number = 0, b: Number = 0, a: Number = 1) = object
 }
 
 object Colors {
-    val black = colorOf()
-    val red = colorOf(r=1)
-    val green = colorOf(g=1)
-    val blue = colorOf(b=1)
-    val gray = colorOf(.75, .75, .75)
-    val white = colorOf(1, 1, 1)
-    val transparent = colorOf(a=0)
+    val black = color()
+    val red = color(r=1)
+    val green = color(g=1)
+    val blue = color(b=1)
+    val gray = color(.75, .75, .75)
+    val white = color(1, 1, 1)
+    val transparent = color(a=0)
 }

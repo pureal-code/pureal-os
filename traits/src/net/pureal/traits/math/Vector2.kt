@@ -1,10 +1,12 @@
 package net.pureal.traits
 
-trait Vector2 {
-    fun plus(other : Vector2) = vectorOf(x.toDouble() + other.x.toDouble(), y.toDouble() + other.y.toDouble())
+import org.omg.CosNaming._BindingIteratorImplBase
+
+trait Vector2 : Numbers {
+    fun plus(other : Vector2) = vector(x.toDouble() + other.x.toDouble(), y.toDouble() + other.y.toDouble())
     fun times(other : Number) : Vector2 {
         val s = other.toDouble()
-        return vectorOf(x.toDouble() * s, y.toDouble() * s)
+        return vector(x.toDouble() * s, y.toDouble() * s)
     }
 
     fun plus() = this
@@ -30,16 +32,18 @@ trait Vector2 {
 
     fun times(other : Vector2) : Number = x.toDouble() * other.x.toDouble() + y.toDouble() * other.y.toDouble()
 
+    override fun iterator() = listOf(x, y).iterator()
+
     override fun equals(other : Any?) = other is Vector2 && (x.toDouble() == other.x.toDouble() && y.toDouble() == other.y.toDouble())
 
-    override fun toString() = "[${x}, ${y}]"
+    override fun toString() = "vector(${x.toDouble()}, ${y.toDouble()})"
 }
 
-fun vectorOf(x : Number, y : Number) = object : Vector2 {
+fun vector(x : Number, y : Number) = object : Vector2 {
     override val x = x
     override val y = y
 }
 
-fun vector2Of(get : (Int) -> Number) = vectorOf(get(0), get(1))
+fun vector2(get : (Int) -> Number) = vector(get(0), get(1))
 
-val zeroVector2 = vectorOf(0,0)
+val zeroVector2 = vector(0,0)

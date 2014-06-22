@@ -1,10 +1,10 @@
 package net.pureal.traits
 
-trait Vector3 {
-    fun plus(other : Vector3) = vectorOf(x.toDouble() + other.x.toDouble(), y.toDouble() + other.y.toDouble(), z.toDouble() + other.z.toDouble())
+trait Vector3 : Numbers {
+    fun plus(other : Vector3) = vector(x.toDouble() + other.x.toDouble(), y.toDouble() + other.y.toDouble(), z.toDouble() + other.z.toDouble())
     fun times(other : Number) : Vector3 {
         val s = other.toDouble()
-        return vectorOf(x.toDouble() * s, y.toDouble() * s, z.toDouble() * s)
+        return vector(x.toDouble() * s, y.toDouble() * s, z.toDouble() * s)
     }
 
     fun plus() = this
@@ -30,14 +30,20 @@ trait Vector3 {
     val length : Number get() = Math.sqrt(lengthSquared.toDouble())
 
     fun times(other : Vector3) : Number = x.toDouble() * other.x.toDouble() + y.toDouble() * other.y.toDouble() + z.toDouble() * other.z.toDouble()
+
+    override fun iterator() = listOf(x, y, z).iterator()
+
+    override fun equals(other : Any?) = other is Vector3 && (x.toDouble() == other.x.toDouble() && y.toDouble() == other.y.toDouble() && z.toDouble() == other.z.toDouble())
+
+    override fun toString() = "vector(${x.toDouble()}, ${y.toDouble()}, ${z.toDouble()})"
 }
 
-fun vectorOf(x : Number, y : Number, z : Number) = object : Vector3 {
+fun vector(x : Number, y : Number, z : Number) = object : Vector3 {
     override val x = x
     override val y = y
     override val z = z
 }
 
-fun vector3Of(get : (Int) -> Number) = vectorOf(get(0), get(1), get(2))
+fun vector3(get : (Int) -> Number) = vector(get(0), get(1), get(2))
 
-val zeroVector3 = vectorOf(0,0,0)
+val zeroVector3 = vector(0,0,0)

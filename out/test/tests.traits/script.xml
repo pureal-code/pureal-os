@@ -3,8 +3,10 @@
     <module name="tests.traits" outputDir="C:/Projects/Pureal/out/test/tests.traits">
         <sources path="C:/Projects/Pureal/tests.traits/src/net/pureal/tests/traits/Matrix2Specs.kt"/>
         <sources path="C:/Projects/Pureal/tests.traits/src/net/pureal/tests/traits/Matrix3Specs.kt"/>
+        <sources path="C:/Projects/Pureal/tests.traits/src/net/pureal/tests/traits/SpekExtensions.kt"/>
         <sources path="C:/Projects/Pureal/tests.traits/src/net/pureal/tests/traits/Transform2Specs.kt"/>
         <sources path="C:/Projects/Pureal/tests.traits/src/net/pureal/tests/traits/Vector2Specs.kt"/>
+        <sources path="C:/Projects/Pureal/tests.traits/src/net/pureal/tests/traits/Vector3Specs.kt"/>
         <!-- Classpath -->
         <classpath path="C:/Program Files/Java/jdk1.7.0_60/jre/lib/charsets.jar"/>
         <classpath path="C:/Program Files/Java/jdk1.7.0_60/jre/lib/deploy.jar"/>

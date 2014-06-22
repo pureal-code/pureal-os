@@ -2,17 +2,14 @@ package net.pureal.traits
 
 import javax.naming.OperationNotSupportedException
 
-trait Matrix3 {
+trait Matrix3 : Numbers {
     val a: Number; val b: Number; val c: Number
     val d: Number; val e: Number; val f: Number
     val g: Number; val h: Number; val i: Number
 
-    fun times(other : Matrix3) = matrix3Of {(x, y) -> row(x) * other.column(y)}
-    fun times(other : Vector2) = vector2Of {
-        val c = column(it)
-        other[it].toDouble() * (c[0].toDouble() + c[1].toDouble() + c[2].toDouble())
-    }
-    fun times(other : Number) = matrix3Of({(x,y) -> other.toDouble() * get(x, y).toDouble()})
+    fun times(other : Matrix3) = matrix3{(x, y) -> other.column(y) * row(x)}
+    fun times(other : Vector3) = vector3{other * row(it)}
+    fun times(other : Number) = matrix3{(x,y) -> other.toDouble() * get(x, y).toDouble()}
     fun div(other : Number) = times(1.0/other.toDouble())
 
     fun get(x : Int, y : Int) : Number = when(x) {
@@ -26,32 +23,33 @@ trait Matrix3 {
     (a.toDouble() * e.toDouble() * i.toDouble() + b.toDouble() * f.toDouble() * g.toDouble() + c.toDouble() * d.toDouble() * h.toDouble()) -
     (c.toDouble() * e.toDouble() * g.toDouble() + a.toDouble() * f.toDouble() * h.toDouble() + b.toDouble() * d.toDouble() * i.toDouble())
 
-    fun transpose() = matrix3Of{(x,y) -> this[y,x]}
-    fun inverse() : Matrix3 {
-        val det = determinant
+    val isInvertible : Boolean get() = determinant != 0.0
 
-        if(det == 0.0) throw ArithmeticException("The matrix has no inverse.")
+    fun transpose() = matrix3 {(x,y) -> this[y,x]}
+    fun inverse() = if(isInvertible) adjugate() / determinant else null
+    fun adjugate() = matrix3{(x,y) -> subMatrix(y, x).determinant.toDouble() * if((x+y) mod 2 == 0) 1 else -1}
 
-        return matrix3Of{(x,y) -> transpose().subMatrix(x,y).determinant()}.adjugate() / det
-    }
-    fun adjugate() = matrix3Of{(x, y) -> this[x,y].toDouble() * if((x+y) mod 2 == 0) 1 else -1}
+    fun row(x : Int) = vector(get(x,0), get(x,1), get(x,2))
+    fun column(y : Int) = vector(get(0,y), get(1,y), get(2, y))
 
-    fun row(x : Int) = vectorOf(get(x,0), get(x,1), get(x,2))
-    fun column(y : Int) = vectorOf(get(0,y), get(1,y), get(2, y))
+    fun subMatrix(exceptX : Int, exceptY : Int) = matrix2{(x,y)-> this[(0..2).filter{it != exceptX}[x], (0..2).filter{it != exceptY}[y]]}
 
-    fun subMatrix(exceptX : Int, exceptY : Int) : Matrix2 = matrix2Of{(x,y)-> this[(0..2).filter{it != exceptX}[x], (0..2).filter{it != exceptY}[y]]}
+    override fun iterator() = listOf(a, b, c, d, e, f, g, h, i).iterator()
 
     override fun equals(other : Any?) = other is Matrix3 && (a.toDouble() == other.a.toDouble() && b.toDouble() == other.b.toDouble() && c.toDouble() == other.c.toDouble() && d.toDouble() == other.d.toDouble() && e.toDouble() == other.e.toDouble() && f.toDouble() == other.f.toDouble() && g.toDouble() == other.g.toDouble() && h.toDouble() == other.h.toDouble() && i.toDouble() == other.i.toDouble())
 
-    override fun toString() = "[[${a}, ${b}, ${c}], [${d}, ${e}, ${f}], [${g}, ${h}, ${i}]]"
+    override fun toString() = "matrix(${a.toDouble()}, ${b.toDouble()}, ${c.toDouble()}, ${d.toDouble()}, ${e.toDouble()}, ${f.toDouble()}, ${g.toDouble()}, ${h.toDouble()}, ${i.toDouble()})"
 }
 
-fun matrixOf(a: Number, b: Number, c: Number, d: Number, e: Number, f: Number, g: Number, h: Number, i: Number) = object : Matrix3 {
+fun matrix(a: Number, b: Number, c: Number, d: Number, e: Number, f: Number, g: Number, h: Number, i: Number) = object : Matrix3 {
     override val a = a; override val b = b; override val c = c
     override val d = d; override val e = e; override val f = f
     override val g = g; override val h = h; override val i = i
 }
 
-fun matrix3Of(get: (Int, Int) -> Number): Matrix3 = matrixOf(get(0, 0), get(0, 1), get(0, 2), get(1, 0), get(1, 1), get(1, 2), get(2, 0), get(2, 1), get(2, 2))
+fun matrix3(get: (Int, Int) -> Number) = matrix(
+        get(0, 0), get(0, 1), get(0, 2),
+        get(1, 0), get(1, 1), get(1, 2),
+        get(2, 0), get(2, 1), get(2, 2))
 
-val identityMatrix3 = matrixOf(1, 0, 0, 0, 1, 0, 0, 0, 1)
+val identityMatrix3 = matrix3{(x,y) -> if (x == y) 1 else 0}

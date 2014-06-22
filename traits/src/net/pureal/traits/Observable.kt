@@ -15,7 +15,7 @@ trait Observable<T> {
     }
 }
 
-fun observableOf<T>(vararg observables : Observable<T>) = object : Observable<T> {
+fun observable<T>(vararg observables : Observable<T>) = object : Observable<T> {
     {
         for (observable in observables) {
             observable += { ::notifyObservers }
@@ -24,4 +24,4 @@ fun observableOf<T>(vararg observables : Observable<T>) = object : Observable<T>
     override val observers = hashSetOf<(T) -> Unit>()
 }
 
-fun observableOf() = observableOf<Unit>()
+fun observable() = observable<Unit>()

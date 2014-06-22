@@ -1,6 +1,6 @@
 package net.pureal.traits.graphics
 
-import net.pureal.traits.Transform2
+import net.pureal.traits.*
 
 trait Fill
 

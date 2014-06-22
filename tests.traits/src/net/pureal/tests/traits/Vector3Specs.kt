@@ -3,22 +3,22 @@ package net.pureal.tests.traits.math
 import org.spek.*
 import net.pureal.traits.*
 
-class Vector2Specs : Spek() {{
-    given("a 2 vector") {
-        val x = vector(1.5, -4)
+class Vector3Specs : Spek() {{
+    given("a 3 vector") {
+        val x = vector(1.5, -4, 3)
 
         on("getting the string repesentation") {
             val s = x.toString()
 
             it("should be correct") {
-                shouldEqual(s, "vector(1.5, -4.0)")
+                shouldEqual(s, "vector(1.5, -4.0, 3.0)")
             }
         }
     }
 
-    given("two unit vectors in x- and y-direction") {
-        val eX = vector(1,0)
-        val eY = vector(0,1)
+    given("two unit 3 vectors in x- and z-direction") {
+        val eX = vector(1,0,0)
+        val eY = vector(0,0,1)
 
         on("getting the dot product of the two") {
             val p = eX * eY

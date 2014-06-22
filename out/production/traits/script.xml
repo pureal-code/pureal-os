@@ -15,6 +15,7 @@
         <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/math/Constants.kt"/>
         <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/math/Matrix2.kt"/>
         <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/math/Matrix3.kt"/>
+        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/math/Numbers.kt"/>
         <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/math/Vector2.kt"/>
         <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/math/Vector3.kt"/>
         <!-- Classpath -->
