@@ -7,6 +7,22 @@ class Matrix2Specs : Spek() {{
     given("a 2 square matrix") {
         val m = matrixOf(1,2,-4, 3)
 
+        on("getting a row") {
+            val x = m.row(1)
+
+            it("should be correct") {
+                shouldEqual(vectorOf(-4,3), x)
+            }
+        }
+
+        on("multiplying it with a vector") {
+            val x = m * vectorOf(1,4)
+
+            it("should be correct") {
+                shouldEqual(vectorOf(9,8), x)
+            }
+        }
+
         on("getting the determinant") {
             val d = m.determinant()
 

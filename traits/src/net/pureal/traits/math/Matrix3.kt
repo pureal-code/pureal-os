@@ -41,14 +41,14 @@ trait Matrix3 {
 
     fun subMatrix(exceptX : Int, exceptY : Int) : Matrix2 = matrix2Of{(x,y)-> this[(0..2).filter{it != exceptX}[x], (0..2).filter{it != exceptY}[y]]}
 
-    override fun equals(other : Any?) = other is Matrix3 && (a == other.a && b == other.b && c == other.c && d == other.d && e == other.e && f == other.f && g == other.g && h == other.h && i == other.i)
+    override fun equals(other : Any?) = other is Matrix3 && (a.toDouble() == other.a.toDouble() && b.toDouble() == other.b.toDouble() && c.toDouble() == other.c.toDouble() && d.toDouble() == other.d.toDouble() && e.toDouble() == other.e.toDouble() && f.toDouble() == other.f.toDouble() && g.toDouble() == other.g.toDouble() && h.toDouble() == other.h.toDouble() && i.toDouble() == other.i.toDouble())
 
     override fun toString() = "[[${a}, ${b}, ${c}], [${d}, ${e}, ${f}], [${g}, ${h}, ${i}]]"
 }
 
 fun matrixOf(a: Number, b: Number, c: Number, d: Number, e: Number, f: Number, g: Number, h: Number, i: Number) = object : Matrix3 {
-    override val a = a; override val b = b; override val c = c;
-    override val d = d; override val e = e; override val f = f;
+    override val a = a; override val b = b; override val c = c
+    override val d = d; override val e = e; override val f = f
     override val g = g; override val h = h; override val i = i
 }
 

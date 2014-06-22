@@ -2,13 +2,9 @@
     <!-- Module script for production -->
     <module name="traits" outputDir="C:/Projects/Pureal/out/production/traits">
         <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/Interactive.kt"/>
-        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/Matrix2.kt"/>
-        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/Matrix3.kt"/>
         <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/Observable.kt"/>
         <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/Transform2.kt"/>
         <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/Trigger.kt"/>
-        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/Vector2.kt"/>
-        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/Vector3.kt"/>
         <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/graphics/Color.kt"/>
         <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/graphics/Fill.kt"/>
         <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/graphics/Screen.kt"/>
@@ -16,6 +12,11 @@
         <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/graphics/Stroke.kt"/>
         <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/graphics/Structure.kt"/>
         <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/graphics/Text.kt"/>
+        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/math/Constants.kt"/>
+        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/math/Matrix2.kt"/>
+        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/math/Matrix3.kt"/>
+        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/math/Vector2.kt"/>
+        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/math/Vector3.kt"/>
         <!-- Classpath -->
         <classpath path="C:/Program Files/Java/jdk1.7.0_60/jre/lib/charsets.jar"/>
         <classpath path="C:/Program Files/Java/jdk1.7.0_60/jre/lib/deploy.jar"/>

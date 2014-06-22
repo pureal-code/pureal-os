@@ -41,10 +41,10 @@ class Matrix3Specs : Spek() {{
             val x = m.adjugate()
 
             it("should be correct") {
-                matrixOf(
+                shouldEqual(matrixOf(
                         1,1,4,
                         -3,4,5,
-                        -2,0,1)
+                        -2,0,1), x)
 
             }
         }
