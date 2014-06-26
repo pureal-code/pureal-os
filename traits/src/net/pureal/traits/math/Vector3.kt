@@ -29,13 +29,21 @@ trait Vector3 : Numbers {
     }
     val length : Number get() = Math.sqrt(lengthSquared.toDouble())
 
-    fun times(other : Vector3) : Number = x.toDouble() * other.x.toDouble() + y.toDouble() * other.y.toDouble() + z.toDouble() * other.z.toDouble()
+    fun dotProduct(other : Vector3) : Number = x.toDouble() * other.x.toDouble() + y.toDouble() * other.y.toDouble() + z.toDouble() * other.z.toDouble()
 
     override fun iterator() = listOf(x, y, z).iterator()
 
     override fun equals(other : Any?) = other is Vector3 && (x.toDouble() == other.x.toDouble() && y.toDouble() == other.y.toDouble() && z.toDouble() == other.z.toDouble())
 
     override fun toString() = "vector(${x.toDouble()}, ${y.toDouble()}, ${z.toDouble()})"
+
+    fun times(other : Vector3) = this.dotProduct(other)
+
+    fun crossProduct(other : Vector3) = vector(
+            y.toDouble()*other.z.toDouble()-z.toDouble()*other.y.toDouble(),
+            z.toDouble()*other.x.toDouble()-x.toDouble()*other.z.toDouble(),
+            x.toDouble()*other.y.toDouble()-y.toDouble()*other.x.toDouble())
+
 }
 
 fun vector(x : Number, y : Number, z : Number) = object : Vector3 {
