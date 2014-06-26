@@ -43,7 +43,6 @@ trait Vector3 : Numbers {
             y.toDouble()*other.z.toDouble()-z.toDouble()*other.y.toDouble(),
             z.toDouble()*other.x.toDouble()-x.toDouble()*other.z.toDouble(),
             x.toDouble()*other.y.toDouble()-y.toDouble()*other.x.toDouble())
-
 }
 
 fun vector(x : Number, y : Number, z : Number) = object : Vector3 {

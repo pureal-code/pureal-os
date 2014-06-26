@@ -1,7 +1,11 @@
 package net.pureal.traits.math
 
-/**
- * Created by Maximilian on 26.06.2014.
- */
-public trait Real {
+
+public trait Real : MathValue {
+
+}
+
+fun Number.toReal() : Real = object : Real{
+    override val operator = null;
+    override val operands = Array<Number>(1, {this})
 }

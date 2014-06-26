@@ -27,5 +27,15 @@ class Vector3Specs : Spek() {{
                 shouldEqual(0.0, p)
             }
         }
+
+        on("getting the cross product of the two") {
+            val p = eX.crossProduct(eY)
+
+            it("should be (0 -1 0)") {
+                shouldEqual(vector(0,-1,0),p)
+            }
+        }
+
     }
+
 }}
