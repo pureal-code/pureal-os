@@ -9,11 +9,12 @@ public trait RealPrimitive : Real {
 
     override fun toString() : String = value.toString()
 
-    fun getValue() : Number = value
+    override fun Number() : Number = value
 }
 
-fun real(v:Number) : RealPrimitive =  object : RealPrimitive {
-    override val value : Number = v
+fun real(v:Number) = object : RealPrimitive {
+
+    override val value : Number = v.toDouble()
 }
 
 fun Number.toReal() : RealPrimitive = real(this)
