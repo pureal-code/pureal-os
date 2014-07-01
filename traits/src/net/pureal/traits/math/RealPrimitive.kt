@@ -9,6 +9,18 @@ public trait RealPrimitive : Real {
     override fun toString() = value.toString()
 
     override fun Number() = value
+
+    override fun equals(other : Any?) : Boolean {
+        return when(other){
+            is RealPrimitive -> value == other.value
+            is Number -> value == other
+            else -> false
+        }
+    }
+
+    override fun minus() : Real {
+        return real(-(value.toDouble()))
+    }
 }
 
 fun real(v:Number) = object : RealPrimitive {
