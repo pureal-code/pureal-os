@@ -4,7 +4,7 @@ import net.pureal.traits.math.Real
 import net.pureal.traits.math.real
 import net.pureal.traits.math.RealOperation
 
-public trait MultiplicationValue : RealOperation {
+public trait DivisionValue : RealOperation {
     override val priority : Int
         get() = 1
 
@@ -19,11 +19,11 @@ public trait MultiplicationValue : RealOperation {
         val f1str = factorOne.getEncapsulatedString(priority)
         val f2str = factorTwo.getEncapsulatedString(priority)
 
-        return "${f1str} * ${f2str}"
+        return "${f1str} / ${f2str}"
     }
 
     override fun approximate(accuracy : Int) : Real {
-        return real(factorOne.toDouble() * factorTwo.toDouble())
+        return real(factorOne.toDouble() / factorTwo.toDouble())
     }
 
     // TODO: remove after symPy is imported
@@ -31,7 +31,7 @@ public trait MultiplicationValue : RealOperation {
         val s1 : Real = factorOne.simplify()
         val s2 : Real = factorTwo.simplify()
         if(s1.isPrimitive && s2.isPrimitive)
-            return real(s1.toDouble()*s2.toDouble())
+            return real(s1.toDouble()/s2.toDouble())
 
         // return this if no simplification is possible
         return this
@@ -39,11 +39,11 @@ public trait MultiplicationValue : RealOperation {
 
 
     // Code easter-egg: The first factor gets discriminated by this function, it always feels negative afterwards
-    override fun minus() : MultiplicationValue = multiplicationValue(-factorOne, factorTwo)
+    override fun minus() : DivisionValue = divisionValue(-factorOne, factorTwo)
 
 }
 
-fun multiplicationValue(a: Real, b: Real) : MultiplicationValue = object : MultiplicationValue {
+fun divisionValue(a : Real, b : Real) : DivisionValue = object : DivisionValue {
     override val factorOne = a
     override val factorTwo = b
 }

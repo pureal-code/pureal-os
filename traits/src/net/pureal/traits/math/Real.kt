@@ -2,6 +2,8 @@ package net.pureal.traits.math
 
 import net.pureal.traits.math.operations.summationValue
 import net.pureal.traits.math.operations.multiplicationValue
+import net.pureal.traits.math.operations.subtractionValue
+import net.pureal.traits.math.operations.divisionValue
 
 
 public trait Real {
@@ -15,17 +17,11 @@ public trait Real {
         return this
     }
 
-    fun approximate() : Real {
-        return this
-    }
+    fun approximate(accuracy : Int = 50) : Real = this
 
-    fun getEncapsulatedString(outerPriority : Int) : String {
-        return toString()
-    }
+    fun getEncapsulatedString(outerPriority : Int) : String = toString()
 
-    fun getPrimitiveValue() : Number {
-        return approximate().Number()
-    }
+    fun getPrimitiveValue() : Number = approximate().Number()
 
     override fun equals(other : Any?) : Boolean
     {
@@ -33,7 +29,7 @@ public trait Real {
         {
             null -> return false
             is Number -> {
-                return this.approximate().getPrimitiveValue() == other.toDouble()
+                return this.toDouble() == other.toDouble()
             }
             is Real -> {
                 if(isPrimitive && other.isPrimitive)
@@ -41,7 +37,8 @@ public trait Real {
                     return this.getPrimitiveValue() == other.getPrimitiveValue()
                 }
                 return false
-                return this.approximate() == other.approximate() // TODO: actually pretty dirty checking, to be refined later
+                // return this.approximate() == other.approximate()
+                // TODO: actually pretty dirty checking, to be refined later
                 // TODO: More condition checking to do
             }
 
@@ -51,11 +48,15 @@ public trait Real {
 
     fun plus(other: Real) : Real = summationValue(this,other)
 
-    fun minus() : Real
+    fun minus() : Real = subtractionValue(0.toReal(), this)
 
-    fun minus(other: Real) : Real = summationValue(this,-other)
+    fun minus(other: Real) : Real = subtractionValue(this,other)
 
     fun times(other: Real) : Real = multiplicationValue(this,other)
+
+    fun div(other: Real) : Real = divisionValue(this,other)
+
+    fun invert() : Real = divisionValue(1.toReal(),this)
 
     // TODO: for compatibility's sake - to be removed after we have our lossless number type
     fun toDouble() : Double = getPrimitiveValue().toDouble()

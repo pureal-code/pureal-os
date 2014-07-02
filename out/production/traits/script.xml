@@ -12,6 +12,7 @@
         <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/graphics/Stroke.kt"/>
         <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/graphics/Structure.kt"/>
         <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/graphics/Text.kt"/>
+        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/math/Constant.kt"/>
         <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/math/Constants.kt"/>
         <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/math/Matrix2.kt"/>
         <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/math/Matrix3.kt"/>
@@ -19,9 +20,12 @@
         <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/math/Real.kt"/>
         <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/math/RealOperation.kt"/>
         <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/math/RealPrimitive.kt"/>
+        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/math/Symbol.kt"/>
         <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/math/Vector2.kt"/>
         <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/math/Vector3.kt"/>
+        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/math/operations/DivisionValue.kt"/>
         <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/math/operations/MultiplicationValue.kt"/>
+        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/math/operations/SubtractionValue.kt"/>
         <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/math/operations/SummationValue.kt"/>
         <!-- Classpath -->
         <classpath path="C:/Program Files/Java/jdk1.7.0_60/jre/lib/charsets.jar"/>

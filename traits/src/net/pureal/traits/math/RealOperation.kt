@@ -14,7 +14,7 @@ public trait RealOperation : Real {
 
     override fun getEncapsulatedString(outerPriority : Int) : String {
         val s = this.toString()
-        return if (priority > outerPriority) s; else "( ${s} )"
+        return if (priority > outerPriority) s; else "(${s})"
     }
 
 }
