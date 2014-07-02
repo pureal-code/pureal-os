@@ -21,7 +21,7 @@ public trait SummationValue : RealOperation {
         return "${s1str} + ${s2str}"
     }
 
-    override fun approximate() : Real {
+    override fun approximate(accuracy : Int) : Real {
         return real(summandOne.toDouble() + summandTwo.toDouble())
     }
 

@@ -3,7 +3,7 @@ package net.pureal.tests.traits.math
 import org.spek.*
 import net.pureal.traits.*
 import kotlin.test.assertEquals
-import net.pureal.traits.math.toReal
+import net.pureal.traits.math.*
 
 public class RealSpecs : Spek() {{
     given("the real numbers 2, 3 and 4"){
@@ -51,8 +51,53 @@ public class RealSpecs : Spek() {{
                 shouldEqual(mul1, 8.0)
             })
         }
+        on("dividing 4 by 3")
+        {
+            val div1 = (c / b).simplify()
+            it("should be 4/3 (as Double currently)")
+            {
+                shouldEqual(div1, 4.0/3.0)
+            }
+        }
+        on("combining operations - 2+3*4")
+        {
+            val f1 = a + b * c
+            it("should be '2.0 + 3.0 * 4.0'")
+            {
+                shouldEqual("2.0 + 3.0 * 4.0", f1.toString())
+            }
+            it("should be 14")
+            {
+                shouldEqual(f1.simplify(), 14.0)
+            }
+        }
+        on("combining operations - (2+3)*4")
+        {
+            val f1 = (a+b)*c
+            val f2 = c*(a+b)
+            it("should be (2.0 + 3.0) * 4 and other way around")
+            {
+                shouldEqual("(2.0 + 3.0) * 4.0", f1.toString())
+                shouldEqual("4.0 * (2.0 + 3.0)", f2.toString())
+            }
+            it("should be 18 in both cases")
+            {
+                shouldEqual(f1.simplify(), 20.0)
+                shouldEqual(f2.simplify(), 20.0)
+                shouldEqual(f1.simplify(), f2.simplify())
+            }
+        }
     }
-
+    given("the constant pi as approximate")
+    {
+        val pi = realConstant("pi",3.141592.toReal())
+        on("getting string representation")
+        {
+            it("should be 'pi'", {
+                shouldEqual("pi",pi.toString())
+            })
+        }
+    }
 
 
 }}
