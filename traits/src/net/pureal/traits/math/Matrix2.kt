@@ -17,7 +17,7 @@ trait Matrix2 : Numbers {
         else -> throw IllegalArgumentException()}
 
     val determinant : Number get() = a.toDouble() * d.toDouble() - b.toDouble() * c.toDouble()
-    fun inverse() = matrix(d.toDouble(), -b.toDouble(), -c.toDouble(), a.toDouble()) times (1/determinant.toDouble())
+    fun inverse() : Matrix2 = matrix(d.toDouble(), -b.toDouble(), -c.toDouble(), a.toDouble()) times (1/determinant.toDouble())
 
     fun row(y : Int) = vector(get(0,y), get(1,y))
     fun column(x : Int) = vector(get(x,0), get(x,1))

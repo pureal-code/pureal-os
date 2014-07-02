@@ -3,7 +3,7 @@ package net.pureal.traits
 import org.omg.CosNaming._BindingIteratorImplBase
 
 trait Vector2 : Numbers {
-    fun plus(other : Vector2) = vector(x.toDouble() + other.x.toDouble(), y.toDouble() + other.y.toDouble())
+    fun plus(other : Vector2) : Vector2 = vector(x.toDouble() + other.x.toDouble(), y.toDouble() + other.y.toDouble())
     fun times(other : Number) : Vector2 {
         val s = other.toDouble()
         return vector(x.toDouble() * s, y.toDouble() * s)

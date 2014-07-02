@@ -1,7 +1,7 @@
 package net.pureal.traits
 
 trait Vector3 : Numbers {
-    fun plus(other : Vector3) = vector(x.toDouble() + other.x.toDouble(), y.toDouble() + other.y.toDouble(), z.toDouble() + other.z.toDouble())
+    fun plus(other : Vector3) : Vector3 = vector(x.toDouble() + other.x.toDouble(), y.toDouble() + other.y.toDouble(), z.toDouble() + other.z.toDouble())
     fun times(other : Number) : Vector3 {
         val s = other.toDouble()
         return vector(x.toDouble() * s, y.toDouble() * s, z.toDouble() * s)
@@ -39,7 +39,7 @@ trait Vector3 : Numbers {
 
     fun times(other : Vector3) = this.dotProduct(other)
 
-    fun crossProduct(other : Vector3) = vector(
+    fun crossProduct(other : Vector3) : Vector3 = vector(
             y.toDouble()*other.z.toDouble()-z.toDouble()*other.y.toDouble(),
             z.toDouble()*other.x.toDouble()-x.toDouble()*other.z.toDouble(),
             x.toDouble()*other.y.toDouble()-y.toDouble()*other.x.toDouble())
