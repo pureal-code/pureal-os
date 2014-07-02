@@ -1,27 +1,28 @@
 <modules>
     <!-- Module script for production -->
-    <module name="traits" outputDir="D:/My Documents/IntelliJ Projects/pureal-os/out/production/traits">
-        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/Interactive.kt"/>
-        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/Observable.kt"/>
-        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/Transform2.kt"/>
-        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/Trigger.kt"/>
-        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/graphics/Color.kt"/>
-        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/graphics/Fill.kt"/>
-        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/graphics/Screen.kt"/>
-        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/graphics/Shape.kt"/>
-        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/graphics/Stroke.kt"/>
-        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/graphics/Structure.kt"/>
-        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/graphics/Text.kt"/>
-        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/math/Constants.kt"/>
-        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/math/Matrix2.kt"/>
-        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/math/Matrix3.kt"/>
-        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/math/Numbers.kt"/>
-        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/math/Real.kt"/>
-        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/math/RealOperation.kt"/>
-        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/math/RealPrimitive.kt"/>
-        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/math/Vector2.kt"/>
-        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/math/Vector3.kt"/>
-        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src/net/pureal/traits/math/operations/SummationValue.kt"/>
+    <module name="traits" outputDir="C:/Projects/Pureal/out/production/traits">
+        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/Interactive.kt"/>
+        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/Observable.kt"/>
+        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/Transform2.kt"/>
+        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/Trigger.kt"/>
+        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/graphics/Button.kt"/>
+        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/graphics/Color.kt"/>
+        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/graphics/Fill.kt"/>
+        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/graphics/Screen.kt"/>
+        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/graphics/Shape.kt"/>
+        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/graphics/Stroke.kt"/>
+        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/graphics/Structure.kt"/>
+        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/graphics/Text.kt"/>
+        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/math/Constants.kt"/>
+        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/math/Matrix2.kt"/>
+        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/math/Matrix3.kt"/>
+        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/math/Numbers.kt"/>
+        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/math/Real.kt"/>
+        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/math/RealOperation.kt"/>
+        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/math/RealPrimitive.kt"/>
+        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/math/Vector2.kt"/>
+        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/math/Vector3.kt"/>
+        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/math/operations/SummationValue.kt"/>
         <!-- Classpath -->
         <classpath path="C:/Program Files/Java/jdk1.7.0_60/jre/lib/charsets.jar"/>
         <classpath path="C:/Program Files/Java/jdk1.7.0_60/jre/lib/deploy.jar"/>
@@ -44,13 +45,13 @@
         <classpath path="C:/Program Files/Java/jdk1.7.0_60/jre/lib/ext/zipfs.jar"/>
         <!-- Output directory, commented out -->
         <!-- 
-            <classpath path="D:/My Documents/IntelliJ Projects/pureal-os/out/production/traits"/>
+            <classpath path="C:/Projects/Pureal/out/production/traits"/>
         -->
-        <classpath path="D:/My Documents/IntelliJ Projects/pureal-os/lib/kotlin-runtime.jar"/>
+        <classpath path="C:/Projects/Pureal/lib/kotlin-runtime.jar"/>
         <!-- Java Source Roots -->
-        <classpath path="D:/My Documents/IntelliJ Projects/pureal-os/traits/src"/>
+        <classpath path="C:/Projects/Pureal/traits/src"/>
         <!-- External annotations -->
         <externalAnnotations path= "C:/Program Files (x86)/JetBrains/IntelliJ IDEA Community Edition 13.1.3/lib/jdkAnnotations.jar"/>
-        <externalAnnotations path= "C:/Users/Maximilian/.IdeaIC13/config/plugins/Kotlin/kotlinc/lib/kotlin-jdk-annotations.jar"/>
+        <externalAnnotations path= "C:/Users/Fusion/.IdeaIC13/config/plugins/Kotlin/kotlinc/lib/kotlin-jdk-annotations.jar"/>
     </module>
 </modules>
