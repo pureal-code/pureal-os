@@ -21,16 +21,22 @@ public trait SummationValue : RealOperation {
         return "${s1str} + ${s2str}"
     }
 
-    override fun simplify() : Real
-    {
+    override fun approximate() : Real {
+        return real(summandOne.toDouble() + summandTwo.toDouble())
+    }
+
+    // TODO: remove after symPy is imported
+    override fun simplify() : Real {
         val s1 : Real = summandOne.simplify()
         val s2 : Real = summandTwo.simplify()
         if(s1.isPrimitive && s2.isPrimitive)
-            return real(s1.getPrimitiveValue().toDouble()+s2.getPrimitiveValue().toDouble())
+            return real(s1.toDouble()+s2.toDouble())
 
         // return this if no simplification is possible
         return this
     }
+
+    override fun minus() : SummationValue = summationValue(-summandOne,-summandTwo)
 
 }
 
