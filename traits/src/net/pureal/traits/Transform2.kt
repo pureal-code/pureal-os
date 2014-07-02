@@ -11,10 +11,10 @@ trait Transform2 {
         return vector(v[0], v[1])
     }
 
-    fun before(other : Transform2) = transform(matrix * other.matrix)
+    fun before(other : Transform2) : Transform2 = transform(matrix * other.matrix)
     fun at(location : Vector2) = Transforms2.translation(-location).before(this).before(Transforms2.translation(location))
 
-    fun inverse() = transform(matrix.inverse()!!)
+    fun inverse() : Transform2 = transform(matrix.inverse()!!)
 
     override fun toString() = "transform(${matrix.toString()})"
 }
@@ -22,7 +22,7 @@ trait Transform2 {
 object Transforms2 {
     val identity = transform(identityMatrix3)
 
-    fun translation(vector : Vector2) = transform(matrix(
+    fun translation(vector : Vector2) : Transform2 = transform(matrix(
             1, 0, vector[0],
             0, 1, vector[1],
             0, 0, 1

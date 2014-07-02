@@ -7,9 +7,9 @@ trait Matrix3 : Numbers {
     val d: Number; val e: Number; val f: Number
     val g: Number; val h: Number; val i: Number
 
-    fun times(other : Matrix3) = matrix3{(x, y) -> other.column(y) * row(x)}
+    fun times(other : Matrix3) : Matrix3 = matrix3{(x, y) -> other.column(y) * row(x)}
     fun times(other : Vector3) = vector3{other * row(it)}
-    fun times(other : Number) = matrix3{(x,y) -> other.toDouble() * get(x, y).toDouble()}
+    fun times(other : Number) : Matrix3 = matrix3{(x,y) -> other.toDouble() * get(x, y).toDouble()}
     fun div(other : Number) = times(1.0/other.toDouble())
 
     fun get(x : Int, y : Int) : Number = when(x) {
@@ -25,9 +25,9 @@ trait Matrix3 : Numbers {
 
     val isInvertible : Boolean get() = determinant != 0.0
 
-    fun transpose() = matrix3 {(x,y) -> this[y,x]}
+    fun transpose() : Matrix3 = matrix3 {(x,y) -> this[y,x]}
     fun inverse() = if(isInvertible) adjugate() / determinant else null
-    fun adjugate() = matrix3{(x,y) -> subMatrix(y, x).determinant.toDouble() * if((x+y) mod 2 == 0) 1 else -1}
+    fun adjugate() : Matrix3 = matrix3{(x,y) -> subMatrix(y, x).determinant.toDouble() * if((x+y) mod 2 == 0) 1 else -1}
 
     fun row(x : Int) = vector(get(x,0), get(x,1), get(x,2))
     fun column(y : Int) = vector(get(0,y), get(1,y), get(2, y))
