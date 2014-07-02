@@ -1,9 +1,10 @@
 package net.pureal.traits.graphics
 
-import net.pureal.traits.Observable
+import net.pureal.traits.math.*
+import net.pureal.traits.*
 
 trait Element {
-    val transform: Transform
+    val transform: Transform2
     val changed : Observable<Unit>
 }
 

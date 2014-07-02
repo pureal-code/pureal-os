@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/android.app/android.app.iml" filepath="$PROJECT_DIR$/android.app/android.app.iml" />
       <module fileurl="file://$PROJECT_DIR$/android.backend/android.backend.iml" filepath="$PROJECT_DIR$/android.backend/android.backend.iml" />
       <module fileurl="file://$PROJECT_DIR$/shell/shell.iml" filepath="$PROJECT_DIR$/shell/shell.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tests.traits/tests.traits.iml" filepath="$PROJECT_DIR$/tests.traits/tests.traits.iml" />
       <module fileurl="file://$PROJECT_DIR$/traits/traits.iml" filepath="$PROJECT_DIR$/traits/traits.iml" />
     </modules>
   </component>

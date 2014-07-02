@@ -1,23 +1,12 @@
 <modules>
-    <!-- Module script for production -->
-    <module name="traits" outputDir="C:/Projects/Pureal/out/production/traits">
-        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/Interactive.kt"/>
-        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/Observable.kt"/>
-        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/Transform2.kt"/>
-        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/Trigger.kt"/>
-        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/graphics/Color.kt"/>
-        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/graphics/Fill.kt"/>
-        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/graphics/Screen.kt"/>
-        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/graphics/Shape.kt"/>
-        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/graphics/Stroke.kt"/>
-        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/graphics/Structure.kt"/>
-        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/graphics/Text.kt"/>
-        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/math/Constants.kt"/>
-        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/math/Matrix2.kt"/>
-        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/math/Matrix3.kt"/>
-        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/math/Numbers.kt"/>
-        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/math/Vector2.kt"/>
-        <sources path="C:/Projects/Pureal/traits/src/net/pureal/traits/math/Vector3.kt"/>
+    <!-- Module script for tests -->
+    <module name="tests.traits" outputDir="C:/Projects/Pureal/out/test/tests.traits">
+        <sources path="C:/Projects/Pureal/tests.traits/src/net/pureal/tests/traits/Matrix2Specs.kt"/>
+        <sources path="C:/Projects/Pureal/tests.traits/src/net/pureal/tests/traits/Matrix3Specs.kt"/>
+        <sources path="C:/Projects/Pureal/tests.traits/src/net/pureal/tests/traits/SpekExtensions.kt"/>
+        <sources path="C:/Projects/Pureal/tests.traits/src/net/pureal/tests/traits/Transform2Specs.kt"/>
+        <sources path="C:/Projects/Pureal/tests.traits/src/net/pureal/tests/traits/Vector2Specs.kt"/>
+        <sources path="C:/Projects/Pureal/tests.traits/src/net/pureal/tests/traits/Vector3Specs.kt"/>
         <!-- Classpath -->
         <classpath path="C:/Program Files/Java/jdk1.7.0_60/jre/lib/charsets.jar"/>
         <classpath path="C:/Program Files/Java/jdk1.7.0_60/jre/lib/deploy.jar"/>
@@ -40,11 +29,17 @@
         <classpath path="C:/Program Files/Java/jdk1.7.0_60/jre/lib/ext/zipfs.jar"/>
         <!-- Output directory, commented out -->
         <!-- 
-            <classpath path="C:/Projects/Pureal/out/production/traits"/>
+            <classpath path="C:/Projects/Pureal/out/test/tests.traits"/>
         -->
+        <classpath path="C:/Projects/Pureal/out/production/tests.traits"/>
         <classpath path="C:/Projects/Pureal/lib/kotlin-runtime.jar"/>
+        <classpath path="C:/Projects/Pureal/lib/spek-0.1.122.jar"/>
+        <classpath path="C:/Projects/Pureal/lib/hamcrest-core-1.3.jar"/>
+        <classpath path="C:/Projects/Pureal/lib/junit-4.11.jar"/>
+        <classpath path="C:/Projects/Pureal/out/test/traits"/>
+        <classpath path="C:/Projects/Pureal/out/production/traits"/>
         <!-- Java Source Roots -->
-        <classpath path="C:/Projects/Pureal/traits/src"/>
+        <classpath path="C:/Projects/Pureal/tests.traits/src"/>
         <!-- External annotations -->
         <externalAnnotations path= "C:/Program Files (x86)/JetBrains/IntelliJ IDEA Community Edition 13.1.3/lib/jdkAnnotations.jar"/>
         <externalAnnotations path= "C:/Users/Fusion/.IdeaIC13/config/plugins/Kotlin/kotlinc/lib/kotlin-jdk-annotations.jar"/>

@@ -3,7 +3,7 @@ package net.pureal.shell
 import net.pureal.traits.graphics.*
 import net.pureal.traits.*
 import kotlin.properties.Delegates
-
+/*
 class Playground {
     fun foo() {
 
@@ -16,7 +16,7 @@ class Playground {
             }
             override val fill = object : SolidFill { override val color = colorOf(g=1) }
             override val stroke = object : InvisibleStroke {}
-            override val transform = object : Transform {
+            override val transform = object : Transform2 {
                 override val rotation = 0
                 override val scale = vectorOf(0, 0)
                 override val translation =  vectorOf(0, 0)
