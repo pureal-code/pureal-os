@@ -1,12 +1,13 @@
 <modules>
     <!-- Module script for tests -->
-    <module name="tests.traits" outputDir="C:/Projects/Pureal/out/test/tests.traits">
-        <sources path="C:/Projects/Pureal/tests.traits/src/net/pureal/tests/traits/Matrix2Specs.kt"/>
-        <sources path="C:/Projects/Pureal/tests.traits/src/net/pureal/tests/traits/Matrix3Specs.kt"/>
-        <sources path="C:/Projects/Pureal/tests.traits/src/net/pureal/tests/traits/SpekExtensions.kt"/>
-        <sources path="C:/Projects/Pureal/tests.traits/src/net/pureal/tests/traits/Transform2Specs.kt"/>
-        <sources path="C:/Projects/Pureal/tests.traits/src/net/pureal/tests/traits/Vector2Specs.kt"/>
-        <sources path="C:/Projects/Pureal/tests.traits/src/net/pureal/tests/traits/Vector3Specs.kt"/>
+    <module name="tests.traits" outputDir="D:/My Documents/IntelliJ Projects/pureal-os/out/test/tests.traits">
+        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/tests.traits/src/net/pureal/tests/traits/Matrix2Specs.kt"/>
+        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/tests.traits/src/net/pureal/tests/traits/Matrix3Specs.kt"/>
+        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/tests.traits/src/net/pureal/tests/traits/RealSpecs.kt"/>
+        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/tests.traits/src/net/pureal/tests/traits/SpekExtensions.kt"/>
+        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/tests.traits/src/net/pureal/tests/traits/Transform2Specs.kt"/>
+        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/tests.traits/src/net/pureal/tests/traits/Vector2Specs.kt"/>
+        <sources path="D:/My Documents/IntelliJ Projects/pureal-os/tests.traits/src/net/pureal/tests/traits/Vector3Specs.kt"/>
         <!-- Classpath -->
         <classpath path="C:/Program Files/Java/jdk1.7.0_60/jre/lib/charsets.jar"/>
         <classpath path="C:/Program Files/Java/jdk1.7.0_60/jre/lib/deploy.jar"/>
@@ -29,19 +30,19 @@
         <classpath path="C:/Program Files/Java/jdk1.7.0_60/jre/lib/ext/zipfs.jar"/>
         <!-- Output directory, commented out -->
         <!-- 
-            <classpath path="C:/Projects/Pureal/out/test/tests.traits"/>
+            <classpath path="D:/My Documents/IntelliJ Projects/pureal-os/out/test/tests.traits"/>
         -->
-        <classpath path="C:/Projects/Pureal/out/production/tests.traits"/>
-        <classpath path="C:/Projects/Pureal/lib/kotlin-runtime.jar"/>
-        <classpath path="C:/Projects/Pureal/lib/spek-0.1.122.jar"/>
-        <classpath path="C:/Projects/Pureal/lib/hamcrest-core-1.3.jar"/>
-        <classpath path="C:/Projects/Pureal/lib/junit-4.11.jar"/>
-        <classpath path="C:/Projects/Pureal/out/test/traits"/>
-        <classpath path="C:/Projects/Pureal/out/production/traits"/>
+        <classpath path="D:/My Documents/IntelliJ Projects/pureal-os/out/production/tests.traits"/>
+        <classpath path="D:/My Documents/IntelliJ Projects/pureal-os/lib/kotlin-runtime.jar"/>
+        <classpath path="D:/My Documents/IntelliJ Projects/pureal-os/lib/spek-0.1.122.jar"/>
+        <classpath path="D:/My Documents/IntelliJ Projects/pureal-os/lib/hamcrest-core-1.3.jar"/>
+        <classpath path="D:/My Documents/IntelliJ Projects/pureal-os/lib/junit-4.11.jar"/>
+        <classpath path="D:/My Documents/IntelliJ Projects/pureal-os/out/test/traits"/>
+        <classpath path="D:/My Documents/IntelliJ Projects/pureal-os/out/production/traits"/>
         <!-- Java Source Roots -->
-        <classpath path="C:/Projects/Pureal/tests.traits/src"/>
+        <classpath path="D:/My Documents/IntelliJ Projects/pureal-os/tests.traits/src"/>
         <!-- External annotations -->
         <externalAnnotations path= "C:/Program Files (x86)/JetBrains/IntelliJ IDEA Community Edition 13.1.3/lib/jdkAnnotations.jar"/>
-        <externalAnnotations path= "C:/Users/Fusion/.IdeaIC13/config/plugins/Kotlin/kotlinc/lib/kotlin-jdk-annotations.jar"/>
+        <externalAnnotations path= "C:/Users/Maximilian/.IdeaIC13/config/plugins/Kotlin/kotlinc/lib/kotlin-jdk-annotations.jar"/>
     </module>
 </modules>
