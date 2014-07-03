@@ -22,6 +22,5 @@ fun realConstant(n : String, v : Real, u: String? = null, fn: ((Int) -> Real)? =
     override val unit : String? = u
     override val isApproximate : Boolean = fn != null
     override val calculation_fn = fn
-
 }
 
