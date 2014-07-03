@@ -2,4 +2,6 @@ package net.pureal.traits.graphics
 
 import net.pureal.traits
 
-trait Screen : Composed
+trait Screen {
+    fun show(content : Composed)
+}
