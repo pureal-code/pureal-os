@@ -8,6 +8,9 @@ class Shell(val screen: Screen) {
     {
         val button = RectangleButton(vector(.5, .5), Colors.gray)
         button.content += {println("button clicked!")}
+
+        screen.pointerInput(button.element).click += {(v) -> {null!!}}
+
         screen.show(object : Composed {
             override val elements: Set<Element> = setOf(button.element)
             override val added: Observable<Element> = observable<Element>()

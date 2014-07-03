@@ -52,4 +52,4 @@ fun matrix3(get: (Int, Int) -> Number) = matrix(
         get(1, 0), get(1, 1), get(1, 2),
         get(2, 0), get(2, 1), get(2, 2))
 
-val identityMatrix3 = matrix3{(x,y) -> if (x == y) 1 else 0}
+val identityMatrix3 = matrix(1,0,0,0,1,0,0,0,1)
