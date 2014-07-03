@@ -6,8 +6,8 @@ import net.pureal.traits.*
 
 class Shell(val screen: Screen) {
     {
-        val button = TestButton()
-        button.value += {(Unit) -> { println("button clicked!") } }
+        val button = RectangleButton(Colors.gray, vector(.5, .5))
+        button.content += {(Unit) -> { println("button clicked!") } }
         screen.show(object : Composed {
             override val elements: Set<Element> = setOf(button.element)
             override val added: Observable<Element> = observable<Element>()
@@ -16,22 +16,14 @@ class Shell(val screen: Screen) {
     }
 }
 
-class TestButton : Button {
-    val clicked: Trigger<Unit> = trigger();
-    override val value: Trigger<Unit> = clicked
-    override val element: Element = object : Rectangle {
-        override val size: Vector2 = vector(.5, .5)
-        override val fill: Fill = object : SolidFill {
-            override val color = Colors.gray
-        }
-        override val stroke: Stroke = object : FilledStroke {
-            override val fill: Fill = object : SolidFill {
-                override val color = Colors.black
-            }
-            override val width: Number = .1
-        }
-        override val transform: Transform2 = Transforms2.identity
-        override val changed: Observable<Unit> = observable()
+class RectangleButton(color : Color, size : Vector2) : Button {
+    override val content = trigger<Unit>()
+    override val element = object : Rectangle {
+        override val size = size
+        override val fill = solidFill(color)
+        override val stroke = object : InvisibleStroke {}
+        override val transform = Transforms2.identity
+        override val changed = observable()
     }
     override val pointerInput: PointerInput = null!! // TODO...
 }

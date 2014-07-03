@@ -6,10 +6,12 @@ import net.pureal.traits.graphics.*
 
 class DefaultButtonSpecs : Spek() {{
     given("a default button") {
-        val b = defaultButton(Transform2.Identity, size(0.04, 0.01), Colors.black)
+        val b = TestButton(Transform2.Identity, size(0.04, 0.01), Colors.black)
 
-        on("clicking the button") {
-            b.value()
+        on("appeding a handler and invoking the button") {
+            b.content.invoke()
+
+            b.
         }
     }
 }}

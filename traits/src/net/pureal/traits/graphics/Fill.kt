@@ -17,3 +17,7 @@ trait Gradient : Fill {
 
 trait LinearGradient : Gradient
 trait RadialGradient : Gradient
+
+fun solidFill(color : Color) = object : SolidFill {
+    override val color: Color = color
+}
