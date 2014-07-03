@@ -4,12 +4,13 @@ import net.pureal.traits.graphics.*
 
 trait Interactive<T> {
     val content : T
-    val element : Element
-    val pointerInput : PointerInput
 }
 
-fun interactive<T>(content : T, element : Element, pointerInput : PointerInput) = object : Interactive<T> {
+trait Visual<T> : Interactive<T> {
+    val element : Element
+}
+
+fun visual<T>(content : T, element : Element) = object : Visual<T> {
     override val content = content
     override val element = element
-    override val pointerInput = pointerInput
 }
