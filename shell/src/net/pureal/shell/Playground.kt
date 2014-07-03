@@ -62,3 +62,7 @@ class Playground {
         override val removed = observableOf<Element>()
     }
 }
+*/
+class DefaultButton {
+
+}
