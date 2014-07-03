@@ -63,6 +63,3 @@ class Playground {
     }
 }
 */
-class DefaultButton {
-
-}

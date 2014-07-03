@@ -27,4 +27,3 @@ class RectangleButton(color : Color, size : Vector2) : Button {
     }
     override val pointerInput: PointerInput = null!! // TODO...
 }
-
