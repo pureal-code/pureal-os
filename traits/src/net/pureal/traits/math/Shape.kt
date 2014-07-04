@@ -8,15 +8,16 @@ trait Shape {
 
 trait BoundedShape : Shape {
     val size : Vector2
+    val bound : Vector2 get() = size / 2
 }
 
 trait Ellipse : BoundedShape {
     override fun contains(location : Vector2) : Boolean {
-        return if(size.x == 0) location.x == 0 && Math.abs(location.y.toDouble()) <= size.y.toDouble() / 2
+        return if(bound.x == 0) location.x == 0 && Math.abs(location.y.toDouble()) <= bound.y.toDouble()
         else {
-            val transformedLocation = vector((location.x.toDouble() / size.x.toDouble()) * size.y.toDouble(), location.y.toDouble())
+            val transformedLocation = vector((location.x.toDouble() / bound.x.toDouble()) * bound.y.toDouble(), location.y.toDouble())
 
-            return transformedLocation.lengthSquared.toDouble() <= size.y.toDouble() * size.y.toDouble()
+            return transformedLocation.lengthSquared.toDouble() <= bound.y.toDouble() * bound.y.toDouble()
         }
     }
 }
@@ -27,7 +28,7 @@ trait Circle : Ellipse {
 }
 
 trait Rectangle : BoundedShape {
-    override fun contains(location : Vector2) = Math.abs(location.x.toDouble()) <= size.x.toDouble() / 2 && Math.abs(location.y.toDouble()) <= size.y.toDouble() / 2
+    override fun contains(location : Vector2) = Math.abs(location.x.toDouble()) <= bound.x.toDouble() && Math.abs(location.y.toDouble()) <= bound.y.toDouble()
 }
 
 fun rectangle(size : Vector2) = object : Rectangle {
