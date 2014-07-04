@@ -16,6 +16,9 @@
     <orderEntry type="jdk" jdkName="Android API 15 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="KotlinJavaRuntime" level="project" />
+    <orderEntry type="module" module-name="android.backend" />
+    <orderEntry type="module" module-name="shell" />
+    <orderEntry type="module" module-name="traits" />
   </component>
 </module>
 

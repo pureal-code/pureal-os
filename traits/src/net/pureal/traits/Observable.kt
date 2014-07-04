@@ -1,6 +1,6 @@
 package net.pureal.traits
 
-trait Observable<T> {
+trait Observable<out T> {
     protected val observers : MutableSet<(T) -> Unit>
     final fun plusAssign(observer : (T) -> Unit) {
         observers.add(observer)
