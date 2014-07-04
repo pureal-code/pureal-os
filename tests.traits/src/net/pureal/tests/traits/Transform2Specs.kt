@@ -28,6 +28,8 @@ class Transform2Specs : Spek() {{
         }
     }
 
+    val pi = 3.14159265358979323846264338327950288419716939937510
+
     given("a rotation") {
         val t = Transforms2.rotation(pi/2)
 
