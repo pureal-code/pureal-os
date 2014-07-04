@@ -8,5 +8,6 @@ trait Screen {
     val size : Vector2
     fun elementAt(location : Vector2) : Element
 
-    fun pointerInput(element : Element) : PointerInput
+    fun absoluteTransform(element : Element) : Transform2
+    fun relativePointerInput(element : Element) : PointerInput
 }
