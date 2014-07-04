@@ -18,6 +18,7 @@ public trait RealPrimitive : Real {
         }
     }
 
+
     override fun minus() : Real {
         return real(-(value.toDouble()))
     }
