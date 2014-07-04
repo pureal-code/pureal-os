@@ -6,7 +6,7 @@ public trait RealPrimitive : Real {
 
     override val isPrimitive : Boolean get() = true
 
-    override fun toString() = value.toString()
+    override fun toString() = "real(\""+value.toString()+"\")"
 
     override fun Number() = value
 
@@ -27,4 +27,9 @@ fun real(v:Number) = object : RealPrimitive {
     override val value : Number = v.toDouble()
 }
 
+fun real(s:String) = object : RealPrimitive {
+    override val value = basicReal(s)
+}
+
 fun Number.toReal() : RealPrimitive = real(this)
+
