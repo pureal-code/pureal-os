@@ -12,12 +12,15 @@ class Shell(val screen: Screen) {
 
         screen.relativePointerInput(button.element).click += {(location) ->
             val relativeLocation = screen.absoluteTransform(button.element)(location)
-            if(button.element.contains(relativeLocation)) {
+            if(button.element.shape.contains(relativeLocation)) {
                 button.content()
             }
         }
 
         screen.show(object : Composed {
+            override val changed: Observable<Unit> = observable<Unit>()
+            override val shape = screen.rectangle
+            override val transform = Transforms2.identity
             override val elements = setOf(button.element)
             override val added = observable<Element>()
             override val removed = observable<Element>()
@@ -27,10 +30,8 @@ class Shell(val screen: Screen) {
 
 class RectangleButton(size : Vector2, color : Color) : Button {
     override val content = trigger<Unit>()
-    override val element = object : ShapeElement {
-        override val shape = rectangle(size)
-        override val fill = solidFill(color)
-        override val stroke = object : InvisibleStroke {}
+    override val element = object : ColoredElement {
+        override val shape = singleColored(rectangle(size), color)
         override val transform = Transforms2.identity
         override val changed = observable()
     }
