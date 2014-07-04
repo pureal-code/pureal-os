@@ -6,7 +6,7 @@ import net.pureal.traits.math.operations.subtractionValue
 import net.pureal.traits.math.operations.divisionValue
 
 
-public trait Real {
+public trait Real : Number {
     val isApproximate : Boolean get() = false
     val isPrimitive : Boolean get() = false
 
@@ -58,8 +58,14 @@ public trait Real {
 
     fun invert() : Real = divisionValue(1.toReal(),this)
 
-    // TODO: for compatibility's sake - to be removed after we have our lossless number type
-    fun toDouble() : Double = getPrimitiveValue().toDouble()
+
+    override fun toDouble() : Double = getPrimitiveValue().toDouble()
+    override fun toFloat() : Float = toDouble().toFloat()
+    override fun toLong() : Long = getPrimitiveValue().toLong()
+    override fun toInt() : Int = toLong().toInt()
+    override fun toShort() : Short = toLong().toShort()
+    override fun toByte() : Byte = toLong().toByte()
+    override fun toChar() : Char = toLong().toChar()
 
     fun Number() : Number
     {

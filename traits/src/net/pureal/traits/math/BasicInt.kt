@@ -1,40 +1,62 @@
 package net.pureal.traits.math
 
-public trait BasicInt : Number {
-    override fun toDouble() : Double {
-        return 0.0
-    }
-    override fun toFloat() : Float {
-        return toDouble().toFloat()
-    }
-    override fun toLong() : Long {
-        return 0
-    }
-    override fun toInt() : Int {
-        return toLong().toInt()
-    }
-    override fun toShort() : Short {
-        return toLong().toShort()
-    }
-    override fun toByte() : Byte {
-        return toLong().toByte()
-    }
-    override fun toChar() : Char {
-        return toLong().toChar()
-    }
+import com.sun.javaws.exceptions.InvalidArgumentException
 
-    val value : IntArray
 
-    fun toBasicReal() : BasicReal = basicReal(this, basicInt(0))
+/** Basic Int:
+ *  Subtype of BasicReal that is always Integer with exp 0
+ *  to facilitate calculations ...
+ */
+public trait BasicInt : BasicReal {
 
-    fun minus() : BasicInt = this // TODO: do this when I got some clue
+    override val exponent : Long get() = 0
+
+    fun toBasicReal() : BasicReal = basicReal(this, 0)
+
+    override fun minus() : BasicInt = basicInt(number, !sign)
+
+
+
+    override fun isInteger() : Boolean = true
 }
 
 // It must still be evaluated if the signed Int makes problems and if wae can use an unsigned Int or if we need w/e
-fun basicInt(i : Int) : BasicInt {
+fun basicInt(i : Int) : BasicInt = basicInt(i.toLong())
+
+fun basicInt(s : Short) : BasicInt = basicInt(s.toLong())
+
+fun basicInt(b : Byte) : BasicInt = basicInt(b.toLong())
+
+fun basicInt(l : Long) : BasicInt {
+    var n = l
     var arr: IntArray = IntArray(0)
-    arr[0] = i
+    var sgn: Boolean = n < 0
+    if(sgn) n = -n
+    var index : Int = 0
+    while(n > maxSimpleInt){
+        val dig : Int = (n % basicDivisor).toInt()
+        arr[index] = dig
+        n = n / basicDivisor
+        index++
+    }
+    arr[index] = n.toInt()
+
     return object : BasicInt {
-        override val value: IntArray = arr
+        override val number : IntArray = arr
+        override val sign : Boolean = sgn
     }
 }
+
+fun basicInt(s : String) : BasicInt {
+    // TODO: control w/ regex if s only has numbers
+    return basicInt(s.toLong())
+}
+
+fun basicInt(num : IntArray, sgn: Boolean = false) : BasicInt {
+    // TODO: check if num has desired format
+    return object : BasicInt {
+        override val number = num
+        override val sign = sgn
+    }
+}
+

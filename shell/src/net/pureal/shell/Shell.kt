@@ -10,12 +10,12 @@ class Shell(val screen: Screen) {
         val button = RectangleButton(vector(.5, .5), Colors.gray)
         button.content += {println("button clicked!")}
 
-        screen.relativePointerInput(button.element).click += {(location) ->
+        /*screen.relativePointerInput(button.element).click += {(location) ->
             val relativeLocation = screen.absoluteTransform(button.element)(location)
             if(button.element.shape.contains(relativeLocation)) {
                 button.content()
             }
-        }
+        }*/
 
         screen.show(object : Composed {
             override val changed: Observable<Unit> = observable<Unit>()
