@@ -5,7 +5,8 @@ import java.lang.Math.*
 import kotlin.math.*
 
 
-public trait BasicReal : Number, Comparable<BasicReal> {
+public trait BasicReal : Number {
+    /*********** CONVERSIONS **************/
     override fun toDouble() : Double = number.doubleValue() * exponentialFactor()
 
     override fun toFloat() : Float = number.floatValue() * exponentialFactor().toFloat()
@@ -19,21 +20,10 @@ public trait BasicReal : Number, Comparable<BasicReal> {
 
     fun toBigInteger() : BigInteger = number * BigInteger(exponentialFactor().toString())
 
-    override fun compareTo(other : BasicReal) : Int {
-        if(this.sign == 0) return -other.sign
-        if(this.sign != other.sign){
-            return this.sign-other.sign
-        }
-        if(compareExponentTo(other) != 0L) return compareExponentTo(other).toInt() * this.sign
-        return (this-other).number.compareTo(BigInteger.ZERO) * this.sign
-    }
-
+    /*********** COMPARATOR FUNCTIONS ***********/
     fun compareExponentTo(other : BasicReal) : Long {
         return this.exponent - other.exponent
     }
-
-    fun exponentialFactor() : Double = pow(10.0,exponent.toDouble())
-
 
     fun compareTo(other : Number) : Int {
         when (other) {
@@ -43,9 +33,22 @@ public trait BasicReal : Number, Comparable<BasicReal> {
             is Long -> return compareTo(basicReal(other))
             is Float -> return compareTo(basicReal(other))
             is Double -> return compareTo(basicReal(other))
+            is BasicReal -> {
+                if(this.sign == 0) return -other.sign
+                if(this.sign != other.sign){
+                    return this.sign-other.sign
+                }
+                if(compareExponentTo(other) != 0L) return compareExponentTo(other).toInt() * this.sign
+                return (this-other).number.compareTo(BigInteger.ZERO) * this.sign
+            }
             else -> throw IllegalArgumentException()
         }
     }
+
+    fun exponentialFactor() : Double = pow(10.0,exponent.toDouble())
+
+
+
 
     /********* BASIC OPERATIONS *********/
     fun plus(other : Number) : BasicReal {
@@ -153,7 +156,6 @@ fun basicReal(s : String) : BasicReal {
 
 
     // look if we have exponent
-    var len : Int = str.length
     var epos : Int = str.indexOf("E")
     var exp : Long = 0
     if(epos != -1){
@@ -161,13 +163,24 @@ fun basicReal(s : String) : BasicReal {
         exp = estr.toLong()
         str = str.substring(0,epos)
     }
-
-
     // now remove the "dot of the number"
-
+    epos = str.indexOf(".")
+    if(epos != -1){
+        exp -= (str.length - epos - 1) // reduce by number of characters after '.'
+        str = str.replaceAll("[\\.]","") // remove dot
+    }
+    // remove tailing zeros
+    while(str.last()=='0')
+    {
+        str = str.substring(0,str.length-1)
+        exp++
+    }
     val num : BigInteger = BigInteger(str)
 
-
+    return object : BasicReal {
+        override val number : BigInteger = num
+        override val exponent : Long = exp
+    }
 }
 
 fun basicReal(num : BigInteger, exp : Long = 0) : BasicReal = object : BasicReal {
@@ -189,3 +202,5 @@ fun basicReal(i : Int) : BasicReal = basicReal(i.toString())
 fun basicReal(s : Short) : BasicReal = basicInt(s.toString())
 fun basicReal(b : Byte) : BasicReal = basicInt(b.toString())
 
+fun BigInteger(i : Int) : BigInteger = BigInteger(i.toString())
+fun BigInteger(l : Long) : BigInteger = BigInteger(l.toString())

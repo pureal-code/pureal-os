@@ -1,7 +1,5 @@
 package net.pureal.traits
 
-import net.pureal.traits.math.*
-
 trait Matrix2 : Numbers {
     val a : Number; val b : Number
     val c : Number; val d : Number

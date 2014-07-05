@@ -1,7 +1,7 @@
 package net.pureal.traits.math
 
-import com.sun.javaws.exceptions.InvalidArgumentException
 import java.math.BigInteger
+import kotlin.math.*
 
 
 /** Basic Int:
@@ -14,7 +14,7 @@ public trait BasicInt : BasicReal {
 
     fun toBasicReal() : BasicReal = basicReal(this, 0)
 
-    override fun minus() : BasicInt = basicInt(number, !sign)
+    override fun minus() : BasicInt = basicInt(-number)
 
     override fun isInteger() : Boolean = true
 }
@@ -32,11 +32,7 @@ fun basicInt(s : String) : BasicInt = object : BasicInt {
     override val number : BigInteger = BigInteger(s)
 }
 
-fun basicInt(num : BigInteger, sgn: Boolean = false) : BasicInt {
-    // TODO: check if num has desired format
-    return object : BasicInt {
-        override val number = num
-        override val sign = sgn
-    }
+fun basicInt(num : BigInteger) : BasicInt = object : BasicInt {
+    override val number = num
 }
 
