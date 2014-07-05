@@ -24,7 +24,13 @@ public trait BasicReal {
     final fun toByte() : Byte = toLong().toByte()
     final fun toChar() : Char = toLong().toChar()
 
-    override fun toString() = "BasicReal(\"${number.toString()}E${exponent.toString()}\")"
+    override fun toString() : String {
+        val esgn : String = when {
+            exponent >= 0 -> "+"
+            else -> "-"
+        }
+        return "BasicReal(\"${number.toString()}E${esgn}${abs(exponent).toString()}\")"
+    }
 
     open fun toMathematicalString() : String {
         return toString() // TODO: do this later
@@ -94,7 +100,10 @@ public trait BasicReal {
             is Double -> return this - BasicReal(other)
             is Float -> return this - BasicReal(other)
             is BasicReal -> {
-                return this
+                val minexp = getLowestExponent(this, other)
+                val br1 = this.setToExponent(minexp)
+                val br2 = other.setToExponent(minexp)
+                return BasicReal(br1.number - br2.number, minexp)
             }
             else -> throw IllegalArgumentException()
         }

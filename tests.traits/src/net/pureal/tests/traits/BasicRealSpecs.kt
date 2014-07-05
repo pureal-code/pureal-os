@@ -77,6 +77,14 @@ public class BasicRealSpecs : Spek() {{
                 }
             }
         }
+
+        on("creating some strings and checking toString()'") {
+            array("299E+1", "501E-1", "-6E+20", "-101010101E-20").forEach {
+                it("should be the kotlin Code to create this \"${it}\" ") {
+                    shouldEqual("BasicReal(\"${it}\")", BasicReal(it).toString())
+                }
+            }
+        }
     }
     given("basicReals that are to be added") {
         on("adding 2 + 200") {
@@ -86,11 +94,27 @@ public class BasicRealSpecs : Spek() {{
                 shouldEqual(0L, res.exponent)
             }
         }
-        on("adding 15 + .2 + 560") {
-            val res = BasicReal("15") + BasicReal(".2") + BasicReal("560")
-            it("should be 575.2") {
-                shouldEqual(BigInteger(5752), res.number)
+        on("adding 15 + .02 + 560") {
+            val res = BasicReal("15") + BasicReal(".02") + BasicReal("560")
+            it("should be 575.02") {
+                shouldEqual(BigInteger(57502), res.number)
+                shouldEqual(-2L, res.exponent)
+            }
+        }
+        on("adding 25.4 + (-33)") {
+            val res = BasicReal(25.4) + BasicReal(-33)
+            it("should be -7.6") {
+                shouldEqual(BigInteger(-76), res.number)
                 shouldEqual(-1L, res.exponent)
+                shouldBeTrue(res.sign)
+            }
+        }
+        on("subtracting -10 with -3000") {
+            val res = BasicReal(-10) - BasicReal(-3000)
+            it("should be 299E+1") {
+                shouldEqual(BigInteger(299), res.number)
+                shouldEqual(+1L, res.exponent)
+                shouldBeFalse(res.sign)
             }
         }
     }
