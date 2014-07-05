@@ -1,7 +1,5 @@
 package net.pureal.traits
 
-import javax.naming.OperationNotSupportedException
-
 trait Matrix3 : Numbers {
     val a: Number; val b: Number; val c: Number
     val d: Number; val e: Number; val f: Number
