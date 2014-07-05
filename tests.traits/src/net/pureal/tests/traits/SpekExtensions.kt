@@ -4,7 +4,7 @@ import org.spek.*
 import net.pureal.traits.*
 import kotlin.test.*
 
-fun It.shouldThrow<E : Exception>(exceptionAssertion : (E) -> Unit = {}, action : () -> Unit) {
+public fun It.shouldThrow<E : Exception>(exceptionAssertion : (E) -> Unit = {}, action : () -> Unit) {
     try {
         action()
         throw AssertionError("No exception thrown.")
