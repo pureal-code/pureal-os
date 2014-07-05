@@ -5,34 +5,36 @@ import java.lang.Math.*
 import kotlin.math.*
 
 
-public trait BasicReal : Number {
+public trait BasicReal {
+    
+
     /*********** CONVERSIONS **************/
-    override fun toDouble() : Double = number.doubleValue() * exponentialFactor()
+    final fun toDouble() : Double = number.doubleValue() * exponentialFactor()
 
-    override fun toFloat() : Float = number.floatValue() * exponentialFactor().toFloat()
+    final fun toFloat() : Float = number.floatValue() * exponentialFactor().toFloat()
 
-    override fun toLong() : Long = number.longValue() * exponentialFactor().toLong()
+    final fun toLong() : Long = number.longValue() * exponentialFactor().toLong()
 
-    override fun toInt() : Int = toLong().toInt()
-    override fun toShort() : Short = toLong().toShort()
-    override fun toByte() : Byte = toLong().toByte()
-    override fun toChar() : Char = toLong().toChar()
+    final fun toInt() : Int = toLong().toInt()
+    final fun toShort() : Short = toLong().toShort()
+    final fun toByte() : Byte = toLong().toByte()
+    final fun toChar() : Char = toLong().toChar()
 
     fun toBigInteger() : BigInteger = number * BigInteger(exponentialFactor().toString())
 
     /*********** COMPARATOR FUNCTIONS ***********/
-    fun compareExponentTo(other : BasicReal) : Long {
+    open fun compareExponentTo(other : BasicReal) : Long {
         return this.exponent - other.exponent
     }
 
-    fun compareTo(other : Number) : Int {
+    open fun compareTo(other : Any?) : Int {
         when (other) {
-            is Byte -> return compareTo(basicReal(other))
-            is Short -> return compareTo(basicReal(other))
-            is Int -> return compareTo(basicReal(other))
-            is Long -> return compareTo(basicReal(other))
-            is Float -> return compareTo(basicReal(other))
-            is Double -> return compareTo(basicReal(other))
+            is Byte -> return compareTo(BasicReal(other))
+            is Short -> return compareTo(BasicReal(other))
+            is Int -> return compareTo(BasicReal(other))
+            is Long -> return compareTo(BasicReal(other))
+            is Float -> return compareTo(BasicReal(other))
+            is Double -> return compareTo(BasicReal(other))
             is BasicReal -> {
                 if(this.sign == 0) return -other.sign
                 if(this.sign != other.sign){
@@ -45,20 +47,20 @@ public trait BasicReal : Number {
         }
     }
 
-    fun exponentialFactor() : Double = pow(10.0,exponent.toDouble())
+    open fun exponentialFactor() : Double = pow(10.0,exponent.toDouble())
 
 
 
 
     /********* BASIC OPERATIONS *********/
-    fun plus(other : Number) : BasicReal {
+    open fun plus(other : Any?) : BasicReal {
         when (other) {
-            is Byte -> return this + basicInt(other)
-            is Short -> return this + basicInt(other)
-            is Int -> return this + basicInt(other)
-            is Long -> return this + basicInt(other)
-            is Double -> return this + basicReal(other)
-            is Float -> return this + basicReal(other)
+            is Byte -> return this + BasicInt(other)
+            is Short -> return this + BasicInt(other)
+            is Int -> return this + BasicInt(other)
+            is Long -> return this + BasicInt(other)
+            is Double -> return this + BasicReal(other)
+            is Float -> return this + BasicReal(other)
             is BasicReal -> {
                 return this
             }
@@ -66,14 +68,14 @@ public trait BasicReal : Number {
         }
     }
 
-    fun minus(other : Number) : BasicReal {
+    open fun minus(other : Any?) : BasicReal {
         when (other) {
-            is Byte -> return this - basicInt(other)
-            is Short -> return this - basicInt(other)
-            is Int -> return this - basicInt(other)
-            is Long -> return this - basicInt(other)
-            is Double -> return this - basicReal(other)
-            is Float -> return this - basicReal(other)
+            is Byte -> return this - BasicInt(other)
+            is Short -> return this - BasicInt(other)
+            is Int -> return this - BasicInt(other)
+            is Long -> return this - BasicInt(other)
+            is Double -> return this - BasicReal(other)
+            is Float -> return this - BasicReal(other)
             is BasicReal -> {
                 return this
             }
@@ -81,14 +83,14 @@ public trait BasicReal : Number {
         }
     }
 
-    fun times(other : Number) : BasicReal {
+    open fun times(other : Any?) : BasicReal {
         when (other) {
-            is Byte -> return this * basicInt(other)
-            is Short -> return this * basicInt(other)
-            is Int -> return this * basicInt(other)
-            is Long -> return this * basicInt(other)
-            is Double -> return this * basicReal(other)
-            is Float -> return this * basicReal(other)
+            is Byte -> return this * BasicInt(other)
+            is Short -> return this * BasicInt(other)
+            is Int -> return this * BasicInt(other)
+            is Long -> return this * BasicInt(other)
+            is Double -> return this * BasicReal(other)
+            is Float -> return this * BasicReal(other)
             is BasicReal -> {
                 return this
             }
@@ -96,14 +98,14 @@ public trait BasicReal : Number {
         }
     }
 
-    fun div(other : Number) : BasicReal {
+    open fun div(other : Any?) : BasicReal {
         when (other) {
-            is Byte -> return this / basicInt(other)
-            is Short -> return this / basicInt(other)
-            is Int -> return this / basicInt(other)
-            is Long -> return this / basicInt(other)
-            is Double -> return this / basicReal(other)
-            is Float -> return this / basicReal(other)
+            is Byte -> return this / BasicInt(other)
+            is Short -> return this / BasicInt(other)
+            is Int -> return this / BasicInt(other)
+            is Long -> return this / BasicInt(other)
+            is Double -> return this / BasicReal(other)
+            is Float -> return this / BasicReal(other)
             is BasicReal -> {
                 return this
             }
@@ -117,13 +119,13 @@ public trait BasicReal : Number {
      * number stores a big Integer ...
      * and exponent is the 10-exponent - is Long as we do not expect exponents near 2^63
      */
-    val exponent : Long
     val number : BigInteger
+    val exponent : Long
 
-    val sign : Int get() = number.signum()
+    final val sign : Int get() = number.signum()
 
 
-    fun minus() : BasicReal = basicReal(-number, exponent)
+    open fun minus() : BasicReal = BasicReal(-number, exponent)
 
     override fun equals(other : Any?) : Boolean
     {
@@ -135,19 +137,19 @@ public trait BasicReal : Number {
         }
     }
 
-    fun isInteger() : Boolean = exponent >= 0
+    open fun isInteger() : Boolean = exponent >= 0
 
-    fun signum() : Int = number.signum()
+    final fun signum() : Int = number.signum()
 
-    fun setToExponent(exp : Long) : BasicReal {
+    final fun setToExponent(exp : Long) : BasicReal {
         if (exp == exponent) return this
-        return basicReal(number / BigInteger(pow(10.0,(exp-exponent).toDouble()).toString()))
+        return BasicReal(number / BigInteger(pow(10.0,(exp-exponent).toDouble()).toString()))
     }
 }
 
 
 
-fun basicReal(s : String) : BasicReal {
+fun BasicReal(s : String) : BasicReal {
     var str : String = s.capitalize()
     var estr : String
     // with regex - remove illegal characters and whitespace
@@ -177,30 +179,27 @@ fun basicReal(s : String) : BasicReal {
     }
     val num : BigInteger = BigInteger(str)
 
-    return object : BasicReal {
-        override val number : BigInteger = num
-        override val exponent : Long = exp
-    }
+    return BasicReal (num, exp)
 }
 
-fun basicReal(num : BigInteger, exp : Long = 0) : BasicReal = object : BasicReal {
+fun BasicReal(num : BigInteger, exp : Long) = object : BasicReal {
     override val number : BigInteger = num
     override val exponent : Long = exp
 }
 
-fun basicReal(bi : BasicInt, exp : Long) : BasicReal = object : BasicReal {
-    override val number : BigInteger = bi.number
-    override val exponent : Long = exp
-}
+fun BasicReal(num : BigInteger) : BasicReal = BasicReal (num, 0)
+fun BasicReal(bi : BasicInt, exp : Long) : BasicReal = BasicReal(bi.number, exp)
 
 
 
-fun basicReal(d : Double) : BasicReal = basicReal(d.toString())
-fun basicReal(f : Float) : BasicReal = basicReal(f.toString())
-fun basicReal(l : Long) : BasicReal = basicReal(l.toString())
-fun basicReal(i : Int) : BasicReal = basicReal(i.toString())
-fun basicReal(s : Short) : BasicReal = basicInt(s.toString())
-fun basicReal(b : Byte) : BasicReal = basicInt(b.toString())
+fun BasicReal(d : Double) : BasicReal = BasicReal(d.toString())
+fun BasicReal(f : Float) : BasicReal = BasicReal(f.toString())
+fun BasicReal(l : Long) : BasicReal = BasicReal(l.toString())
+fun BasicReal(i : Int) : BasicReal = BasicReal(i.toString())
+fun BasicReal(s : Short) : BasicReal = BasicInt(s.toString())
+fun BasicReal(b : Byte) : BasicReal = BasicInt(b.toString())
 
+/*
 fun BigInteger(i : Int) : BigInteger = BigInteger(i.toString())
 fun BigInteger(l : Long) : BigInteger = BigInteger(l.toString())
+*/

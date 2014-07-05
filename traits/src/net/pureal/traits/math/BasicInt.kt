@@ -10,29 +10,30 @@ import kotlin.math.*
  */
 public trait BasicInt : BasicReal {
 
-    override val exponent : Long get() = 0
 
-    fun toBasicReal() : BasicReal = basicReal(this, 0)
+    fun toBasicReal() : BasicReal = BasicReal(this, 0)
 
-    override fun minus() : BasicInt = basicInt(-number)
+    override fun minus() : BasicInt = BasicInt(-number)
 
     override fun isInteger() : Boolean = true
+
+    final override val exponent : Long get() = 0
+
+    override fun exponentialFactor() : Double = 0.toDouble()
 }
 
-// It must still be evaluated if the signed Int makes problems and if wae can use an unsigned Int or if we need w/e
-fun basicInt(i : Int) : BasicInt = basicInt(i.toString())
-
-fun basicInt(s : Short) : BasicInt = basicInt(s.toString())
-
-fun basicInt(b : Byte) : BasicInt = basicInt(b.toString())
-
-fun basicInt(l : Long) : BasicInt = basicInt(l.toString())
-
-fun basicInt(s : String) : BasicInt = object : BasicInt {
-    override val number : BigInteger = BigInteger(s)
+fun BasicInt(num : BigInteger) = object : BasicInt {
+    override val number : BigInteger = num
 }
 
-fun basicInt(num : BigInteger) : BasicInt = object : BasicInt {
-    override val number = num
-}
+fun BasicInt(i : Int) : BasicInt = BasicInt(i.toString())
+
+fun BasicInt(s : Short) : BasicInt = BasicInt(s.toString())
+
+fun BasicInt(b : Byte) : BasicInt = BasicInt(b.toString())
+
+fun BasicInt(l : Long) : BasicInt = BasicInt(l.toString())
+
+fun BasicInt(s : String) : BasicInt = BasicInt(BigInteger(s))
+
 
