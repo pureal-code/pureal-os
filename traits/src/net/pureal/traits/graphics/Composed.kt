@@ -11,7 +11,7 @@ trait Composed : Element {
     val removed : Observable<Element>
 }
 
-fun composed(elements : Set<Element>, transform : Transform2) = object : Composed {
+fun composed(elements : Set<Element>, transform : Transform2 = Transforms2.identity) = object : Composed {
     override val shape = concatenatedShape(elements map {it.shape})
     override val elements = elements
     override val transform = transform

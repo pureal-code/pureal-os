@@ -5,7 +5,7 @@ import net.pureal.traits.interaction.*
 import net.pureal.traits.math.*
 
 trait Screen {
-    fun show(content : Composed)
+    fun show(content : Element)
     val size : Vector2
 
     fun absoluteTransform(element : Element) : Transform2

@@ -23,5 +23,3 @@ fun observable<T>(vararg observables : Observable<T>) = object : Observable<T> {
     }
     override val observers = hashSetOf<(T) -> Unit>()
 }
-
-fun observable() = observable<Unit>()

@@ -2,11 +2,13 @@ package net.pureal.shell
 
 import org.spek.*
 import net.pureal.traits.*
+import net.pureal.traits.math.*
 import net.pureal.traits.graphics.*
+import net.pureal.traits.interaction.*
 
-class RectangleButtonSpecs : Spek() {{
-    given("a rectangle button") {
-        val b = RectangleButton(size=vector(0.04, 0.01), color=Colors.black)
+class ButtonSpecs : Spek() {{
+    given("a button") {
+        val b = button(coloredElement(singleColored(rectangle(size=vector(0.04, 0.01)), color=Colors.black)))
 
         enum class State {neverClicked; clicked}
 

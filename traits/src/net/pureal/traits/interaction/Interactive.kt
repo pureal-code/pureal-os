@@ -8,6 +8,7 @@ trait Interactive<T> {
 
 trait Visual<T> : Interactive<T> {
     val element : Element
+    fun addPointerInput(pointerInput : PointerInput) {}
 }
 
 fun visual<T>(content : T, element : Element) = object : Visual<T> {
