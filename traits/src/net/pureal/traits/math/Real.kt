@@ -10,10 +10,9 @@ public trait Real {
     val isApproximate : Boolean get() = false
     val isPrimitive : Boolean get() = false
 
-    override fun toString(): String
 
     fun simplify() : Real {
-        // TODO: return sympy.simplify(toString()) - is to be inherited by all sub-traits in the end
+        // TODO: return sympy.simplify(toSympyString()) - is to be inherited by all sub-traits in the end
         return this
     }
 

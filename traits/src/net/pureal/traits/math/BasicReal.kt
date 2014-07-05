@@ -153,7 +153,7 @@ fun BasicReal(s : String) : BasicReal {
     var str : String = s.capitalize()
     var estr : String
     // with regex - remove illegal characters and whitespace
-    str = str.replaceAll("[^0-9\\.\\-\\+E]","")
+    if(str.matches("[^0-9\\.\\-\\+E\\s]")) throw IllegalArgumentException("There are forbidden characters in the expression")
 
 
 
