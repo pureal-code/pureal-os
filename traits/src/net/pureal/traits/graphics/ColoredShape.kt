@@ -15,5 +15,6 @@ trait SingleColoredShape : ColoredShape {
 }
 
 fun singleColored(shape : Shape, color : Color) = object : SingleColoredShape {
-    override fun colorAt(location: Vector2) = if(shape.contains(location)) color else null
+    override val shape = shape
+    override val color = color
 }
