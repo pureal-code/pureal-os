@@ -4,7 +4,7 @@ import net.pureal.traits.*
 import net.pureal.traits.graphics.*
 import net.pureal.traits.math.*
 
-trait Button : Visual<Trigger<Unit>>, ColoredElement {
+trait Button : Clickable<Trigger<Unit>> {
     override fun onClick(vector2 : Vector2) = content()
 }
 
@@ -23,5 +23,4 @@ fun button(
     {
         content += {onClick()}
     }
-
 }
