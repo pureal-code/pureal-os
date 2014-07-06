@@ -73,4 +73,48 @@ class FillSpecs : Spek() {{
             }
         }
     }
+
+    given("a linear gradient fill from black to white stop 0 to 2") {
+        val x = Fills.radialGradient(sortedMapOf(Pair<Number, Color>(0, Colors.black), Pair<Number, Color>(2, Colors.white)))
+
+        on("getting the color at the origin") {
+            val c = x.colorAt(vector(0,0))
+
+            it("should be black") {
+                shouldEqual(Colors.black, c)
+            }
+        }
+
+        on("getting the color at distance 1 from the origin in x-direction") {
+            val c = x.colorAt(vector(1,0))
+
+            it("should be gray (50%)") {
+                shouldEqual(Colors.gray(.5), c)
+            }
+        }
+
+        on("getting the color at distance 1 from the origin in y-direction") {
+            val c = x.colorAt(vector(0,1))
+
+            it("should be gray (50%)") {
+                shouldEqual(Colors.gray(.5), c)
+            }
+        }
+
+        on("getting the color at distance 2 from the origin in counter-y-direction") {
+            val c = x.colorAt(vector(0,-2))
+
+            it("should be white") {
+                shouldEqual(Colors.white, c)
+            }
+        }
+
+        on("getting the color at a distance greater than 2 from the origin") {
+            val c = x.colorAt(vector(24,-2))
+
+            it("should be white") {
+                shouldEqual(Colors.white, c)
+            }
+        }
+    }
 }}

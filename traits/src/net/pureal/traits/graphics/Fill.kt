@@ -21,6 +21,10 @@ object Fills {
     fun linearGradient(stops : SortedMap<out Number, Color>) = object : LinearGradient {
         override val stops = stops
     }
+
+    fun radialGradient(stops : SortedMap<out Number, Color>) = object : RadialGradient {
+        override val stops = stops
+    }
 }
 
 trait TransformedFill : Fill {
@@ -41,28 +45,29 @@ trait SolidFill : Fill {
 
 trait Gradient : Fill {
     val stops : SortedMap<out Number, Color>
-}
-
-trait LinearGradient : Gradient {
-    override fun colorAt(location : Vector2) : Color {
+    protected fun colorAt(location : Number) : Color {
+        val l = location.toDouble()
         val entries = stops.entrySet()
-        val locationOnGradient = location.x.toDouble()
 
-        val equalStops = entries filter {it.key.toDouble() == locationOnGradient}
+        val equalStops = entries filter {it.key.toDouble() == l}
         if (!equalStops.empty) return equalStops.single().value
 
-        val nextBiggerStop = (entries filter {it.key.toDouble() > locationOnGradient}).firstOrNull()
-        val nextSmallerStop = (entries filter {it.key.toDouble() < locationOnGradient}).lastOrNull()
+        val nextBiggerStop = (entries filter {it.key.toDouble() > l}).firstOrNull()
+        val nextSmallerStop = (entries filter {it.key.toDouble() < l}).lastOrNull()
 
         if (nextBiggerStop == null && nextSmallerStop == null) return Colors.transparent
         if (nextBiggerStop == null) return nextSmallerStop!!.value
         if (nextSmallerStop == null) return nextBiggerStop.value
 
-        val portion = (locationOnGradient - nextSmallerStop.key.toDouble()) / (nextBiggerStop.key.toDouble() - nextSmallerStop.key.toDouble())
+        val portion = (l - nextSmallerStop.key.toDouble()) / (nextBiggerStop.key.toDouble() - nextSmallerStop.key.toDouble())
         return nextSmallerStop.value * (1 - portion) + nextBiggerStop.value * portion
     }
-
-    private fun mixedColor()
 }
 
-trait RadialGradient : Gradient
+trait LinearGradient : Gradient {
+    override fun colorAt(location : Vector2) = super<Gradient>.colorAt(location.x.toDouble())
+}
+
+trait RadialGradient : Gradient {
+    override fun colorAt(location : Vector2) = super<Gradient>.colorAt(location.length)
+}
