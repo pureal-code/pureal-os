@@ -7,7 +7,8 @@ import kotlin.math.*
 
 public trait BasicReal {
     class object {
-        var accuracy : Int = 100
+        var accuracy : Int = 50
+        var allowInaccurateDivision = false
         final fun getLowestExponent(o1 : BasicReal, o2: BasicReal) : Long = min(o1.exponent,o2.exponent)
         final fun exponentialFactor(exp : Long) : BigInteger = BigInteger.TEN.pow(abs(exp.toInt()))
     }
@@ -163,7 +164,13 @@ public trait BasicReal {
             is Double -> return this / BasicReal(other)
             is Float -> return this / BasicReal(other)
             is BasicReal -> {
-                return this
+                if(other.number == BigInteger.ZERO) throw ArithmeticException("A Division by Zero is not allowed")
+                val targetExp = exponent-other.exponent
+                val br1 = setToExponent(exponent-accuracy)
+                val c = br1.number.divideAndRemainder(other.number)
+                if (!allowInaccurateDivision && c[1] != BigInteger.ZERO)
+                    throw ArithmeticException("Accurate Division is not possible")
+                return BasicReal(c[0], targetExp-accuracy).minimize()
             }
             else -> throw IllegalArgumentException()
         }

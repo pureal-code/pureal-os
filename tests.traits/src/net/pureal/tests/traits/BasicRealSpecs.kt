@@ -151,6 +151,39 @@ public class BasicRealSpecs : Spek() {{
             }
         }
     }
+    given("some basic Reals to divide") {
+        on("dividing 2 by -5") {
+            val res = BasicReal(2) / BasicReal(-5)
+            it("should be -4E-1") {
+                shouldEqual(BigInteger(-4), res.number)
+                shouldEqual(-1L, res.exponent)
+            }
+        }
+        on("dividing 160 by .1") {
+            val res = BasicReal("160") / BasicReal(".1")
+            it("should be 16E+2") {
+                shouldEqual(BigInteger(16), res.number)
+                shouldEqual(2L, res.exponent)
+            }
+        }
+        on("dividing 63 by 9000") {
+            val res = BasicReal(63) / BasicReal(9000)
+            it("should be 7E-3") {
+                shouldEqual(BigInteger(7), res.number)
+                shouldEqual(-3L, res.exponent)
+            }
+        }
+        on("dividing 1001 by 0") {
+            it("should throw an Exception 'Division by 0'") {
+                shouldThrow<ArithmeticException> { BasicReal(1001) / BasicReal(0) }
+            }
+        }
+        on("dividing 2 by 3") {
+            it("should throw an Exception 'Inaccurate Division'") {
+                shouldThrow<ArithmeticException> { BasicReal(2) / BasicReal(3) }
+            }
+        }
+    }
     given("some basic Reals that are to be minimized")
     {
         on("minimizing 10000E+0") {
@@ -175,6 +208,7 @@ public class BasicRealSpecs : Spek() {{
             }
         }
     }
+
 
 
 }}
