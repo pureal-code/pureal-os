@@ -85,8 +85,16 @@ public class BasicRealSpecs : Spek() {{
                 }
             }
         }
+
+        on("creating some strings and checking toMathematicalString()'") {
+            array("2990", "1.05", "-6E+20", "-1.01010101E-20", "-120030", ".022", "-.44","0").forEach {
+                it("should be a mathematical String \"${it}\" ") {
+                    shouldEqual("${it}", BasicReal(it).toMathematicalString())
+                }
+            }
+        }
     }
-    given("basicReals that are to be added") {
+    given("basicReals that are to be added / substracted") {
         on("adding 2 + 200") {
             val res = BasicReal(2) + BasicReal(200)
             it("should be 202") {
@@ -115,6 +123,34 @@ public class BasicRealSpecs : Spek() {{
                 shouldEqual(BigInteger(299), res.number)
                 shouldEqual(+1L, res.exponent)
                 shouldBeFalse(res.sign)
+            }
+        }
+    }
+    given("some basic Reals that are to be multiplied")
+    {
+        // TODO: Nothing here yet
+    }
+    given("some basic Reals that are to be minimized")
+    {
+        on("minimizing 10000E+0") {
+            val b = BasicReal(BigInteger(10000), 0).minimize()
+            it("should be 1E+4") {
+                shouldEqual(BigInteger(1), b.number)
+                shouldEqual(4L, b.exponent)
+            }
+        }
+        on("minimizing 0E+4") {
+            val b = BasicReal(BigInteger(0), 4).minimize()
+            it("should be 0E+0") {
+                shouldEqual(BigInteger(0), b.number)
+                shouldEqual(0L, b.exponent)
+            }
+        }
+        on("minimizing -1.3200E-1") {
+            val b = BasicReal(BigInteger(-13200), -5).minimize()
+            it("should be -132E-3") {
+                shouldEqual(BigInteger(-132), b.number)
+                shouldEqual(-3L, b.exponent)
             }
         }
     }

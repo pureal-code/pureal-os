@@ -25,6 +25,8 @@ public trait BasicReal {
     final fun toChar() : Char = toLong().toChar()
 
     override fun toString() : String {
+        if(number == BigInteger.ZERO) return "BasicReal(0)"
+        if(exponent == 0L) return "BasicReal(\"${number.toString()}\")"
         val esgn : String = when {
             exponent >= 0 -> "+"
             else -> "-"
@@ -33,7 +35,32 @@ public trait BasicReal {
     }
 
     open fun toMathematicalString() : String {
-        return toString() // TODO: do this later
+        if(number == BigInteger.ZERO) return "0"
+        var s : String = number.toString()
+        val s_begin = when {
+            s.first() == '-' -> 1
+            else -> 0
+        }
+        if(exponent+s.length in -2..7) {
+            if(exponent >= 0) return (number*exponentialFactor()).toString()
+            var dotpos : Int = s.length + exponent.toInt()
+            while(dotpos < s_begin) {
+                dotpos++
+                s = s.substring(0, s_begin) + "0" + s.substring(s_begin, s.length)
+            }
+            return s.substring(0, dotpos)  + "." + s.substring(dotpos, s.length)
+        }
+        var dotpos = 1 + s_begin
+        var exp = exponent + s.length - dotpos
+        s = when {
+            dotpos != s.length -> s.substring(0, dotpos) + "." + s.substring(dotpos, s.length)
+            else -> s
+        }
+        val esgn : String = when {
+            exp >= 0 -> "+"
+            else -> "-"
+        }
+        return s + "E" + esgn + abs(exp).toString()
     }
 
     final fun toBigInteger() : BigInteger {
@@ -140,8 +167,26 @@ public trait BasicReal {
     }
 
     open fun minimize() : BasicReal {
-        val stepSize : Int = floor(sqrt(accuracy.toDouble())).toInt()
-        return this // TODO:
+        if(this.number == BigInteger.ZERO) return BasicReal(this.number, 0)
+        var stepSize : Int = accuracy / 4
+        var powers : Long = 0
+        var tmp : BigInteger = this.number
+        var done : Boolean = false
+        do {
+            var p = BigInteger.TEN.pow(stepSize)
+            var c = array(tmp, BigInteger.ZERO)
+            while(c[1] == BigInteger.ZERO){
+                tmp = c[0]
+                powers += stepSize
+                c = tmp.divideAndRemainder(p)
+            }
+            powers -= stepSize
+            if(stepSize == 1) done = true
+            else {
+                stepSize /= 2
+            }
+        } while (!done)
+        return BasicReal(tmp, exponent + powers)
     }
 
     /**
@@ -158,7 +203,7 @@ public trait BasicReal {
 
     open fun minus() : BasicReal = BasicReal(-number, exponent)
 
-    open override fun equals(other : Any?) : Boolean
+    override fun equals(other : Any?) : Boolean
     {
         when (other) {
             null -> return false
@@ -240,9 +285,10 @@ fun BasicReal(bi : BasicInt, exp : Long = 0) : BasicReal = BasicReal(bi.number, 
 
 fun BasicReal(d : Double) : BasicReal = BasicReal(d.toString())
 fun BasicReal(f : Float) : BasicReal = BasicReal(f.toString())
-fun BasicReal(l : Long) : BasicReal = BasicReal(l.toString())
-fun BasicReal(i : Int) : BasicReal = BasicReal(i.toString())
-fun BasicReal(s : Short) : BasicReal = BasicInt(s.toString())
-fun BasicReal(b : Byte) : BasicReal = BasicInt(b.toString())
+
+fun BasicReal(l : Long) : BasicReal = BasicReal(BigInteger(l), 0).minimize()
+fun BasicReal(i : Int) : BasicReal = BasicReal(i.toLong())
+fun BasicReal(s : Short) : BasicReal = BasicInt(s.toLong())
+fun BasicReal(b : Byte) : BasicReal = BasicInt(b.toLong())
 
 
