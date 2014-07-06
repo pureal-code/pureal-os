@@ -128,7 +128,28 @@ public class BasicRealSpecs : Spek() {{
     }
     given("some basic Reals that are to be multiplied")
     {
-        // TODO: Nothing here yet
+        on("multiplying .2 with -.03")
+        {
+            val res = BasicReal(".2") * BasicReal("-.03")
+            it("should be -6E-3") {
+                shouldEqual(BigInteger(-6), res.number)
+                shouldEqual(-3L, res.exponent)
+            }
+        }
+        on("multiplying 2.4E+7 with 1.1E+4") {
+            val res = BasicReal("2.4E+7") * BasicReal("1.1E+4")
+            it("should be 2.64E+11") {
+                shouldEqual(BigInteger(264), res.number)
+                shouldEqual(+9L, res.exponent)
+            }
+        }
+        on("multiplying 3001 with 0") {
+            val res = BasicReal(3001) * BasicReal(0)
+            it("should be 0E+0") {
+                shouldEqual(BigInteger(0), res.number)
+                shouldEqual(0L, res.exponent)
+            }
+        }
     }
     given("some basic Reals that are to be minimized")
     {

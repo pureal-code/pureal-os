@@ -145,7 +145,10 @@ public trait BasicReal {
             is Double -> return this * BasicReal(other)
             is Float -> return this * BasicReal(other)
             is BasicReal -> {
-                return this
+                return BasicReal(
+                        this.number * other.number,
+                        this.exponent + other.exponent
+                ).minimize()
             }
             else -> throw IllegalArgumentException()
         }
