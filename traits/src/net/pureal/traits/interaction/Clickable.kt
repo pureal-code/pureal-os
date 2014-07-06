@@ -1,12 +1,8 @@
 package net.pureal.traits.interaction
 
-import net.pureal.traits.graphics.Element
-import net.pureal.traits.Vector2
-import net.pureal.traits.Transform2
-import net.pureal.traits.Transforms2
-import net.pureal.traits.math.Shape
-import net.pureal.traits.Observable
-import net.pureal.traits.observable
+import net.pureal.traits.graphics.*
+import net.pureal.traits.math.*
+import net.pureal.traits.*
 
 trait Clickable<T> : Element<T> {
     fun onClick(location : Vector2) {}

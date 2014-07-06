@@ -1,23 +1,68 @@
 package net.pureal.traits.graphics
 
 import net.pureal.traits.*
+import java.util.SortedMap
 
-trait Fill
+trait Fill {
+    fun colorAt(location : Vector2) : Color
+    fun transform(transform : Transform2) : TransformedFill = object : TransformedFill {
+        override val original = this@Fill
+        override val transform = transform
+    }
+}
 
-trait InvisibleFill : Fill
+object Fills {
+    fun solid(color : Color) = object : SolidFill {
+        override val color = color
+    }
+
+    val invisible = object : InvisibleFill {}
+
+    fun linearGradient(stops : SortedMap<out Number, Color>) = object : LinearGradient {
+        override val stops = stops
+    }
+}
+
+trait TransformedFill : Fill {
+    val original : Fill
+    val transform : Transform2
+    private val inverse : Transform2 get() = transform.inverse()
+    override fun colorAt(location: Vector2) : Color = original.colorAt(inverse(location))
+}
+
+trait InvisibleFill : SolidFill {
+    override val color : Color get() = Colors.transparent
+}
 
 trait SolidFill : Fill {
     val color : Color
+    override fun colorAt(location : Vector2) = color
 }
 
 trait Gradient : Fill {
-    val stops : Map<out Number, Color>
-    val transform: Transform2
+    val stops : SortedMap<out Number, Color>
 }
 
-trait LinearGradient : Gradient
+trait LinearGradient : Gradient {
+    override fun colorAt(location : Vector2) : Color {
+        val entries = stops.entrySet()
+        val locationOnGradient = location.x.toDouble()
+
+        val equalStops = entries filter {it.key.toDouble() == locationOnGradient}
+        if (!equalStops.empty) return equalStops.single().value
+
+        val nextBiggerStop = (entries filter {it.key.toDouble() > locationOnGradient}).firstOrNull()
+        val nextSmallerStop = (entries filter {it.key.toDouble() < locationOnGradient}).lastOrNull()
+
+        if (nextBiggerStop == null && nextSmallerStop == null) return Colors.transparent
+        if (nextBiggerStop == null) return nextSmallerStop!!.value
+        if (nextSmallerStop == null) return nextBiggerStop.value
+
+        val portion = (locationOnGradient - nextSmallerStop.key.toDouble()) / (nextBiggerStop.key.toDouble() - nextSmallerStop.key.toDouble())
+        return nextSmallerStop.value * (1 - portion) + nextBiggerStop.value * portion
+    }
+
+    private fun mixedColor()
+}
+
 trait RadialGradient : Gradient
-
-fun solidFill(color : Color) = object : SolidFill {
-    override val color: Color = color
-}

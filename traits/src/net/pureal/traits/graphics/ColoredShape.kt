@@ -7,3 +7,7 @@ trait ColoredShape : Shape {
     override fun contains(location : Vector2) = colorAt(location) != null
     fun colorAt(location : Vector2) : Color?
 }
+
+fun coloredShape(shape : Shape, fill : Fill) = object : ColoredShape {
+    override fun colorAt(location: Vector2) = if(shape.contains(location)) fill.colorAt(location) else null
+}
