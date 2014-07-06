@@ -9,6 +9,7 @@ public trait Symbol : Real {
     val unit : String? // TODO: Create a dedicated Unit Type
 
     override fun toString() = name
+    override fun toMathematicalString() = name
 
     override val isPrimitive : Boolean get() = isKnown
 

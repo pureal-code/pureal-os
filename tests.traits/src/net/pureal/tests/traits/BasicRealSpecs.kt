@@ -85,8 +85,16 @@ public class BasicRealSpecs : Spek() {{
                 }
             }
         }
+
+        on("creating some strings and checking toMathematicalString()'") {
+            array("2990", "1.05", "-6E+20", "-1.01010101E-20", "-120030", ".022", "-.44","0").forEach {
+                it("should be a mathematical String \"${it}\" ") {
+                    shouldEqual("${it}", BasicReal(it).toMathematicalString())
+                }
+            }
+        }
     }
-    given("basicReals that are to be added") {
+    given("basicReals that are to be added / substracted") {
         on("adding 2 + 200") {
             val res = BasicReal(2) + BasicReal(200)
             it("should be 202") {
@@ -118,6 +126,107 @@ public class BasicRealSpecs : Spek() {{
             }
         }
     }
+    given("some basic Reals that are to be multiplied")
+    {
+        on("multiplying .2 with -.03")
+        {
+            val res = BasicReal(".2") * BasicReal("-.03")
+            it("should be -6E-3") {
+                shouldEqual(BigInteger(-6), res.number)
+                shouldEqual(-3L, res.exponent)
+            }
+        }
+        on("multiplying 2.4E+7 with 1.1E+4") {
+            val res = BasicReal("2.4E+7") * BasicReal("1.1E+4")
+            it("should be 2.64E+11") {
+                shouldEqual(BigInteger(264), res.number)
+                shouldEqual(+9L, res.exponent)
+            }
+        }
+        on("multiplying 3001 with 0") {
+            val res = BasicReal(3001) * BasicReal(0)
+            it("should be 0E+0") {
+                shouldEqual(BigInteger(0), res.number)
+                shouldEqual(0L, res.exponent)
+            }
+        }
+    }
+    given("some basic Reals to divide") {
+        on("dividing 2 by -5") {
+            val res = BasicReal(2) / BasicReal(-5)
+            it("should be -4E-1") {
+                shouldEqual(BigInteger(-4), res.number)
+                shouldEqual(-1L, res.exponent)
+            }
+        }
+        on("dividing 160 by .1") {
+            val res = BasicReal("160") / BasicReal(".1")
+            it("should be 16E+2") {
+                shouldEqual(BigInteger(16), res.number)
+                shouldEqual(2L, res.exponent)
+            }
+        }
+        on("dividing 63 by 9000") {
+            val res = BasicReal(63) / BasicReal(9000)
+            it("should be 7E-3") {
+                shouldEqual(BigInteger(7), res.number)
+                shouldEqual(-3L, res.exponent)
+            }
+        }
+        on("dividing 1001 by 0") {
+            it("should throw an Exception 'Division by 0'") {
+                shouldThrow<ArithmeticException> { BasicReal(1001) / BasicReal(0) }
+            }
+        }
+        on("dividing 2 by 3") {
+            it("should throw an Exception 'Inaccurate Division'") {
+                shouldThrow<RuntimeException> { BasicReal(2) / BasicReal(3) }
+            }
+        }
+    }
+    given("some basic Reals that are to be minimized")
+    {
+        on("minimizing 10000E+0") {
+            val b = BasicReal(BigInteger(10000), 0).minimize()
+            it("should be 1E+4") {
+                shouldEqual(BigInteger(1), b.number)
+                shouldEqual(4L, b.exponent)
+            }
+        }
+        on("minimizing 0E+4") {
+            val b = BasicReal(BigInteger(0), 4).minimize()
+            it("should be 0E+0") {
+                shouldEqual(BigInteger(0), b.number)
+                shouldEqual(0L, b.exponent)
+            }
+        }
+        on("minimizing -1.3200E-1") {
+            val b = BasicReal(BigInteger(-13200), -5).minimize()
+            it("should be -132E-3") {
+                shouldEqual(BigInteger(-132), b.number)
+                shouldEqual(-3L, b.exponent)
+            }
+        }
+    }
+    given("basic Reals for comparison test")
+    {
+        on("testing if 10 == 10") {
+            it("should be true") {
+                shouldBeTrue(BasicReal(10).equals(BasicReal(10)))
+            }
+        }
+        on("testing if -1 < +1") {
+            it("should be true") {
+                shouldBeTrue(BasicReal(-1) < BasicReal(+1))
+            }
+        }
+        on("testing if -4 < -2") {
+            it("should be true") {
+                shouldBeTrue(BasicReal(-4) < BasicReal(-2))
+            }
+        }
+    }
+
 
 
 }}

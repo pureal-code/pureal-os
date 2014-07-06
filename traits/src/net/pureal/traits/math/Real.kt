@@ -12,12 +12,15 @@ public trait Real {
 
 
     fun simplify() : Real {
-        // TODO: return sympy.simplify(toSympyString()) - is to be inherited by all sub-traits in the end
+        // TODO: return sympy.simplify(toMathematicalString()) - is to be inherited by all sub-traits in the end
         return this
     }
 
+    fun toMathematicalString() : String
+
     fun approximate(accuracy : Int = 50) : Real = this
 
+    fun getEncapsulatedMathString(outerPriority : Int) : String = toMathematicalString()
     fun getEncapsulatedString(outerPriority : Int) : String = toString()
 
     fun getPrimitiveValue() : Number = approximate().Number()
