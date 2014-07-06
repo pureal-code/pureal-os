@@ -25,22 +25,22 @@ public class BasicRealSpecs : Spek() {{
             }
         }
         on("creating a basic Real of '-0' and '000'") {
-            val str1 = "000"
-            val str2 = "-0"
-            val br1 = BasicReal(str1)
-            val br2 = BasicReal(str2)
-            it("should be 0") {
-                shouldEqual(0L,br1.exponent)
-                shouldEqual(BigInteger(0),br1.number)
-                shouldEqual(0L,br2.exponent)
-                shouldEqual(BigInteger(0),br2.number)
+                val str1 = "000"
+                val str2 = "-0"
+                val br1 = BasicReal(str1)
+                val br2 = BasicReal(str2)
+                it("should be 0") {
+                    shouldEqual(0L,br1.exponent)
+                    shouldEqual(BigInteger(0),br1.number)
+                    shouldEqual(0L,br2.exponent)
+                    shouldEqual(BigInteger(0),br2.number)
+                }
             }
-        }
-        on("creating a basic Real of '-001010'") {
-            val br = BasicReal("-001010")
-            it("should be -101E+1") {
-                shouldEqual(1L,br.exponent)
-                shouldEqual(BigInteger(-101),br.number)
+            on("creating a basic Real of '-001010'") {
+                val br = BasicReal("-001010")
+                it("should be -101E+1") {
+                    shouldEqual(1L,br.exponent)
+                    shouldEqual(BigInteger(-101),br.number)
                 shouldBeTrue(br.sign)
             }
         }

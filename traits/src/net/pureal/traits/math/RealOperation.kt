@@ -12,12 +12,12 @@ public trait RealOperation : Real {
 
     override fun toString() : String
 
-    override fun getEncapsulatedString(outerPriority : Int) : String {
+    override fun getOuterString(outerPriority : Int) : String {
         val s = this.toString()
         return if (priority > outerPriority) s; else "(${s})"
     }
 
-    override fun getEncapsulatedMathString(outerPriority : Int) : String {
+    override fun getOuterMathString(outerPriority : Int) : String {
         val s = this.toMathematicalString()
         return if (priority > outerPriority) s; else "(${s})"
     }

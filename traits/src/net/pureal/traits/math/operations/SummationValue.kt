@@ -15,15 +15,15 @@ public trait SummationValue : RealOperation {
     val summandTwo : Real
 
     override fun toString() : String {
-        val s1str = summandOne.getEncapsulatedString(priority)
-        val s2str = summandTwo.getEncapsulatedString(priority)
+        val s1str = summandOne.getOuterString(priority)
+        val s2str = summandTwo.getOuterString(priority)
 
         return "${s1str} + ${s2str}"
     }
 
     override fun toMathematicalString() : String {
-        val s1str = summandOne.getEncapsulatedMathString(priority)
-        val s2str = summandTwo.getEncapsulatedMathString(priority)
+        val s1str = summandOne.getOuterMathString(priority)
+        val s2str = summandTwo.getOuterMathString(priority)
 
         return "${s1str} + ${s2str}"
     }

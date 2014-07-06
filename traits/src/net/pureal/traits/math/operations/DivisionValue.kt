@@ -17,15 +17,15 @@ public trait DivisionValue : RealOperation {
     val factorTwo : Real
 
     override fun toMathematicalString() : String {
-        val f1str = factorOne.getEncapsulatedMathString(priority)
-        val f2str = factorTwo.getEncapsulatedMathString(priority)
+        val f1str = factorOne.getOuterMathString(priority)
+        val f2str = factorTwo.getOuterMathString(priority)
 
         return "${f1str} / ${f2str}"
     }
 
     override fun toString() : String {
-        val f1str = factorOne.getEncapsulatedString(priority)
-        val f2str = factorTwo.getEncapsulatedString(priority)
+        val f1str = factorOne.getOuterString(priority)
+        val f2str = factorTwo.getOuterString(priority)
 
         return "${f1str} / ${f2str}"
     }
