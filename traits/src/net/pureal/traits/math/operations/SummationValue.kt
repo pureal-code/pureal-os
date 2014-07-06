@@ -21,6 +21,13 @@ public trait SummationValue : RealOperation {
         return "${s1str} + ${s2str}"
     }
 
+    override fun toMathematicalString() : String {
+        val s1str = summandOne.getEncapsulatedMathString(priority)
+        val s2str = summandTwo.getEncapsulatedMathString(priority)
+
+        return "${s1str} + ${s2str}"
+    }
+
     override fun approximate(accuracy : Int) : Real {
         return real(summandOne.toDouble() + summandTwo.toDouble())
     }
@@ -29,8 +36,7 @@ public trait SummationValue : RealOperation {
     override fun simplify() : Real {
         val s1 : Real = summandOne.simplify()
         val s2 : Real = summandTwo.simplify()
-        if(s1.isPrimitive && s2.isPrimitive)
-            return real(s1.toDouble()+s2.toDouble())
+        if(s1 is RealPrimitive && s2 is RealPrimitive) return real(s1.value+s2.value)
 
         // return this if no simplification is possible
         return this

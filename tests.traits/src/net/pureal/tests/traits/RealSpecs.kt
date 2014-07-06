@@ -14,18 +14,16 @@ public class RealSpecs : Spek() {{
         {
             val sum = (a + b).simplify()
             it("should be the real number 5", {
-                shouldEqual(5.toReal(), sum)
+                shouldEqual(sum, 5)
                 shouldBeTrue(sum.isPrimitive)
-                shouldEqual(sum, 5.0)
             })
         }
         on("adding all three")
         {
             val sum = (a + b + c).simplify()
             it("should be the real number 9", {
-                shouldEqual(9.toReal(), sum)
+                shouldEqual(sum, 9)
                 shouldBeTrue(sum.isPrimitive)
-                shouldEqual(sum, 9.0)
             })
             val sum2 = (c + b + a).simplify()
             it("should be independent of the sequence", {
@@ -37,8 +35,8 @@ public class RealSpecs : Spek() {{
             val sub1 = (a - b).simplify()
             val sub2 = (b - a).simplify()
             it("should be 1 or -1 respectively", {
-                shouldEqual(sub1, -1.0)
-                shouldEqual(sub2, 1.0)
+                shouldEqual(sub1, -1)
+                shouldEqual(sub2, 1)
             })
             it("should be negative if the order is swapped", {
                 shouldEqual(-sub1,sub2)
@@ -51,20 +49,20 @@ public class RealSpecs : Spek() {{
                 shouldEqual(mul1, 8.0)
             })
         }
-        on("dividing 4 by 3")
+        on("dividing 2 by 4")
         {
-            val div1 = (c / b).simplify()
-            it("should be 4/3 (as Double currently)")
+            val div1 = (a / c).simplify()
+            it("should be 2/4 = .5")
             {
-                shouldEqual(div1, 4.0/3.0)
+                shouldEqual(div1, .5)
             }
         }
         on("combining operations - 2+3*4")
         {
             val f1 = a + b * c
-            it("should be '2.0 + 3.0 * 4.0'")
+            it("should be '2 + 3 * 4'")
             {
-                shouldEqual("2.0 + 3.0 * 4.0", f1.toString())
+                shouldEqual("2 + 3 * 4", f1.toMathematicalString())
             }
             it("should be 14")
             {
@@ -75,10 +73,10 @@ public class RealSpecs : Spek() {{
         {
             val f1 = (a+b)*c
             val f2 = c*(a+b)
-            it("should be (2.0 + 3.0) * 4 and other way around")
+            it("should be (2 + 3) * 4 and other way around")
             {
-                shouldEqual("(2.0 + 3.0) * 4.0", f1.toString())
-                shouldEqual("4.0 * (2.0 + 3.0)", f2.toString())
+                shouldEqual("(2 + 3) * 4", f1.toMathematicalString())
+                shouldEqual("4 * (2 + 3)", f2.toMathematicalString())
             }
             it("should be 18 in both cases")
             {

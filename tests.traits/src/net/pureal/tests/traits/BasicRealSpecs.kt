@@ -180,7 +180,7 @@ public class BasicRealSpecs : Spek() {{
         }
         on("dividing 2 by 3") {
             it("should throw an Exception 'Inaccurate Division'") {
-                shouldThrow<ArithmeticException> { BasicReal(2) / BasicReal(3) }
+                shouldThrow<RuntimeException> { BasicReal(2) / BasicReal(3) }
             }
         }
     }
@@ -205,6 +205,24 @@ public class BasicRealSpecs : Spek() {{
             it("should be -132E-3") {
                 shouldEqual(BigInteger(-132), b.number)
                 shouldEqual(-3L, b.exponent)
+            }
+        }
+    }
+    given("basic Reals for comparison test")
+    {
+        on("testing if 10 == 10") {
+            it("should be true") {
+                shouldBeTrue(BasicReal(10).equals(BasicReal(10)))
+            }
+        }
+        on("testing if -1 < +1") {
+            it("should be true") {
+                shouldBeTrue(BasicReal(-1) < BasicReal(+1))
+            }
+        }
+        on("testing if -4 < -2") {
+            it("should be true") {
+                shouldBeTrue(BasicReal(-4) < BasicReal(-2))
             }
         }
     }

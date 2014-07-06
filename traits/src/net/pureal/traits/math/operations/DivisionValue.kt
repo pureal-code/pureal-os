@@ -3,6 +3,7 @@ package net.pureal.traits.math.operations
 import net.pureal.traits.math.Real
 import net.pureal.traits.math.real
 import net.pureal.traits.math.RealOperation
+import net.pureal.traits.math.RealPrimitive
 
 public trait DivisionValue : RealOperation {
     override val priority : Int
@@ -14,6 +15,13 @@ public trait DivisionValue : RealOperation {
 
     val factorOne : Real
     val factorTwo : Real
+
+    override fun toMathematicalString() : String {
+        val f1str = factorOne.getEncapsulatedMathString(priority)
+        val f2str = factorTwo.getEncapsulatedMathString(priority)
+
+        return "${f1str} / ${f2str}"
+    }
 
     override fun toString() : String {
         val f1str = factorOne.getEncapsulatedString(priority)
@@ -30,8 +38,14 @@ public trait DivisionValue : RealOperation {
     override fun simplify() : Real {
         val s1 : Real = factorOne.simplify()
         val s2 : Real = factorTwo.simplify()
-        if(s1.isPrimitive && s2.isPrimitive)
-            return real(s1.toDouble()/s2.toDouble())
+        if(s1 is RealPrimitive && s2 is RealPrimitive){
+            try {
+                val res = s1.value / s2.value
+                return real(res)
+            } catch (e : RuntimeException) {
+                return this
+            }
+        }
 
         // return this if no simplification is possible
         return this

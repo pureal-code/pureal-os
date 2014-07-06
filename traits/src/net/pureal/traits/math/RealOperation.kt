@@ -17,4 +17,9 @@ public trait RealOperation : Real {
         return if (priority > outerPriority) s; else "(${s})"
     }
 
+    override fun getEncapsulatedMathString(outerPriority : Int) : String {
+        val s = this.toMathematicalString()
+        return if (priority > outerPriority) s; else "(${s})"
+    }
+
 }

@@ -84,13 +84,14 @@ public trait BasicReal {
             is Long -> return compareTo(BasicReal(other))
             is Float -> return compareTo(BasicReal(other))
             is Double -> return compareTo(BasicReal(other))
+            is BigInteger -> return compareTo(BasicReal(other))
             is BasicReal -> {
                 if(this.signum() == 0) return -other.signum()
                 if(this.signum() != other.signum()){
                     return this.signum()-other.signum()
                 }
                 if(compareExponentTo(other) != 0L) return compareExponentTo(other).toInt() * this.signum()
-                return (this-other).number.compareTo(BigInteger.ZERO) * this.signum()
+                return (this-other).number.compareTo(BigInteger.ZERO)
             }
             else -> throw IllegalArgumentException()
         }
@@ -169,7 +170,7 @@ public trait BasicReal {
                 val br1 = setToExponent(exponent-accuracy)
                 val c = br1.number.divideAndRemainder(other.number)
                 if (!allowInaccurateDivision && c[1] != BigInteger.ZERO)
-                    throw ArithmeticException("Accurate Division is not possible")
+                    throw RuntimeException("Accurate Division is not possible")
                 return BasicReal(c[0], targetExp-accuracy).minimize()
             }
             else -> throw IllegalArgumentException()
@@ -218,7 +219,7 @@ public trait BasicReal {
         when (other) {
             null -> return false
             is Number -> return compareTo(other)==0
-            is BigInteger -> return other==toBigInteger()
+            is BasicReal -> return compareTo(other)==0
             else -> return false
         }
     }
