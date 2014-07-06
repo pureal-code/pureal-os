@@ -2,18 +2,26 @@ package net.pureal.traits.interaction
 
 import net.pureal.traits.*
 import net.pureal.traits.graphics.*
+import net.pureal.traits.math.*
 
-trait Button : Visual<Trigger<Unit>> {
-    override fun addPointerInput(pointerInput : PointerInput) {
-        pointerInput.click += {(location) ->
-            if (element.shape.contains(location)) {
-                content()
-            }
-        }
-    }
+trait Button : Visual<Trigger<Unit>>, ColoredElement {
+    override fun onClick(vector2 : Vector2) = content()
 }
 
-fun button(element : Element, trigger : Trigger<Unit> = trigger<Unit>()) = object : Button {
+fun button(
+        trigger : Trigger<Unit> = trigger<Unit>(),
+        transform: Transform2 = Transforms2.identity,
+        shape : ColoredShape,
+        changed : Observable<Unit> = observable(),
+        onClick : () -> Unit = {}) = object : Button {
+
     override val content = trigger
-    override val element = element
+    override val transform = transform
+    override val shape = shape
+    override val changed = changed
+
+    {
+        content += {onClick()}
+    }
+
 }

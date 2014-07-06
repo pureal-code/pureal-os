@@ -8,7 +8,7 @@ import net.pureal.traits.interaction.*
 
 class ButtonSpecs : Spek() {{
     given("a button") {
-        val b = button(coloredElement(singleColored(rectangle(size=vector(0.04, 0.01)), color=Colors.black)))
+        val b = button(shape=singleColored(rectangle(size=vector(0.04, 0.01)), Colors.black))
 
         enum class State {neverClicked; clicked}
 

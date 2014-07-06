@@ -6,21 +6,4 @@ import net.pureal.traits.math.*
 import net.pureal.traits.*
 // TODO brings reference barf: import org.jetbrains.jet.codegen.*
 
-class Shell(val screen: Screen) {
-    {
-        val button = button(coloredElement(singleColored(rectangle(screen.size / 2), Colors.gray)))
-        val trigger = button.content
-        val element = button.element
-
-        trigger += {println("button clicked!")}
-
-        screen.relativePointerInput(element).click += {(location) ->
-            val relativeLocation = screen.absoluteTransform(element)(location)
-            if(element.shape.contains(relativeLocation)) {
-                trigger()
-            }
-        }
-
-        screen.show(composed(setOf(element)))
-    }
-}
+class Shell(val screen: Screen) {{screen.show(composed(setOf(button(shape=singleColored(rectangle(screen.size / 2), Colors.gray), onClick={println("button clicked!")}))))}}
