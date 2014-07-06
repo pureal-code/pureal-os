@@ -15,15 +15,15 @@ public trait SubtractionValue : RealOperation {
     val operandTwo: Real
 
     override fun toString() : String {
-        val o1str = operandOne.getEncapsulatedString(priority)
-        val o2str = operandTwo.getEncapsulatedString(priority)
+        val o1str = operandOne.getOuterString(priority)
+        val o2str = operandTwo.getOuterString(priority)
 
         return "${o1str} - ${o2str}"
     }
 
     override fun toMathematicalString() : String {
-        val o1str = operandOne.getEncapsulatedMathString(priority)
-        val o2str = operandTwo.getEncapsulatedMathString(priority)
+        val o1str = operandOne.getOuterMathString(priority)
+        val o2str = operandTwo.getOuterMathString(priority)
 
         return "${o1str} - ${o2str}"
     }

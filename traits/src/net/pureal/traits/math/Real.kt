@@ -8,7 +8,7 @@ import net.pureal.traits.math.operations.divisionValue
 // TODO: cast to Number when compiler works correctly with it
 public trait Real {
     val isApproximate : Boolean get() = false
-    val isPrimitive : Boolean get() = false
+    val isPrimitive : Boolean get() = false // TODO: maybe remove - this is actually bullshit
 
 
     fun simplify() : Real {
@@ -20,10 +20,10 @@ public trait Real {
 
     fun approximate(accuracy : Int = 50) : Real = this
 
-    fun getEncapsulatedMathString(outerPriority : Int) : String = toMathematicalString()
-    fun getEncapsulatedString(outerPriority : Int) : String = toString()
+    fun getOuterMathString(outerPriority : Int) : String = toMathematicalString()
+    fun getOuterString(outerPriority : Int) : String = toString()
 
-    fun getPrimitiveValue() : Number = approximate().Number()
+    fun getPrimitive() : Number = approximate().Number() // TODO: make it basicReal or RealPrimitive
 
     override fun equals(other : Any?) : Boolean
     {
@@ -36,7 +36,7 @@ public trait Real {
             is Real -> {
                 if(isPrimitive && other.isPrimitive)
                 {
-                    return this.getPrimitiveValue() == other.getPrimitiveValue()
+                    return this.getPrimitive() == other.getPrimitive()
                 }
                 return false
                 // return this.approximate() == other.approximate()
@@ -61,9 +61,9 @@ public trait Real {
     fun invert() : Real = divisionValue(1.toReal(),this)
 
 
-    fun toDouble() : Double = getPrimitiveValue().toDouble()
+    fun toDouble() : Double = getPrimitive().toDouble()
     fun toFloat() : Float = toDouble().toFloat()
-    fun toLong() : Long = getPrimitiveValue().toLong()
+    fun toLong() : Long = getPrimitive().toLong()
     fun toInt() : Int = toLong().toInt()
     fun toShort() : Short = toLong().toShort()
     fun toByte() : Byte = toLong().toByte()
