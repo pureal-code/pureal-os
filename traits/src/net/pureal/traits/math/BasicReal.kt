@@ -26,13 +26,7 @@ public trait BasicReal {
     final fun toChar() : Char = toLong().toChar()
 
     override fun toString() : String {
-        if(number == BigInteger.ZERO) return "BasicReal(0)"
-        if(exponent == 0L) return "BasicReal(\"${number.toString()}\")"
-        val esgn : String = when {
-            exponent >= 0 -> "+"
-            else -> "-"
-        }
-        return "BasicReal(\"${number.toString()}E${esgn}${abs(exponent).toString()}\")"
+        return "BasicReal(\"${toMathematicalString()}\")"
     }
 
     open fun toMathematicalString() : String {
@@ -114,7 +108,7 @@ public trait BasicReal {
                 val minexp = getLowestExponent(this, other)
                 val br1 = this.setToExponent(minexp)
                 val br2 = other.setToExponent(minexp)
-                return BasicReal(br1.number + br2.number, minexp)
+                return BasicReal(br1.number + br2.number, minexp).minimize()
             }
             else -> throw IllegalArgumentException()
         }
@@ -132,7 +126,7 @@ public trait BasicReal {
                 val minexp = getLowestExponent(this, other)
                 val br1 = this.setToExponent(minexp)
                 val br2 = other.setToExponent(minexp)
-                return BasicReal(br1.number - br2.number, minexp)
+                return BasicReal(br1.number - br2.number, minexp).minimize()
             }
             else -> throw IllegalArgumentException()
         }

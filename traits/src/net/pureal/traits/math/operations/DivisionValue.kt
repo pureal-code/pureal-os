@@ -2,46 +2,34 @@ package net.pureal.traits.math.operations
 
 import net.pureal.traits.math.Real
 import net.pureal.traits.math.real
-import net.pureal.traits.math.RealOperation
+import net.pureal.traits.math.RealBinaryOperation
 import net.pureal.traits.math.RealPrimitive
 
-public trait DivisionValue : RealOperation {
+public trait DivisionValue : RealBinaryOperation {
     final override val priority : Int
-        get() = 1
+        get() = +5
 
     override val description : String
         get() = "Division"
 
+    final override val operationSign : String
+        get() = "/"
 
-    val factorOne : Real
-    val factorTwo : Real
+    final override val isOrderDependent : Boolean
+        get() = true
 
-    override fun toMathematicalString() : String {
-        val f1str = if (factorOne.priority <= priority) "(${factorOne.toMathematicalString()})"
-            else factorOne.toMathematicalString()
 
-        val f2str = if (factorTwo.priority <= priority) "(${factorTwo.toMathematicalString()})"
-            else factorTwo.toMathematicalString()
-        return "${f1str} / ${f2str}"
-    }
-
-    override fun toString() : String {
-        val f1str = if (factorOne.priority <= priority) "(${factorOne.toString()})"
-        else factorOne.toString()
-
-        val f2str = if (factorTwo.priority <= priority) "(${factorTwo.toString()})"
-        else factorTwo.toString()
-        return "${f1str} / ${f2str}"
-    }
+    override val value1 : Real
+    override val value2 : Real
 
     override fun approximate(accuracy : Int) : Real {
-        return real(factorOne.toDouble() / factorTwo.toDouble())
+        return real(value1.toDouble() / value2.toDouble())
     }
 
     // TODO: remove after symPy is imported
     override fun simplify() : Real {
-        val s1 : Real = factorOne.simplify()
-        val s2 : Real = factorTwo.simplify()
+        val s1 : Real = value1.simplify()
+        val s2 : Real = value2.simplify()
         if(s1 is RealPrimitive && s2 is RealPrimitive){
             try {
                 val res = s1.value / s2.value
@@ -57,11 +45,11 @@ public trait DivisionValue : RealOperation {
 
 
     // Code easter-egg: The first factor gets discriminated by this function, it always feels negative afterwards
-    override fun minus() : DivisionValue = divisionValue(-factorOne, factorTwo)
+    override fun minus() : DivisionValue = divisionValue(-value1, value2)
 
 }
 
 fun divisionValue(a : Real, b : Real) : DivisionValue = object : DivisionValue {
-    override val factorOne = a
-    override val factorTwo = b
+    override val value1 = a
+    override val value2 = b
 }
