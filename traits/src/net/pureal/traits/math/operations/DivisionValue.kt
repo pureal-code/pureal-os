@@ -6,27 +6,31 @@ import net.pureal.traits.math.RealOperation
 import net.pureal.traits.math.RealPrimitive
 
 public trait DivisionValue : RealOperation {
-    override val priority : Int
+    final override val priority : Int
         get() = 1
 
     override val description : String
-        get() = "Times"
+        get() = "Division"
 
 
     val factorOne : Real
     val factorTwo : Real
 
     override fun toMathematicalString() : String {
-        val f1str = factorOne.getOuterMathString(priority)
-        val f2str = factorTwo.getOuterMathString(priority)
+        val f1str = if (factorOne.priority <= priority) "(${factorOne.toMathematicalString()})"
+            else factorOne.toMathematicalString()
 
+        val f2str = if (factorTwo.priority <= priority) "(${factorTwo.toMathematicalString()})"
+            else factorTwo.toMathematicalString()
         return "${f1str} / ${f2str}"
     }
 
     override fun toString() : String {
-        val f1str = factorOne.getOuterString(priority)
-        val f2str = factorTwo.getOuterString(priority)
+        val f1str = if (factorOne.priority <= priority) "(${factorOne.toString()})"
+        else factorOne.toString()
 
+        val f2str = if (factorTwo.priority <= priority) "(${factorTwo.toString()})"
+        else factorTwo.toString()
         return "${f1str} / ${f2str}"
     }
 

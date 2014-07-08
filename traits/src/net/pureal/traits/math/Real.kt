@@ -1,6 +1,6 @@
 package net.pureal.traits.math
 
-import net.pureal.traits.math.operations.summationValue
+import net.pureal.traits.math.operations.additionValue
 import net.pureal.traits.math.operations.multiplicationValue
 import net.pureal.traits.math.operations.subtractionValue
 import net.pureal.traits.math.operations.divisionValue
@@ -8,8 +8,8 @@ import net.pureal.traits.math.operations.divisionValue
 // TODO: cast to Number when compiler works correctly with it
 public trait Real {
     val isApproximate : Boolean get() = false
-    val isPrimitive : Boolean get() = false // TODO: maybe remove - this is actually bullshit
 
+    val priority : Int
 
     fun simplify() : Real {
         // TODO: return sympy.simplify(toMathematicalString()) - is to be inherited by all sub-traits in the end
@@ -20,9 +20,6 @@ public trait Real {
 
     fun approximate(accuracy : Int = 50) : Real = this
 
-    fun getOuterMathString(outerPriority : Int) : String = toMathematicalString()
-    fun getOuterString(outerPriority : Int) : String = toString()
-
     fun getPrimitive() : Number = approximate().Number() // TODO: make it basicReal or RealPrimitive
 
     override fun equals(other : Any?) : Boolean
@@ -30,25 +27,23 @@ public trait Real {
         when (other)
         {
             null -> return false
-            is Number -> {
-                return this.toDouble() == other.toDouble()
-            }
             is Real -> {
-                if(isPrimitive && other.isPrimitive)
+                if(this is RealPrimitive && other is RealPrimitive)
                 {
                     return this.getPrimitive() == other.getPrimitive()
                 }
                 return false
                 // return this.approximate() == other.approximate()
                 // TODO: actually pretty dirty checking, to be refined later
-                // TODO: More condition checking to do
             }
-
+            is Number -> {
+                return this.getPrimitive() == other
+            }
         }
         return false
     }
 
-    fun plus(other: Real) : Real = summationValue(this,other)
+    fun plus(other: Real) : Real = additionValue(this,other)
 
     fun minus() : Real = subtractionValue(0.toReal(), this)
 

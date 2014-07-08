@@ -15,7 +15,6 @@ public class RealSpecs : Spek() {{
             val sum = (a + b).simplify()
             it("should be the real number 5", {
                 shouldEqual(sum, 5)
-                shouldBeTrue(sum.isPrimitive)
             })
         }
         on("adding all three")
@@ -23,7 +22,6 @@ public class RealSpecs : Spek() {{
             val sum = (a + b + c).simplify()
             it("should be the real number 9", {
                 shouldEqual(sum, 9)
-                shouldBeTrue(sum.isPrimitive)
             })
             val sum2 = (c + b + a).simplify()
             it("should be independent of the sequence", {

@@ -6,7 +6,7 @@ import java.math.BigInteger
 public trait RealPrimitive : Real {
     val value: BasicReal
 
-    override val isPrimitive : Boolean get() = true
+    final override val priority : Int get() = 1000
 
     // TODO: replace with BasicReal later
     override fun toString() = "real(\"${value.toMathematicalString()}\")"

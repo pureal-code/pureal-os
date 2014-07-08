@@ -2,30 +2,34 @@ package net.pureal.traits.math.operations
 
 import net.pureal.traits.math.*
 
-public trait SummationValue : RealOperation {
+public trait AdditionValue : RealOperation {
 
-    override val priority : Int
+    final override val priority : Int
         get() = 0
 
     override val description : String
-        get() = "Plus"
+        get() = "Addition"
 
 
     val summandOne : Real
     val summandTwo : Real
 
-    override fun toString() : String {
-        val s1str = summandOne.getOuterString(priority)
-        val s2str = summandTwo.getOuterString(priority)
+    override fun toMathematicalString() : String {
+        val f1str = if (summandOne.priority <= priority) "(${summandOne.toMathematicalString()})"
+        else summandOne.toMathematicalString()
 
-        return "${s1str} + ${s2str}"
+        val f2str = if (summandTwo.priority <= priority) "(${summandTwo.toMathematicalString()})"
+        else summandTwo.toMathematicalString()
+        return "${f1str} + ${f2str}"
     }
 
-    override fun toMathematicalString() : String {
-        val s1str = summandOne.getOuterMathString(priority)
-        val s2str = summandTwo.getOuterMathString(priority)
+    override fun toString() : String {
+        val f1str = if (summandOne.priority <= priority) "(${summandOne.toString()})"
+        else summandOne.toString()
 
-        return "${s1str} + ${s2str}"
+        val f2str = if (summandTwo.priority <= priority) "(${summandTwo.toString()})"
+        else summandTwo.toString()
+        return "${f1str} + ${f2str}"
     }
 
     override fun approximate(accuracy : Int) : Real {
@@ -42,11 +46,11 @@ public trait SummationValue : RealOperation {
         return this
     }
 
-    override fun minus() : SummationValue = summationValue(-summandOne,-summandTwo)
+    override fun minus() : AdditionValue = additionValue(-summandOne,-summandTwo)
 
 }
 
-fun summationValue(a : Real, b : Real) : SummationValue = object : SummationValue
+fun additionValue(a : Real, b : Real) : AdditionValue = object : AdditionValue
 {
     override val summandOne = a
     override val summandTwo = b
