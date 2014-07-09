@@ -12,4 +12,4 @@ fun coloredShape(shape : Shape, fill : Fill) = object : ColoredShape {
     override fun colorAt(location: Vector2) = if(shape.contains(location)) fill.colorAt(location) else null
 }
 
-fun solidColoredShape(shape : Shape, color : Color) = coloredShape(shape, Fills.solid())
+fun solidColoredShape(shape : Shape, color : Color) = coloredShape(shape, Fills.solid(color))
