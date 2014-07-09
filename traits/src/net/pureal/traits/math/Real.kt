@@ -9,14 +9,10 @@ import net.pureal.traits.math.operations.divisionValue
 public trait Real {
     val isApproximate : Boolean get() = false
 
-    val priority : Int
-
     fun simplify() : Real {
         // TODO: return sympy.simplify(toMathematicalString()) - is to be inherited by all sub-traits in the end
         return this
     }
-
-    fun toMathematicalString() : String
 
     fun approximate(accuracy : Int = 50) : Real = this
 

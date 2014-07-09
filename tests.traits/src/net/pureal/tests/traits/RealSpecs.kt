@@ -60,7 +60,7 @@ public class RealSpecs : Spek() {{
             val f1 = a + b * c
             it("should be '2 + 3 * 4'")
             {
-                shouldEqual("2 + 3 * 4", f1.toMathematicalString())
+                shouldEqual("real(\"2\") + real(\"3\") * real(\"4\")", f1.toString())
             }
             it("should be 14")
             {
@@ -73,8 +73,8 @@ public class RealSpecs : Spek() {{
             val f2 = c*(a+b)
             it("should be (2 + 3) * 4 and other way around")
             {
-                shouldEqual("(2 + 3) * 4", f1.toMathematicalString())
-                shouldEqual("4 * (2 + 3)", f2.toMathematicalString())
+                shouldEqual("(real(\"2\") + real(\"3\")) * real(\"4\")", f1.toString())
+                shouldEqual("real(\"4\") * (real(\"2\") + real(\"3\"))", f2.toString())
             }
             it("should be 18 in both cases")
             {

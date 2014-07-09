@@ -2,7 +2,7 @@ package net.pureal.traits.math.operations
 
 import net.pureal.traits.math.*
 
-public trait SubtractionValue : RealOperation {
+public trait SubtractionValue : RealBinaryOperation {
 
     final override val priority : Int
         get() = 0
@@ -10,49 +10,36 @@ public trait SubtractionValue : RealOperation {
     override val description : String
         get() = "Subtraction"
 
+    final override val operationSign : String
+        get() = "-"
 
-    val operandOne: Real
-    val operandTwo: Real
+    final override val isOrderDependent : Boolean
+        get() = true
 
-    override fun toMathematicalString() : String {
-        val f1str = if (operandOne.priority < priority) "(${operandOne.toMathematicalString()})"
-        else operandOne.toMathematicalString()
-
-        val f2str = if (operandTwo.priority < priority) "(${operandTwo.toMathematicalString()})"
-        else operandTwo.toMathematicalString()
-        return "${f1str} - ${f2str}"
-    }
-
-    override fun toString() : String {
-        val f1str = if (operandOne.priority < priority) "(${operandOne.toString()})"
-        else operandOne.toString()
-
-        val f2str = if (operandTwo.priority < priority) "(${operandTwo.toString()})"
-        else operandTwo.toString()
-        return "${f1str} - ${f2str}"
-    }
+    override val value1 : Real
+    override val value2 : Real
 
     override fun approximate(accuracy : Int) : Real {
-        return real(operandOne.toDouble() - operandTwo.toDouble())
+        return real(value1.toDouble() - value2.toDouble())
     }
 
     // TODO: remove after symPy is imported
     override fun simplify() : Real {
-        val s1 : Real = operandOne.simplify()
-        val s2 : Real = operandTwo.simplify()
+        val s1 : Real = value1.simplify()
+        val s2 : Real = value2.simplify()
         if(s1 is RealPrimitive && s2 is RealPrimitive) return real(s1.value-s2.value)
 
         // return this if no simplification is possible
         return this
     }
 
-    override fun minus() : SubtractionValue = subtractionValue(-operandOne,-operandTwo)
+    override fun minus() : SubtractionValue = subtractionValue(-value1,-value2)
 
 }
 
 fun subtractionValue(a : Real, b : Real) : SubtractionValue = object : SubtractionValue
 {
-    override val operandOne = a
-    override val operandTwo = b
+    override val value1 = a
+    override val value2 = b
 }
 

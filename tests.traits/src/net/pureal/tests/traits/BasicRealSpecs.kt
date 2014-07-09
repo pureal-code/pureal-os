@@ -25,23 +25,23 @@ public class BasicRealSpecs : Spek() {{
             }
         }
         on("creating a basic Real of '-0' and '000'") {
-                val str1 = "000"
-                val str2 = "-0"
-                val br1 = BasicReal(str1)
-                val br2 = BasicReal(str2)
-                it("should be 0") {
-                    shouldEqual(0L,br1.exponent)
-                    shouldEqual(BigInteger(0),br1.number)
-                    shouldEqual(0L,br2.exponent)
-                    shouldEqual(BigInteger(0),br2.number)
-                }
+            val str1 = "000"
+            val str2 = "-0"
+            val br1 = BasicReal(str1)
+            val br2 = BasicReal(str2)
+            it("should be 0") {
+                shouldEqual(0L,br1.exponent)
+                shouldEqual(BigInteger(0),br1.number)
+                shouldEqual(0L,br2.exponent)
+                shouldEqual(BigInteger(0),br2.number)
             }
-            on("creating a basic Real of '-001010'") {
-                val br = BasicReal("-001010")
-                it("should be -101E+1") {
-                    shouldEqual(1L,br.exponent)
-                    shouldEqual(BigInteger(-101),br.number)
-                shouldBeTrue(br.sign)
+        }
+        on("creating a basic Real of '-001010'") {
+            val br = BasicReal("-001010")
+            it("should be -101E+1") {
+                shouldEqual(1L,br.exponent)
+                shouldEqual(BigInteger(-101),br.number)
+            shouldBeTrue(br.sign)
             }
         }
         on("creating a basic Real of '0.03302'") {
@@ -79,7 +79,7 @@ public class BasicRealSpecs : Spek() {{
         }
 
         on("creating some strings and checking toString()'") {
-            array("299E+1", "501E-1", "-6E+20", "-101010101E-20").forEach {
+            array("2990", "50.1", "-6E+20", "-1.01010101E-16").forEach {
                 it("should be the kotlin Code to create this \"${it}\" ") {
                     shouldEqual("BasicReal(\"${it}\")", BasicReal(it).toString())
                 }

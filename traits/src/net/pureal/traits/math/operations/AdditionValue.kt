@@ -2,7 +2,7 @@ package net.pureal.traits.math.operations
 
 import net.pureal.traits.math.*
 
-public trait AdditionValue : RealOperation {
+public trait AdditionValue : RealBinaryOperation {
 
     final override val priority : Int
         get() = 0
@@ -10,48 +10,35 @@ public trait AdditionValue : RealOperation {
     override val description : String
         get() = "Addition"
 
+    final override val operationSign : String
+        get() = "+"
 
-    val summandOne : Real
-    val summandTwo : Real
+    final override val isOrderDependent : Boolean
+        get() = false
 
-    override fun toMathematicalString() : String {
-        val f1str = if (summandOne.priority <= priority) "(${summandOne.toMathematicalString()})"
-        else summandOne.toMathematicalString()
 
-        val f2str = if (summandTwo.priority <= priority) "(${summandTwo.toMathematicalString()})"
-        else summandTwo.toMathematicalString()
-        return "${f1str} + ${f2str}"
-    }
 
-    override fun toString() : String {
-        val f1str = if (summandOne.priority <= priority) "(${summandOne.toString()})"
-        else summandOne.toString()
-
-        val f2str = if (summandTwo.priority <= priority) "(${summandTwo.toString()})"
-        else summandTwo.toString()
-        return "${f1str} + ${f2str}"
-    }
 
     override fun approximate(accuracy : Int) : Real {
-        return real(summandOne.toDouble() + summandTwo.toDouble())
+        return real(value1.toDouble() + value2.toDouble())
     }
 
     // TODO: remove after symPy is imported
     override fun simplify() : Real {
-        val s1 : Real = summandOne.simplify()
-        val s2 : Real = summandTwo.simplify()
+        val s1 : Real = value1.simplify()
+        val s2 : Real = value2.simplify()
         if(s1 is RealPrimitive && s2 is RealPrimitive) return real(s1.value+s2.value)
 
         // return this if no simplification is possible
         return this
     }
 
-    override fun minus() : AdditionValue = additionValue(-summandOne,-summandTwo)
+    override fun minus() : AdditionValue = additionValue(-value1,-value2)
 
 }
 
 fun additionValue(a : Real, b : Real) : AdditionValue = object : AdditionValue
 {
-    override val summandOne = a
-    override val summandTwo = b
+    override val value1 = a
+    override val value2 = b
 }
