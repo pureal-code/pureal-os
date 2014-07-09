@@ -1,5 +1,7 @@
 package net.pureal.traits.graphics
 
+import net.pureal.traits.*
+
 trait Color {
     val r: Number
     val g: Number
@@ -9,9 +11,6 @@ trait Color {
 
     fun times(factor: Number): Color {
         val f = factor.toDouble()
-
-        if (f < 0 || f > 1) throw InvalidArgumentException(array("Factor for dimming a color must be between 0 and 1."))
-
         return color(r = r.toDouble() * f, g = g.toDouble() * f, b = b.toDouble() * f, a = a.toDouble() * f)
     }
 
@@ -21,10 +20,10 @@ trait Color {
 }
 
 fun color(r: Number = 0, g: Number = 0, b: Number = 0, a: Number = 1): Color = object : Color {
-    override val r = r
-    override val g = g
-    override val b = b
-    override val a = a
+    override val r = r clamp 0.0..1.0
+    override val g = g clamp 0.0..1.0
+    override val b = b clamp 0.0..1.0
+    override val a = a clamp 0.0..1.0
 }
 
 object Colors {
