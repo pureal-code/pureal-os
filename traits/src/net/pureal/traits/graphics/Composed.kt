@@ -25,10 +25,17 @@ fun composed<T>(
         removed: Observable<Element<*>> = observable<Element<*>>(),
         changed: Observable<Unit> = observable<Unit>()) = object : Composed<T> {
     override val content = content
-    override val shape = concatenatedShape(elements map {it.shape})
+    override val shape = concatenatedShape(elements map { it.shape })
     override val elements = elements
     override val transform = transform
     override val added = added
     override val removed = removed
     override val changed = changed
 }
+
+fun composed(
+        elements : Set<Element<*>>,
+        transform : Transform2 = Transforms2.identity,
+        added: Observable<Element<*>> = observable<Element<*>>(),
+        removed: Observable<Element<*>> = observable<Element<*>>(),
+        changed: Observable<Unit> = observable<Unit>()) = composed<Unit>(Unit.VALUE, elements, transform, added, removed, changed)
