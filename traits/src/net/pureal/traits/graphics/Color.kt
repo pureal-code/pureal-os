@@ -35,6 +35,7 @@ object Colors {
     val green = color(g=1)
     val blue = color(b=1)
     fun gray(brightness : Number) = color(brightness, brightness, brightness)
+    val gray = gray(.5)
     val white = color(1, 1, 1)
     val transparent = color(a=0)
 }

@@ -9,8 +9,8 @@ class FillSpecs : Spek() {{
     given("a solid fill") {
         val x = Fills.solid(Colors.blue)
 
-        on("getting the color at arbitrary locations") {
-            listOf(vector(2,2), vector(-4.43, 0), vector(1,-23234)).map({location -> x.colorAt(location)}).forEach {
+        listOf(vector(2,2), vector(-4.43, 0), vector(1,-23234)).map({location -> x.colorAt(location)}).forEach {
+            on("getting the color at the arbitrary location ${it}") {
                 it("should be the one defined color") {
                     shouldEqual(Colors.blue, it)
                 }
@@ -21,8 +21,8 @@ class FillSpecs : Spek() {{
     given("an invsible fill") {
         val x = Fills.invisible
 
-        on("getting the color at arbitrary locations") {
-            listOf(vector(2,2), vector(-4.43, 0), vector(1,-23234)).map({location -> x.colorAt(location)}).forEach {
+        listOf(vector(2,2), vector(-4.43, 0), vector(1,-23234)).map({location -> x.colorAt(location)}).forEach {
+            on("getting the color at the arbitrary location ${it}") {
                 it("should be transparent") {
                     shouldEqual(Colors.transparent, it)
                 }
@@ -74,7 +74,7 @@ class FillSpecs : Spek() {{
         }
     }
 
-    given("a linear gradient fill from black to white stop 0 to 2") {
+    given("a radial gradient fill from black to white stop 0 to 2") {
         val x = Fills.radialGradient(sortedMapOf(Pair<Number, Color>(0, Colors.black), Pair<Number, Color>(2, Colors.white)))
 
         on("getting the color at the origin") {
