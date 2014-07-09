@@ -1,4 +1,4 @@
-package net.pureal.shell
+package net.pureal.tests.traits
 
 import org.spek.*
 import net.pureal.traits.*
@@ -8,7 +8,7 @@ import net.pureal.traits.interaction.*
 
 class ButtonSpecs : Spek() {{
     given("a button") {
-        val b = button(shape=singleColored(rectangle(size=vector(0.04, 0.01)), Colors.black))
+        val b = button(shape=singleColored(net.pureal.traits.math.rectangle(size = vector(0.04, 0.01)), Colors.black))
 
         enum class State {neverClicked; clicked}
 
@@ -25,4 +25,3 @@ class ButtonSpecs : Spek() {{
         }
     }
 }}
-

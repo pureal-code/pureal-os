@@ -30,8 +30,7 @@ object Fills {
 trait TransformedFill : Fill {
     val original : Fill
     val transform : Transform2
-    private val inverse : Transform2 get() = transform.inverse()
-    override fun colorAt(location: Vector2) : Color = original.colorAt(inverse(location))
+    override fun colorAt(location: Vector2) = original.colorAt(transform.inverse()(location))
 }
 
 trait InvisibleFill : SolidFill {
