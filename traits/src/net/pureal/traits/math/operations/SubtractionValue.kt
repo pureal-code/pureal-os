@@ -4,28 +4,32 @@ import net.pureal.traits.math.*
 
 public trait SubtractionValue : RealOperation {
 
-    override val priority : Int
+    final override val priority : Int
         get() = 0
 
     override val description : String
-        get() = "Minus"
+        get() = "Subtraction"
 
 
     val operandOne: Real
     val operandTwo: Real
 
-    override fun toString() : String {
-        val o1str = operandOne.getOuterString(priority)
-        val o2str = operandTwo.getOuterString(priority)
+    override fun toMathematicalString() : String {
+        val f1str = if (operandOne.priority < priority) "(${operandOne.toMathematicalString()})"
+        else operandOne.toMathematicalString()
 
-        return "${o1str} - ${o2str}"
+        val f2str = if (operandTwo.priority < priority) "(${operandTwo.toMathematicalString()})"
+        else operandTwo.toMathematicalString()
+        return "${f1str} - ${f2str}"
     }
 
-    override fun toMathematicalString() : String {
-        val o1str = operandOne.getOuterMathString(priority)
-        val o2str = operandTwo.getOuterMathString(priority)
+    override fun toString() : String {
+        val f1str = if (operandOne.priority < priority) "(${operandOne.toString()})"
+        else operandOne.toString()
 
-        return "${o1str} - ${o2str}"
+        val f2str = if (operandTwo.priority < priority) "(${operandTwo.toString()})"
+        else operandTwo.toString()
+        return "${f1str} - ${f2str}"
     }
 
     override fun approximate(accuracy : Int) : Real {
