@@ -14,7 +14,7 @@ public trait Real {
         return this
     }
 
-    fun approximate(accuracy : Int = 50) : Real = this
+    fun approximate(): Real = this
 
     fun getPrimitive() : Number = approximate().Number() // TODO: make it basicReal or RealPrimitive
 
