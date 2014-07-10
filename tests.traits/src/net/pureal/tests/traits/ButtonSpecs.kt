@@ -2,20 +2,22 @@ package net.pureal.tests.traits
 
 import org.spek.*
 import net.pureal.traits.*
-import net.pureal.traits.math.*
 import net.pureal.traits.graphics.*
 import net.pureal.traits.interaction.*
 
 class ButtonSpecs : Spek() {{
     given("a button") {
-        val b = button(shape=singleColored(net.pureal.traits.math.rectangle(size = vector(0.04, 0.01)), Colors.black))
+        val b = button(shape = net.pureal.traits.math.rectangle(size = vector(0.04, 0.01)), fill=Fills.solid(Colors.black))
 
-        enum class State {neverClicked; clicked}
+        enum class State {
+            neverClicked
+            clicked
+        }
 
         var s = State.neverClicked
 
         on("appeding a handler and invoking the button") {
-            b.content += {s = State.clicked}
+            b.content += { s = State.clicked }
 
             b.content.invoke()
 
@@ -24,4 +26,5 @@ class ButtonSpecs : Spek() {{
             }
         }
     }
-}}
+}
+}

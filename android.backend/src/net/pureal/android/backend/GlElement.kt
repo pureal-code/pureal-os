@@ -1,12 +1,7 @@
 package net.pureal.android.backend
 
-import net.pureal.traits.graphics.Composed
-import net.pureal.traits.Trigger
-import net.pureal.traits.trigger
-import net.pureal.traits.graphics.Element
-import net.pureal.traits.Transform2
-import net.pureal.traits.Observable
-import net.pureal.traits.graphics.ColoredElement
+import net.pureal.traits.*
+import net.pureal.traits.graphics.*
 import android.opengl.GLES20
 import java.nio.FloatBuffer
 import java.nio.ByteBuffer
@@ -14,24 +9,24 @@ import java.nio.ByteOrder
 import java.nio.ShortBuffer
 
 
-abstract class GlElement(open val original: Element<out Any?>, val screen: GlScreen) : Element<Any?> {
+abstract class GlElement(open val original: Element<*>, val screen: GlScreen) : Element<Any?> {
     override val transform: Transform2 get() = original.transform
     override val shape: GlShape get() = glShape(original.shape)
     override val changed: Observable<Unit> get() = original.changed
     override val content: Any? get() = original.content;
-    abstract fun draw()
+    abstract fun draw(parentTransform: Transform2)
 }
 
-fun glElement(original: Element<out Any?>, screen: GlScreen): GlElement {
+fun glElement(original: Element<*>, screen: GlScreen): GlElement {
     return when (original) {
         is GlElement -> original
-        is Composed -> GlComposed(original, screen)
-        is ColoredElement -> GlColoredElement(original, screen)
+        is Composed<*> -> GlComposed(original, screen)
+        is ColoredElement<*> -> GlColoredElement(original, screen)
         else -> throw UnsupportedOperationException("No OpenGL implementation for element '${original}'.")
     }
 }
 
-class GlComposed(override val original: Composed<out Any?>, screen: GlScreen) : GlElement(original, screen), Composed<Any?> {
+class GlComposed(override val original: Composed<*>, screen: GlScreen) : GlElement(original, screen), Composed<Any?> {
     override val elements: MutableSet<GlElement> = (original.elements map { glElement(it, screen) }).toHashSet()
     override val added: Trigger<GlElement> = trigger()
     override val removed: Trigger<GlElement> = trigger();
@@ -49,16 +44,32 @@ class GlComposed(override val original: Composed<out Any?>, screen: GlScreen) : 
             }
         }
     }
-    override fun draw() = elements forEach { it.draw() }
+    override fun draw(parentTransform: Transform2) = elements forEach { it.draw(parentTransform before this.transform) }
 }
 
-class GlColoredElement(override val original: ColoredElement<out Any?>, screen: GlScreen) : GlElement(original, screen), ColoredElement<Any?> {
-    override fun draw() {
-        val positionHandle = GLES20.glGetAttribLocation(screen.program!!, "vPosition")
+class GlColoredElement(override val original: ColoredElement<*>, screen: GlScreen) : GlElement(original, screen), ColoredElement<Any?> {
+    override val shape: GlShape get() = glShape(original.shape)
+    override val fill: Fill get() = original.fill
+    override fun draw(parentTransform: Transform2) {
+        val transform = parentTransform before this.transform
+        val matrixHandle = GLES20.glGetUniformLocation(screen.program!!, "matrix");
+        val m = transform.matrix
+        val glMatrix = floatArray(
+                m.a.toFloat(), m.d.toFloat(), 0f, m.g.toFloat(),
+                m.b.toFloat(), m.e.toFloat(), 0f, m.h.toFloat(),
+                0f, 0f, 1f, 0f,
+                m.c.toFloat(), m.f.toFloat(), 0f, m.i.toFloat())
+        GLES20.glUniformMatrix4fv(matrixHandle, 1, false, glMatrix, 0);
+        val positionHandle = GLES20.glGetAttribLocation(screen.program!!, "position")
         GLES20.glEnableVertexAttribArray(positionHandle)
         GLES20.glVertexAttribPointer(positionHandle, 3, GLES20.GL_FLOAT, false, 3 * 4, vertexBuffer)
-        val colorHandle = GLES20.glGetUniformLocation(screen.program!!, "vColor")
-        GLES20.glUniform4fv(colorHandle, 1, floatArray(1f, 0f, 0f, 1f), 0)
+        val colorHandle = GLES20.glGetUniformLocation(screen.program!!, "color")
+        val color = fill.colorAt(vector(0, 0))
+        GLES20.glUniform4fv(colorHandle, 1, floatArray(
+                color.r.toFloat(),
+                color.g.toFloat(),
+                color.b.toFloat(),
+                color.a.toFloat()), 0)
         GLES20.glDrawElements(
                 GLES20.GL_TRIANGLE_FAN, shape.drawOrder.size,
                 GLES20.GL_UNSIGNED_SHORT, drawListBuffer)

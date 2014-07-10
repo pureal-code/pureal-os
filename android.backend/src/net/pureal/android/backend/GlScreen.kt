@@ -9,9 +9,8 @@ import android.app.Activity
 import net.pureal.traits.graphics.*
 import net.pureal.traits.math.*
 import net.pureal.traits.*
-import java.nio.*
 
-class GlScreen(activity: Activity) : GLSurfaceView(activity), Screen {
+class GlScreen (activity: Activity, onReady: (GlScreen) -> Unit) : GLSurfaceView(activity), Screen {
     {
         setEGLContextClientVersion(2)
         setEGLConfigChooser(8, 8, 8, 8, 16, 0)
@@ -20,19 +19,20 @@ class GlScreen(activity: Activity) : GLSurfaceView(activity), Screen {
     {
         setRenderer(object : Renderer {
             override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
-                GLES20.glClearColor(0.0f, 0.0f, 1.0f, 1.0f)
+                GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f)
                 program = createProgram();
                 GLES20.glUseProgram(program!!);
+                onReady(this@GlScreen);
             }
             override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
                 GLES20.glViewport(0, 0, width, height)
             }
             override fun onDrawFrame(gl: GL10?) {
                 GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT)
-                glContent.draw()
+                glContent.draw(Transforms2.scale(1 / this@GlScreen.getWidth().toFloat(), 1 / this@GlScreen.getHeight().toFloat()))
             }
         })
-        setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY)
+        //setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY)
     }
     private var glContent: GlComposed = GlComposed(composed(setOf()), this)
     override var content: Composed<out Any?>
@@ -43,21 +43,22 @@ class GlScreen(activity: Activity) : GLSurfaceView(activity), Screen {
     override fun absoluteTransform(element: Element<out Any?>): Transform2 {
         throw UnsupportedOperationException()
     }
-    override val rectangle: Rectangle = rectangle(vector(1,1))
+    override val rectangle: Rectangle get () = rectangle(vector(this@GlScreen.getWidth(), this@GlScreen.getHeight()))
 }
 
 fun createProgram(): Int {
     val vertexShaderCode = """
-                    attribute vec4 vPosition;
+                    uniform mat4 matrix;
+                    attribute vec4 position;
                     void main() {
-                        gl_Position = vPosition;
+                        gl_Position = matrix * position;
                     }
                 """
     val fragmentShaderCode = """
                     precision mediump float;
-                    uniform vec4 vColor;
+                    uniform vec4 color;
                     void main() {
-                        gl_FragColor = vColor;
+                        gl_FragColor = color;
                     }
                 """
     val vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, vertexShaderCode)

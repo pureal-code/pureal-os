@@ -33,7 +33,8 @@ object Transforms2 {
 
         return linear(matrix(Math.cos(a), -Math.sin(a), Math.sin(a), Math.cos(a)))
     }
-    fun scale(factor : Number) = linear(identityMatrix2*factor)
+    fun scale(factorX : Number, factorY : Number) = linear(matrix(factorX, 0, 0, factorY))
+    fun scale(factor : Number) = scale(factor, factor)
     fun reflection(axisAngle : Number) : Transform2 {
         val d = 2 * axisAngle.toDouble()
         return linear(matrix(Math.cos(d), Math.sin(d), Math.sin(d), -Math.cos(d)))

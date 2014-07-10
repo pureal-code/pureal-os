@@ -119,7 +119,7 @@ class Matrix3Specs : Spek() {{
         val m = identityMatrix3
 
         on("multiplying it with an arbitrary vector") {
-            val x = vector(0,1,-2.5)
+            val x = m * vector(0,1,-2.5)
 
             it("should result in an unchanged vector") {
                 shouldEqual(vector(0,1,-2.5), x)

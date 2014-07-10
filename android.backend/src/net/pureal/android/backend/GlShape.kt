@@ -3,6 +3,7 @@ package net.pureal.android.backend
 import net.pureal.traits.math.Shape
 import net.pureal.traits.Vector2
 import net.pureal.traits.math.Rectangle
+import net.pureal.traits.graphics.Color
 
 abstract class GlShape(open val original: Shape) : Shape {
     override fun contains(location: Vector2): Boolean = original.contains(location)

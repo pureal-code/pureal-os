@@ -17,4 +17,4 @@ trait Screen {
     val size : Vector2 get() = rectangle.size
 }
 
-fun screen(content : Composed<*>, rectangle : Rectangle) = null!!
+//fun screen(content : Composed<*>, rectangle : Rectangle) = null!!
