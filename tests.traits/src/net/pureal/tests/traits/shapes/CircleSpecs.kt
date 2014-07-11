@@ -1,8 +1,7 @@
-package net.pureal.tests.traits.math
+package net.pureal.tests.traits.shapes
 
 import org.spek.*
 import net.pureal.traits.*
-import net.pureal.traits.graphics.*
 import net.pureal.traits.math.*
 
 class CircleSpecs : Spek() {{
@@ -26,3 +25,4 @@ class CircleSpecs : Spek() {{
         }
     }
 }}
+

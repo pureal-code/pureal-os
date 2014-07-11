@@ -18,7 +18,6 @@ class ButtonSpecs : Spek() {{
 
         on("appeding a handler and invoking the button") {
             b.content += { s = State.clicked }
-
             b.content.invoke()
 
             it("should be clicked") {

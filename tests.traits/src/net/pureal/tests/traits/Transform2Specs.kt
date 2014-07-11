@@ -28,10 +28,8 @@ class Transform2Specs : Spek() {{
         }
     }
 
-    val pi = 3.14159265358979323846264338327950288419716939937510
-
     given("a rotation") {
-        val t = Transforms2.rotation(pi/2)
+        val t = Transforms2.rotation(Math.PI/2)
 
         on("applying it on a vector") {
             val x = t(vector(1,3))
@@ -55,7 +53,7 @@ class Transform2Specs : Spek() {{
     }
 
     given("a reflection") {
-        val t = Transforms2.reflection(axisAngle=10*pi)
+        val t = Transforms2.reflection(axisAngle=10*Math.PI)
 
         on("applying it on a vector") {
             val applied = t(vector(1,3))
