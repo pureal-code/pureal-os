@@ -29,7 +29,7 @@ class GlScreen (activity: Activity, onReady: (GlScreen) -> Unit) : GLSurfaceView
             }
             override fun onDrawFrame(gl: GL10?) {
                 GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT)
-                glContent.draw(Transforms2.scale(1 / this@GlScreen.getWidth().toFloat(), 1 / this@GlScreen.getHeight().toFloat()))
+                glContent.draw(Transforms2.scale(1f / this@GlScreen.getWidth().toFloat(), 1f / this@GlScreen.getHeight().toFloat()))
             }
         })
         //setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY)

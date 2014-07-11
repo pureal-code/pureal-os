@@ -11,12 +11,12 @@ class Shell(val screen: Screen) {
     {
         val halfWidth = screen.size.x.toDouble() / 2
         fun logoRect(angle : Number) = button(
-                shape = rectangle(vector(300, 100)),
-                transform = Transforms2.rotation(angle),
+                shape = rectangle(vector(300, 10)),
+                transform = Transforms2.translation(vector(150, 50)) before Transforms2.rotation(angle),
                 fill = Fills.solid(Colors.white),
                 onClick = {println("This is da fucking Pureal logo!")})
 
-        fun star(count : Int) = count.indices map {logoRect(it / count * 2 * 3.14159)}
+        fun star(count : Int) = count.indices map {logoRect(it * 3.14159 * 2 / count  )}
 
         screen.content = composed(elements = star(7))
 

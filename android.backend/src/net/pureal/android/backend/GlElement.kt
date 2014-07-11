@@ -45,14 +45,14 @@ class GlComposed(override val original: Composed<*>, screen: GlScreen) : GlEleme
             }
         }
     }
-    override fun draw(parentTransform: Transform2) = elements.reverse() forEach { it.draw(parentTransform before this.transform) }
+    override fun draw(parentTransform: Transform2) = elements.reverse() forEach { it.draw(this.transform before parentTransform) }
 }
 
 class GlColoredElement(override val original: ColoredElement<*>, screen: GlScreen) : GlElement(original, screen), ColoredElement<Any?> {
     override val shape: GlShape get() = glShape(original.shape)
     override val fill: Fill get() = original.fill
     override fun draw(parentTransform: Transform2) {
-        val transform = parentTransform before this.transform
+        val transform = this.transform before parentTransform
         val matrixHandle = GLES20.glGetUniformLocation(screen.program!!, "matrix");
         val m = transform.matrix
         val glMatrix = floatArray(
