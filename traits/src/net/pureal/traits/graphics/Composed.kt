@@ -19,7 +19,7 @@ trait Composed<T> : Element<T> {
 
 fun composed<T>(
         content : T,
-        elements : Set<Element<*>>,
+        elements : Iterable<Element<*>>,
         transform : Transform2 = Transforms2.identity,
         added: Observable<Element<*>> = observable<Element<*>>(),
         removed: Observable<Element<*>> = observable<Element<*>>(),
@@ -34,7 +34,7 @@ fun composed<T>(
 }
 
 fun composed(
-        elements : Set<Element<*>>,
+        elements : Iterable<Element<*>>,
         transform : Transform2 = Transforms2.identity,
         added: Observable<Element<*>> = observable<Element<*>>(),
         removed: Observable<Element<*>> = observable<Element<*>>(),

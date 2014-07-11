@@ -20,10 +20,10 @@ trait Color {
 }
 
 fun color(r: Number = 0, g: Number = 0, b: Number = 0, a: Number = 1): Color = object : Color {
-    override val r = r clamp 0.0..1.0
-    override val g = g clamp 0.0..1.0
-    override val b = b clamp 0.0..1.0
-    override val a = a clamp 0.0..1.0
+    override val r = r
+    override val g = g
+    override val b = b
+    override val a = a
 }
 
 object Colors {
