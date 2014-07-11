@@ -7,6 +7,7 @@ import java.nio.FloatBuffer
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.ShortBuffer
+import java.util.ArrayList
 
 
 abstract class GlElement(open val original: Element<*>, val screen: GlScreen) : Element<Any?> {
@@ -27,7 +28,7 @@ fun glElement(original: Element<*>, screen: GlScreen): GlElement {
 }
 
 class GlComposed(override val original: Composed<*>, screen: GlScreen) : GlElement(original, screen), Composed<Any?> {
-    override val elements: MutableSet<GlElement> = (original.elements map { glElement(it, screen) }).toHashSet()
+    override val elements: ArrayList<GlElement> = (original.elements map { glElement(it, screen) }).toArrayList()
     override val added: Trigger<GlElement> = trigger()
     override val removed: Trigger<GlElement> = trigger();
     {
@@ -44,7 +45,7 @@ class GlComposed(override val original: Composed<*>, screen: GlScreen) : GlEleme
             }
         }
     }
-    override fun draw(parentTransform: Transform2) = elements forEach { it.draw(parentTransform before this.transform) }
+    override fun draw(parentTransform: Transform2) = elements.reverse() forEach { it.draw(parentTransform before this.transform) }
 }
 
 class GlColoredElement(override val original: ColoredElement<*>, screen: GlScreen) : GlElement(original, screen), ColoredElement<Any?> {

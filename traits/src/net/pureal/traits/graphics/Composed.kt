@@ -2,7 +2,6 @@ package net.pureal.traits.graphics
 
 import net.pureal.traits.math.*
 import net.pureal.traits.*
-import java.util.SortedSet
 
 trait Composed<T> : Element<T> {
     val elements : Iterable<Element<*>>
