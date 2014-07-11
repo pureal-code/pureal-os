@@ -8,7 +8,7 @@ import kotlin.math.*
 public trait BasicReal : InternalReal {
     class object {
         final fun getLowestExponent(o1 : BasicReal, o2: BasicReal) : Long = min(o1.exponent,o2.exponent)
-        final fun exponentialFactor(exp : Long) : BigInteger = BigInteger.TEN.pow(abs(exp.toInt()))
+        final fun exponentialFactor(exp : Long) : BigInteger = BigInteger.TEN.pow(abs(exp.toInt()))!!
     }
 
     /*********** CONVERSIONS **************/
@@ -160,7 +160,7 @@ public trait BasicReal : InternalReal {
                 if(other.number == BigInteger.ZERO) throw ArithmeticException("A Division by Zero is not allowed")
                 val targetExp = exponent-other.exponent
                 val br1 = setToExponent(exponent-activeEnvironment.accuracy)
-                val c = br1.number.divideAndRemainder(other.number)
+                val c = br1.number.divideAndRemainder(other.number)!!
                 if (activeEnvironment.requireExactCalculation && c[1] != BigInteger.ZERO)
                     throw RuntimeException("Accurate Division is not possible")
                 return BasicReal(c[0], targetExp-activeEnvironment.accuracy).minimize()
@@ -181,7 +181,7 @@ public trait BasicReal : InternalReal {
             while(c[1] == BigInteger.ZERO){
                 tmp = c[0]
                 powers += stepSize
-                c = tmp.divideAndRemainder(p)
+                c = tmp.divideAndRemainder(p)!!
             }
             powers -= stepSize
             if(stepSize == 1) done = true
