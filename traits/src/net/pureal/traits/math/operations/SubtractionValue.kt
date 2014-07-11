@@ -19,7 +19,7 @@ public trait SubtractionValue : RealBinaryOperation {
     override val value1 : Real
     override val value2 : Real
 
-    override fun approximate(accuracy : Int) : Real {
+    override fun approximate(): Real {
         return real(value1.toDouble() - value2.toDouble())
     }
 

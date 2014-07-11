@@ -7,16 +7,16 @@ public trait RealConstant : Symbol {
 
     override fun Number() : Number = approximate().Number()
 
-    override fun approximate(accuracy: Int) : Real {
-        if(calculation_fn != null) return calculation_fn!!.invoke(accuracy)
+    override fun approximate(): Real {
+        if(calculation_fn != null) return calculation_fn!!.invoke()
         return value
     }
 
-    protected val calculation_fn : ((Int) -> Real)?
+    protected val calculation_fn : (() -> Real)?
 
 }
 
-fun realConstant(n : String, v : Real, u: String? = null, fn: ((Int) -> Real)? = null) : RealConstant = object : RealConstant {
+fun realConstant(n : String, v : Real, u: String? = null, fn: (() -> Real)? = null) : RealConstant = object : RealConstant {
     override protected val value : Real = v
     override val name : String = n
     override val unit : String? = u

@@ -19,7 +19,7 @@ public trait AdditionValue : RealBinaryOperation {
 
 
 
-    override fun approximate(accuracy : Int) : Real {
+    override fun approximate(): Real {
         return real(value1.toDouble() + value2.toDouble())
     }
 
