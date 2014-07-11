@@ -11,7 +11,7 @@ trait Transform2 {
         return vector(v[0], v[1])
     }
 
-    fun before(other : Transform2) : Transform2 = transform(matrix * other.matrix)
+    fun before(other : Transform2) : Transform2 = transform(other.matrix * matrix)
     fun at(location : Vector2) = Transforms2.translation(-location).before(this).before(Transforms2.translation(location))
 
     fun inverse() : Transform2 = transform(matrix.inverse()!!)
