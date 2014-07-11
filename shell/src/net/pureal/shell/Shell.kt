@@ -12,7 +12,7 @@ class Shell(val screen: Screen) {
         val halfWidth = screen.size.x.toDouble() / 2
         fun logoRect(angle : Number) = button(
                 shape = rectangle(vector(300, 100)),
-                transform = Transforms2.rotation(angle) before Transforms2.translation(vector(150, 50)),
+                transform = Transforms2.rotation(angle),
                 fill = Fills.solid(Colors.white),
                 onClick = {println("This is da fucking Pureal logo!")})
 

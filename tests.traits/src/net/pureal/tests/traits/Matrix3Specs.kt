@@ -92,6 +92,22 @@ class Matrix3Specs : Spek() {{
                 shouldEqual(vector(11,-4,1), x)
             }
         }
+
+        on("multiplying it with another matrix with determinant 0") {
+            val x = m * matrix(1, 2, 3, 4, 5, 6, 7, 8, 9)
+
+            it("should be correct") {
+                shouldEqual(matrix(25, 29, 33, -16, -14, -12, 5, 4, 3), x)
+            }
+        }
+
+        on("multiplying it with another matrix with determinant different from 0") {
+            val x = m * matrix(-2,2,3,1,5,-6,-4,0,3)
+
+            it("should be correct") {
+                shouldEqual(matrix(-19, -3, 21, 18, 26, -30, 0, -4, -3), x)
+            }
+        }
     }
 
     given("a 3 square matrix with determinant 0") {

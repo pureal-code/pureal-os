@@ -77,4 +77,16 @@ class Transform2Specs : Spek() {{
             }
         }
     }
+
+    given("a translation of (3,3) before a rotation of pi/2") {
+        val t = Transforms2.translation(vector(3,3)) before Transforms2.rotation(Math.PI / 2)
+
+        on("applying it on (1,0)") {
+            val x = t(vector(1,0))
+
+            it("should be (-3,4)") {
+                shouldEqual(vector(-3,4), x)
+            }
+        }
+    }
 }}
