@@ -13,7 +13,7 @@ public trait RealBinaryOperation : Real {
 
     override fun simplify() : Real
 
-    override fun approximate(accuracy : Int) : Real
+    override fun approximate(): Real
 
     final fun getSubString(v : Real) : String {
         if (v !is RealBinaryOperation) return v.toString()

@@ -4,7 +4,7 @@ import java.math.BigInteger
 
 
 public trait RealPrimitive : Real {
-    val value: BasicReal
+    val value: InternalReal
 
     // TODO: replace with BasicReal later
     override fun toString() = "real(\"${value.toMathematicalString()}\")"
@@ -20,7 +20,6 @@ public trait RealPrimitive : Real {
             else -> false
         }
     }
-
 
     override fun minus() : Real = real(-value)
 }
@@ -39,7 +38,7 @@ fun real(v:Number) : RealPrimitive {
     }
 }
 
-fun real(r : BasicReal) : RealPrimitive = object : RealPrimitive {
+fun real(r : InternalReal) : RealPrimitive = object : RealPrimitive {
     override val value = r
 }
 
