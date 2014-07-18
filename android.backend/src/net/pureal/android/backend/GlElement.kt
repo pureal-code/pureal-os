@@ -80,15 +80,15 @@ class GlColoredElement(override val original: ColoredElement<*>, screen: GlScree
     private var drawListBuffer = buildDrawListBuffer()
     fun buildVertexBuffer(): FloatBuffer {
         // 4 bytes per float
-        val byteBuffer = ByteBuffer.allocateDirect(shape.coordinates.size * 4) order ByteOrder.nativeOrder()!!;
-        val floatBuffer = byteBuffer.asFloatBuffer()
+        val byteBuffer = ByteBuffer.allocateDirect(shape.coordinates.size * 4)!! order ByteOrder.nativeOrder()!!;
+        val floatBuffer = byteBuffer.asFloatBuffer()!!
         floatBuffer put shape.coordinates position 0
         return floatBuffer
     }
     fun buildDrawListBuffer(): ShortBuffer {
         // 2 bytes per short
-        val byteBuffer = ByteBuffer.allocateDirect(shape.coordinates.size * 2) order ByteOrder.nativeOrder()!!;
-        val shortBuffer = byteBuffer.asShortBuffer()
+        val byteBuffer = ByteBuffer.allocateDirect(shape.coordinates.size * 2)!! order ByteOrder.nativeOrder()!!;
+        val shortBuffer = byteBuffer.asShortBuffer()!!
         shortBuffer put shape.drawOrder position 0
         return shortBuffer
     }
