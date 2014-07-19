@@ -2,20 +2,20 @@ package net.pureal.traits.math
 
 
 public trait RealBinaryOperation : Real {
-    val description : String
-    val priority : Int
-    val operationSign : String
+    val description: String
+    val priority: Int
+    val operationSign: String
 
-    val isOrderDependent : Boolean
+    val isOrderDependent: Boolean
 
-    val value1 : Real
-    val value2 : Real
+    val value1: Real
+    val value2: Real
 
-    override fun simplify() : Real
+    override fun simplify(): Real
 
-    override fun approximate(): Real
+    override fun approximate(): InternalReal
 
-    final fun getSubString(v : Real) : String {
+    final fun getSubString(v: Real): String {
         if (v !is RealBinaryOperation) return v.toString()
         if (isOrderDependent) {
             return if (v.priority <= priority) "(${v.toString()})"
@@ -26,7 +26,7 @@ public trait RealBinaryOperation : Real {
         }
     }
 
-    override fun toString() : String {
+    override fun toString(): String {
         val v1str = getSubString(value1)
         val v2str = getSubString(value2)
         return "${v1str} ${operationSign} ${v2str}"

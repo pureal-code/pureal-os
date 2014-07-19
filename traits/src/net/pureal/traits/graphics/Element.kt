@@ -6,6 +6,6 @@ import net.pureal.traits.interaction.*
 
 trait Element<T> : Interactive<T> {
     val transform: Transform2
-    val shape : Shape
-    val changed : Observable<Unit>
+    val shape: Shape
+    val changed: Observable<Unit>
 }

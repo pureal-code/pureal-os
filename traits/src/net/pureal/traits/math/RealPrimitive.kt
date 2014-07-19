@@ -9,11 +9,10 @@ public trait RealPrimitive : Real {
     // TODO: replace with BasicReal later
     override fun toString() = "real(\"${value.toMathematicalString()}\")"
 
-    override fun Number() = value.toDouble() // TODO: remove toDouble once BasicReal works with number trait
+    override fun approximate() = value
 
-
-    override fun equals(other : Any?) : Boolean {
-        return when(other){
+    override fun equals(other: Any?): Boolean {
+        return when (other) {
             is RealPrimitive -> value == other.value
             is Real -> false
             is Number -> value == other
@@ -21,11 +20,11 @@ public trait RealPrimitive : Real {
         }
     }
 
-    override fun minus() : Real = real(-value)
+    override fun minus(): Real = real(-value)
 }
 
-fun real(v:Number) : RealPrimitive {
-    when(v) {
+fun real(v: Number): RealPrimitive {
+    when (v) {
         is Real -> throw IllegalArgumentException("A RealPrimitive cannot be created with an expression")
         is Int -> return real(BasicReal(v))
         is Long -> return real(BasicReal(v))
@@ -38,11 +37,11 @@ fun real(v:Number) : RealPrimitive {
     }
 }
 
-fun real(r : InternalReal) : RealPrimitive = object : RealPrimitive {
+fun real(r: InternalReal): RealPrimitive = object : RealPrimitive {
     override val value = r
 }
 
-fun real(s : String) : RealPrimitive = real(BasicReal(s))
+fun real(s: String): RealPrimitive = real(BasicReal(s))
 
-fun Number.toReal() : RealPrimitive = real(this)
+fun Number.toReal(): RealPrimitive = real(this)
 

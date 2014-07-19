@@ -4,22 +4,22 @@ import net.pureal.traits.math.*
 import net.pureal.traits.*
 
 trait Composed<T> : Element<T> {
-    val elements : Iterable<Element<*>>
-    fun elementsAt(location : Vector2) : Iterable<Element<*>> = elements flatMap {
+    val elements: Iterable<Element<*>>
+    fun elementsAt(location: Vector2): Iterable<Element<*>> = elements flatMap {
         val transformedLocation = it transform location
         val contains = it.shape.contains(transformedLocation)
 
-        if(!contains) listOf<Element<*>>() else if(it is Composed) it.elementsAt(transformedLocation) else listOf(it)
+        if (!contains) listOf<Element<*>>() else if (it is Composed) it.elementsAt(transformedLocation) else listOf(it)
     }
 
-    val added : Observable<Element<*>>
-    val removed : Observable<Element<*>>
+    val added: Observable<Element<*>>
+    val removed: Observable<Element<*>>
 }
 
 fun composed<T>(
-        content : T,
-        elements : Iterable<Element<*>>,
-        transform : Transform2 = Transforms2.identity,
+        content: T,
+        elements: Iterable<Element<*>>,
+        transform: Transform2 = Transforms2.identity,
         added: Observable<Element<*>> = observable<Element<*>>(),
         removed: Observable<Element<*>> = observable<Element<*>>(),
         changed: Observable<Unit> = observable<Unit>()) = object : Composed<T> {
@@ -33,8 +33,8 @@ fun composed<T>(
 }
 
 fun composed(
-        elements : Iterable<Element<*>>,
-        transform : Transform2 = Transforms2.identity,
+        elements: Iterable<Element<*>>,
+        transform: Transform2 = Transforms2.identity,
         added: Observable<Element<*>> = observable<Element<*>>(),
         removed: Observable<Element<*>> = observable<Element<*>>(),
         changed: Observable<Unit> = observable<Unit>()) = composed<Unit>(Unit.VALUE, elements, transform, added, removed, changed)

@@ -7,41 +7,41 @@ import kotlin.math.*
 
 public trait BasicReal : InternalReal {
     class object {
-        final fun getLowestExponent(o1 : BasicReal, o2: BasicReal) : Long = min(o1.exponent,o2.exponent)
-        final fun exponentialFactor(exp : Long) : BigInteger = BigInteger.TEN.pow(abs(exp.toInt()))!!
+        final fun getLowestExponent(o1: BasicReal, o2: BasicReal): Long = min(o1.exponent, o2.exponent)
+        final fun exponentialFactor(exp: Long): BigInteger = BigInteger.TEN.pow(abs(exp.toInt()))
     }
 
     /*********** CONVERSIONS **************/
-    final override fun toDouble() : Double = number.doubleValue() * doubleExponentialFactor()
+    final override fun toDouble(): Double = number.doubleValue() * doubleExponentialFactor()
 
-    final override fun toFloat() : Float = number.floatValue() * doubleExponentialFactor().toFloat()
+    final override fun toFloat(): Float = number.floatValue() * doubleExponentialFactor().toFloat()
 
-    final override fun toLong() : Long = number.longValue() * doubleExponentialFactor().toLong()
+    final override fun toLong(): Long = number.longValue() * doubleExponentialFactor().toLong()
 
-    final override fun toInt() : Int = toLong().toInt()
-    final override fun toShort() : Short = toLong().toShort()
-    final override fun toByte() : Byte = toLong().toByte()
-    final override fun toChar() : Char = toLong().toChar()
+    final override fun toInt(): Int = toLong().toInt()
+    final override fun toShort(): Short = toLong().toShort()
+    final override fun toByte(): Byte = toLong().toByte()
+    final override fun toChar(): Char = toLong().toChar()
 
-    override fun toString() : String {
+    override fun toString(): String {
         return "BasicReal(\"${toMathematicalString()}\")"
     }
 
-    override fun toMathematicalString() : String {
-        if(number == BigInteger.ZERO) return "0"
-        var s : String = number.toString()
+    override fun toMathematicalString(): String {
+        if (number == BigInteger.ZERO) return "0"
+        var s: String = number.toString()
         val s_begin = when {
             s.first() == '-' -> 1
             else -> 0
         }
-        if(exponent+s.length in -2..7) {
-            if(exponent >= 0) return (number*exponentialFactor()).toString()
-            var dotpos : Int = s.length + exponent.toInt()
-            while(dotpos < s_begin) {
+        if (exponent + s.length in -2..7) {
+            if (exponent >= 0) return (number * exponentialFactor()).toString()
+            var dotpos: Int = s.length + exponent.toInt()
+            while (dotpos < s_begin) {
                 dotpos++
                 s = s.substring(0, s_begin) + "0" + s.substring(s_begin, s.length)
             }
-            return s.substring(0, dotpos)  + "." + s.substring(dotpos, s.length)
+            return s.substring(0, dotpos) + "." + s.substring(dotpos, s.length)
         }
         var dotpos = 1 + s_begin
         var exp = exponent + s.length - dotpos
@@ -49,14 +49,14 @@ public trait BasicReal : InternalReal {
             dotpos != s.length -> s.substring(0, dotpos) + "." + s.substring(dotpos, s.length)
             else -> s
         }
-        val esgn : String = when {
+        val esgn: String = when {
             exp >= 0 -> "+"
             else -> "-"
         }
         return s + "E" + esgn + abs(exp).toString()
     }
 
-    final fun toBigInteger() : BigInteger {
+    final fun toBigInteger(): BigInteger {
         return when {
             exponent > 0 -> number * exponentialFactor()
             else -> number / exponentialFactor()
@@ -64,11 +64,11 @@ public trait BasicReal : InternalReal {
     }
 
     /*********** COMPARATOR FUNCTIONS ***********/
-    open fun compareExponentTo(other : BasicReal) : Long {
+    open fun compareExponentTo(other: BasicReal): Long {
         return this.exponent - other.exponent
     }
 
-    override fun compareTo(other : Any?) : Int {
+    override fun compareTo(other: Any?): Int {
         when (other) {
             is Byte -> return compareTo(BasicReal(other))
             is Short -> return compareTo(BasicReal(other))
@@ -78,23 +78,25 @@ public trait BasicReal : InternalReal {
             is Double -> return compareTo(BasicReal(other))
             is BigInteger -> return compareTo(BasicReal(other))
             is BasicReal -> {
-                if(this.signum() == 0) return -other.signum()
-                if(this.signum() != other.signum()){
-                    return this.signum()-other.signum()
+                if (this.signum() == 0) return -other.signum()
+                if (this.signum() != other.signum()) {
+                    return this.signum() - other.signum()
                 }
-                if(compareExponentTo(other) != 0L) return compareExponentTo(other).toInt() * this.signum()
-                return (this-other).number.compareTo(BigInteger.ZERO)
+                if (compareExponentTo(other) != 0L) return compareExponentTo(other).toInt() * this.signum()
+                return (this - other).number.compareTo(BigInteger.ZERO)
             }
+            is InternalReal -> return other.compareTo(this)
             else -> throw IllegalArgumentException()
         }
     }
 
-    fun exponentialFactor() : BigInteger = BasicReal.exponentialFactor(exponent)
-    fun doubleExponentialFactor() : Double = pow(10.0, exponent.toDouble())
+
+    fun exponentialFactor(): BigInteger = BasicReal.exponentialFactor(exponent)
+    fun doubleExponentialFactor(): Double = pow(10.0, exponent.toDouble())
 
 
     /********* BASIC OPERATIONS *********/
-    override fun plus(other : Any?) : BasicReal {
+    override fun plus(other: Any?): BasicReal {
         when (other) {
             is Byte -> return this + BasicInt(other)
             is Short -> return this + BasicInt(other)
@@ -112,7 +114,7 @@ public trait BasicReal : InternalReal {
         }
     }
 
-    override fun minus(other : Any?) : BasicReal {
+    override fun minus(other: Any?): BasicReal {
         when (other) {
             is Byte -> return this - BasicInt(other)
             is Short -> return this - BasicInt(other)
@@ -130,7 +132,7 @@ public trait BasicReal : InternalReal {
         }
     }
 
-    override fun times(other : Any?) : BasicReal {
+    override fun times(other: Any?): BasicReal {
         when (other) {
             is Byte -> return this * BasicInt(other)
             is Short -> return this * BasicInt(other)
@@ -148,7 +150,7 @@ public trait BasicReal : InternalReal {
         }
     }
 
-    override fun div(other : Any?) : BasicReal {
+    override fun div(other: Any?): BasicReal {
         when (other) {
             is Byte -> return this / BasicInt(other)
             is Short -> return this / BasicInt(other)
@@ -157,34 +159,34 @@ public trait BasicReal : InternalReal {
             is Double -> return this / BasicReal(other)
             is Float -> return this / BasicReal(other)
             is BasicReal -> {
-                if(other.number == BigInteger.ZERO) throw ArithmeticException("A Division by Zero is not allowed")
-                val targetExp = exponent-other.exponent
-                val br1 = setToExponent(exponent-activeEnvironment.accuracy)
-                val c = br1.number.divideAndRemainder(other.number)!!
+                if (other.number == BigInteger.ZERO) throw ArithmeticException("A Division by Zero is not allowed")
+                val targetExp = exponent - other.exponent
+                val br1 = setToExponent(exponent - activeEnvironment.accuracy)
+                val c = br1.number.divideAndRemainder(other.number)
                 if (activeEnvironment.requireExactCalculation && c[1] != BigInteger.ZERO)
                     throw RuntimeException("Accurate Division is not possible")
-                return BasicReal(c[0], targetExp-activeEnvironment.accuracy).minimize()
+                return BasicReal(c[0], targetExp - activeEnvironment.accuracy).minimize()
             }
             else -> throw IllegalArgumentException()
         }
     }
 
-    open fun minimize() : BasicReal {
-        if(this.number == BigInteger.ZERO) return BasicReal(this.number, 0)
-        var stepSize : Int = activeEnvironment.accuracy / 4
-        var powers : Long = 0
-        var tmp : BigInteger = this.number
-        var done : Boolean = false
+    open fun minimize(): BasicReal {
+        if (this.number == BigInteger.ZERO) return BasicReal(this.number, 0)
+        var stepSize: Int = activeEnvironment.accuracy / 4
+        var powers: Long = 0
+        var tmp: BigInteger = this.number
+        var done: Boolean = false
         do {
             var p = BigInteger.TEN.pow(stepSize)
             var c = array(tmp, BigInteger.ZERO)
-            while(c[1] == BigInteger.ZERO){
+            while (c[1] == BigInteger.ZERO) {
                 tmp = c[0]
                 powers += stepSize
-                c = tmp.divideAndRemainder(p)!!
+                c = tmp.divideAndRemainder(p)
             }
             powers -= stepSize
-            if(stepSize == 1) done = true
+            if (stepSize == 1) done = true
             else {
                 stepSize /= 2
             }
@@ -198,95 +200,91 @@ public trait BasicReal : InternalReal {
      * number stores a big Integer ...
      * and exponent is the 10-exponent - is Long as we do not expect exponents near 2^63
      */
-    val number : BigInteger
-    val exponent : Long
+    val number: BigInteger
+    val exponent: Long
 
-    override fun minus() : BasicReal = BasicReal(-number, exponent)
+    override fun minus(): BasicReal = BasicReal(-number, exponent)
 
-    override fun equals(other : Any?) : Boolean
-    {
+    override fun equals(other: Any?): Boolean {
         when (other) {
             null -> return false
-            is Number -> return compareTo(other)==0
-            is BasicReal -> return compareTo(other)==0
+            is Number -> return compareTo(other) == 0
+            is BasicReal -> return compareTo(other) == 0
             else -> return false
         }
     }
 
-    override fun isInteger() : Boolean = exponent >= 0
+    override fun isInteger(): Boolean = exponent >= 0
 
-    final override fun signum() : Int = number.signum()
+    final override fun signum(): Int = number.signum()
 
     final fun getLowestExponent(o1: BasicReal, o2: BasicReal) = BasicReal.getLowestExponent(o1, o2)
 
-    final fun setToExponent(exp : Long) : BasicReal {
+    final fun setToExponent(exp: Long): BasicReal {
         return when {
             exp == exponent -> this
-            exp > exponent -> BasicReal(number / exponentialFactor(exp-exponent), exp)
-            else -> BasicReal(number * exponentialFactor(exp-exponent), exp)
+            exp > exponent -> BasicReal(number / exponentialFactor(exp - exponent), exp)
+            else -> BasicReal(number * exponentialFactor(exp - exponent), exp)
         }
     }
 }
 
 
-
-fun BasicReal(s : String) : BasicReal {
-    var str : String = s.capitalize()
-    var estr : String
+fun BasicReal(s: String): BasicReal {
+    var str: String = s.capitalize()
+    var estr: String
     // with regex - remove illegal characters and whitespace
-    if(str.matches("[^0-9\\.\\-\\+E\\s]")) throw IllegalArgumentException("There are forbidden characters in the expression")
+    if (str.matches("[^0-9\\.\\-\\+E\\s]")) throw IllegalArgumentException("There are forbidden characters in the expression")
 
     // get sign of number
     var sgnstr = ""
-    if(str.first()=='-') {
+    if (str.first() == '-') {
         sgnstr = "-"
         str = str.substring(1)
     }
 
 
     // look if we have exponent
-    var epos : Int = str.indexOf("E")
-    var exp : Long = 0
-    if(epos != -1){
-        estr = str.substring(epos+1)
+    var epos: Int = str.indexOf("E")
+    var exp: Long = 0
+    if (epos != -1) {
+        estr = str.substring(epos + 1)
         exp = estr.toLong()
-        str = str.substring(0,epos)
+        str = str.substring(0, epos)
     }
     // now remove the "dot of the number"
     epos = str.indexOf(".")
-    if(epos != -1){
+    if (epos != -1) {
         exp -= (str.length - epos - 1) // reduce by number of characters after '.'
-        str = str.replaceAll("[\\.]","") // remove dot
+        str = str.replaceAll("[\\.]", "") // remove dot
     }
     // remove leading zeros
-    while(str.first()=='0' && str.length > 1)
-    {
+    while (str.first() == '0' && str.length > 1) {
         str = str.substring(1)
     }
     // remove tailing zeros
-    while(str.last()=='0' && str.length > 1)
-    {
-        str = str.substring(0,str.length-1)
+    while (str.last() == '0' && str.length > 1) {
+        str = str.substring(0, str.length - 1)
         exp++
     }
     return BasicReal (BigInteger (sgnstr + str), exp)
 }
 
 /** MAIN CONSTRUCTOR **/
-fun BasicReal(num : BigInteger, exp : Long) = object : BasicReal {
-    override val number : BigInteger = num
-    override val exponent : Long = exp
+fun BasicReal(num: BigInteger, exp: Long) = object : BasicReal {
+    override val number: BigInteger = num
+    override val exponent: Long = exp
 }
 
-fun BasicReal(num : BigInteger) : BasicReal = BasicReal (num, 0)
-fun BasicReal(bi : BasicInt, exp : Long = 0) : BasicReal = BasicReal(bi.number, exp)
+fun BasicReal(num: BigInteger): BasicReal = BasicReal (num, 0)
+fun BasicReal(bi: BasicInt, exp: Long = 0): BasicReal = BasicReal(bi.number, exp)
 
-fun BasicReal(d : Double) : BasicReal = BasicReal(d.toString())
-fun BasicReal(f : Float) : BasicReal = BasicReal(f.toString())
+fun BasicReal(d: Double): BasicReal = BasicReal(d.toString())
+fun BasicReal(f: Float): BasicReal = BasicReal(f.toString())
 
-fun BasicReal(l : Long) : BasicReal = BasicReal(BigInteger(l), 0).minimize()
-fun BasicReal(i : Int) : BasicReal = BasicReal(i.toLong())
-fun BasicReal(s : Short) : BasicReal = BasicInt(s.toLong())
-fun BasicReal(b : Byte) : BasicReal = BasicInt(b.toLong())
+fun BasicReal(l: Long): BasicReal = BasicReal(BigInteger(l), 0).minimize()
+fun BasicReal(i: Int): BasicReal = BasicReal(i.toLong())
+fun BasicReal(s: Short): BasicReal = BasicInt(s.toLong())
+fun BasicReal(b: Byte): BasicReal = BasicInt(b.toLong())
 
 

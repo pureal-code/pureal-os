@@ -1,26 +1,25 @@
 package net.pureal.traits.math
 
-public trait RealConstant : Symbol {
-    protected val value : Real
+public trait RealConstant : Symbol, RealPrimitive {
+    override val value: InternalReal get() = approximate()
 
-    override val isKnown : Boolean get() = true
+    override fun toString(): String = super<Symbol>.toString()
 
-    override fun Number() : Number = approximate().Number()
+    override val isKnown: Boolean get() = true
 
-    override fun approximate(): Real {
-        if(calculation_fn != null) return calculation_fn!!.invoke()
-        return value
+    override fun approximate(): InternalReal {
+        return calculation_fn.invoke().approximate()
     }
 
-    protected val calculation_fn : (() -> Real)?
+    protected val calculation_fn: (() -> Real)
+
+    override val isApproximate: Boolean get() = false
 
 }
 
-fun realConstant(n : String, v : Real, u: String? = null, fn: (() -> Real)? = null) : RealConstant = object : RealConstant {
-    override protected val value : Real = v
-    override val name : String = n
-    override val unit : String? = u
-    override val isApproximate : Boolean = fn != null
+fun realConstant(n: String, u: String? = null, fn: (() -> Real)): RealConstant = object : RealConstant {
+    override val name: String = n
+    override val unit: String? = u
     override val calculation_fn = fn
 }
 

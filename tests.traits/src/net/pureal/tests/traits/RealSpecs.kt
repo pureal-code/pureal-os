@@ -86,7 +86,7 @@ public class RealSpecs : Spek() {{
     }
     given("the constant pi as approximate")
     {
-        val pi = realConstant("pi",3.141592.toReal())
+        val pi = realConstant("pi"){real("3.1415926535")}
         on("getting string representation")
         {
             it("should be 'pi'", {

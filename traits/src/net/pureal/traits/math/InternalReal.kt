@@ -1,41 +1,42 @@
 package net.pureal.traits.math
 
-public trait InternalReal {
+public trait InternalReal : Number, Comparable<Any?> {
 
-    fun toDouble() : Double
-    fun toFloat() : Float = toDouble().toFloat()
-    fun toLong() : Long
-    fun toInt() : Int = toLong().toInt()
-    fun toShort() : Short = toLong().toShort()
-    fun toByte() : Byte = toLong().toByte()
-    fun toChar() : Char = toLong().toChar()
+    override fun toDouble(): Double
+    override fun toFloat(): Float = toDouble().toFloat()
+    override fun toLong(): Long
+    override fun toInt(): Int = toLong().toInt()
+    override fun toShort(): Short = toLong().toShort()
+    override fun toByte(): Byte = toLong().toByte()
+    override fun toChar(): Char = toLong().toChar()
 
-    override fun toString() : String
+    override fun toString(): String
 
-    fun toMathematicalString() : String // NOTE: i would like the environment to do the conversion, using a xxxRealConverter trait
+    fun toMathematicalString(): String // NOTE: i would like the environment to do the conversion, using a xxxRealConverter trait
 
-    fun compareTo(other : Any?) : Int
+    override fun compareTo(other: Any?): Int
 
-    override fun equals(other : Any?) : Boolean {
+
+    override fun equals(other: Any?): Boolean {
         try {
             return compareTo(other) == 0
-        } catch (e : IllegalArgumentException) {
+        } catch (e: IllegalArgumentException) {
             return false
         }
     }
 
-    fun plus(other : Any?) : InternalReal
-    fun minus(other : Any?) : InternalReal
-    fun times(other : Any?) : InternalReal
-    fun div(other : Any?) : InternalReal
+    fun plus(other: Any?): InternalReal
+    fun minus(other: Any?): InternalReal
+    fun times(other: Any?): InternalReal
+    fun div(other: Any?): InternalReal
     /// throws RuntimeException for
 
-    fun minus() : InternalReal
+    fun minus(): InternalReal
 
-    fun signum() : Int
+    fun signum(): Int
 
-    val sign : Boolean get() = signum() < 0
+    val sign: Boolean get() = signum() < 0
 
-    fun isInteger() : Boolean
+    fun isInteger(): Boolean
 
 }

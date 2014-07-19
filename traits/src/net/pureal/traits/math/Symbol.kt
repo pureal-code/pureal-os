@@ -1,12 +1,12 @@
 package net.pureal.traits.math
 
 public trait Symbol : Real {
-    val name : String
+    val name: String
 
     // TODO: Evaluate if isKnown is needed on the whole Real trait
-    val isKnown : Boolean get() = false
+    val isKnown: Boolean get() = false
 
-    val unit : String? // TODO: Create a dedicated Unit Type
+    val unit: String? // TODO: Create a dedicated Unit Type
 
     override fun toString() = name
 

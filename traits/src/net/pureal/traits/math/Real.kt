@@ -6,64 +6,55 @@ import net.pureal.traits.math.operations.subtractionValue
 import net.pureal.traits.math.operations.divisionValue
 
 // TODO: cast to Number when compiler works correctly with it
-public trait Real {
-    val isApproximate : Boolean get() = false
+public trait Real : Number {
+    val isApproximate: Boolean get() = false
 
-    fun simplify() : Real {
+    fun simplify(): Real {
         // TODO: return sympy.simplify(toMathematicalString()) - is to be inherited by all sub-traits in the end
         return this
     }
 
-    fun approximate(): Real = this
+    fun approximate(): InternalReal {
+        throw UnsupportedOperationException()
+    }
 
-    fun getPrimitive() : Number = approximate().Number() // TODO: make it basicReal or RealPrimitive
-
-    override fun equals(other : Any?) : Boolean
-    {
-        when (other)
-        {
+    override fun equals(other: Any?): Boolean {
+        when (other) {
             null -> return false
             is Real -> {
-                if(this is RealPrimitive && other is RealPrimitive)
-                {
-                    return this.getPrimitive() == other.getPrimitive()
+                if (this is RealPrimitive && other is RealPrimitive) {
+                    return this.approximate() == other.approximate()
                 }
                 return false
                 // return this.approximate() == other.approximate()
                 // TODO: actually pretty dirty checking, to be refined later
             }
             is Number -> {
-                return this.getPrimitive() == other
+                return this.approximate() == other
             }
         }
         return false
     }
 
-    fun plus(other: Real) : Real = additionValue(this,other)
+    fun plus(other: Real): Real = additionValue(this, other)
 
-    fun minus() : Real = subtractionValue(0.toReal(), this)
+    fun minus(): Real = subtractionValue(0.toReal(), this)
 
-    fun minus(other: Real) : Real = subtractionValue(this,other)
+    fun minus(other: Real): Real = subtractionValue(this, other)
 
-    fun times(other: Real) : Real = multiplicationValue(this,other)
+    fun times(other: Real): Real = multiplicationValue(this, other)
 
-    fun div(other: Real) : Real = divisionValue(this,other)
+    fun div(other: Real): Real = divisionValue(this, other)
 
-    fun invert() : Real = divisionValue(1.toReal(),this)
+    fun invert(): Real = divisionValue(1.toReal(), this)
 
 
-    fun toDouble() : Double = getPrimitive().toDouble()
-    fun toFloat() : Float = toDouble().toFloat()
-    fun toLong() : Long = getPrimitive().toLong()
-    fun toInt() : Int = toLong().toInt()
-    fun toShort() : Short = toLong().toShort()
-    fun toByte() : Byte = toLong().toByte()
-    fun toChar() : Char = toLong().toChar()
-
-    fun Number() : Number
-    {
-        throw UnsupportedOperationException()
-    }
-
+    override fun toDouble(): Double = approximate().toDouble()
+    override fun toFloat(): Float = approximate().toFloat()
+    override fun toLong(): Long = approximate().toLong()
+    override fun toInt(): Int = approximate().toInt()
+    override fun toShort(): Short = approximate().toShort()
+    override fun toByte(): Byte = approximate().toByte()
+    override fun toChar(): Char = approximate().toChar()
 
 }
