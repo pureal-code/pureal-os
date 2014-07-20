@@ -37,7 +37,7 @@ public trait SubtractionValue : RealBinaryOperation {
 
 }
 
-fun subtractionValue(a: Real, b: Real): SubtractionValue = object : SubtractionValue {
+fun subtractionValue(a: Real, b: Real): SubtractionValue = object : SubtractionValue, Number() {
     override val value1 = a
     override val value2 = b
 }

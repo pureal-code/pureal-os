@@ -25,7 +25,7 @@ public trait BasicInt : BasicReal {
 }
 
 /** MAIN CONSTRUCTOR **/
-fun BasicInt(num: BigInteger) = object : BasicInt {
+fun BasicInt(num: BigInteger): BasicInt = object : BasicInt, Number() {
     override val number: BigInteger = num
 }
 

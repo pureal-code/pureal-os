@@ -271,10 +271,12 @@ fun BasicReal(s: String): BasicReal {
 }
 
 /** MAIN CONSTRUCTOR **/
-fun BasicReal(num: BigInteger, exp: Long) = object : BasicReal {
+fun BasicReal(num: BigInteger, exp: Long): BasicReal = object : BasicReal, Number() {
     override val number: BigInteger = num
     override val exponent: Long = exp
 }
+
+
 
 fun BasicReal(num: BigInteger): BasicReal = BasicReal (num, 0)
 fun BasicReal(bi: BasicInt, exp: Long = 0): BasicReal = BasicReal(bi.number, exp)

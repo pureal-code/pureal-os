@@ -46,7 +46,7 @@ public trait DivisionValue : RealBinaryOperation {
 
 }
 
-fun divisionValue(a: Real, b: Real): DivisionValue = object : DivisionValue {
+fun divisionValue(a: Real, b: Real): DivisionValue = object : DivisionValue, Number() {
     override val value1 = a
     override val value2 = b
 }

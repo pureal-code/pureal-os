@@ -37,7 +37,7 @@ fun real(v: Number): RealPrimitive {
     }
 }
 
-fun real(r: InternalReal): RealPrimitive = object : RealPrimitive {
+fun real(r: InternalReal): RealPrimitive = object : RealPrimitive, Number() {
     override val value = r
 }
 
