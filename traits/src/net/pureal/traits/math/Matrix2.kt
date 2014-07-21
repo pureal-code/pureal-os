@@ -1,9 +1,9 @@
 package net.pureal.traits
 
 trait Matrix2 : Numbers {
-    val a: Number;
+    val a: Number
     val b: Number
-    val c: Number;
+    val c: Number
     val d: Number
 
     fun times(other: Matrix2) = matrix2 {(x, y) -> other.column(y) * row(x) }

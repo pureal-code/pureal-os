@@ -1,14 +1,14 @@
 package net.pureal.traits
 
 trait Matrix3 : Numbers {
-    val a: Number;
-    val b: Number;
+    val a: Number
+    val b: Number
     val c: Number
-    val d: Number;
-    val e: Number;
+    val d: Number
+    val e: Number
     val f: Number
-    val g: Number;
-    val h: Number;
+    val g: Number
+    val h: Number
     val i: Number
 
     fun times(other: Matrix3): Matrix3 = matrix3 {(x, y) -> other.column(y) * row(x) }
@@ -49,14 +49,14 @@ trait Matrix3 : Numbers {
 }
 
 fun matrix(a: Number, b: Number, c: Number, d: Number, e: Number, f: Number, g: Number, h: Number, i: Number) = object : Matrix3 {
-    override val a = a;
-    override val b = b;
+    override val a = a
+    override val b = b
     override val c = c
-    override val d = d;
-    override val e = e;
+    override val d = d
+    override val e = e
     override val f = f
-    override val g = g;
-    override val h = h;
+    override val g = g
+    override val h = h
     override val i = i
 }
 
