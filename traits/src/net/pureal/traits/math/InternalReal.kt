@@ -32,6 +32,7 @@ public trait InternalReal : Number, Comparable<Any?> {
     /// throws RuntimeException for
 
     fun minus(): InternalReal
+    fun plus() = this
 
     fun signum(): Int
 

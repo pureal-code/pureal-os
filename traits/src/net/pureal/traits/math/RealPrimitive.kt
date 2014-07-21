@@ -23,25 +23,19 @@ public trait RealPrimitive : Real {
     override fun minus(): Real = real(-value)
 }
 
-fun real(v: Number): RealPrimitive {
+fun real(v: Any?): RealPrimitive {
     when (v) {
+        null -> throw IllegalArgumentException("Cannot create a real out of nothing")
+        is RealPrimitive -> return real(v.value)
         is Real -> throw IllegalArgumentException("A RealPrimitive cannot be created with an expression")
-        is Int -> return real(BasicReal(v))
-        is Long -> return real(BasicReal(v))
-        is Short -> return real(BasicReal(v))
-        is Byte -> return real(BasicReal(v))
-        is Float -> return real(BasicReal(v))
-        is Double -> return real(BasicReal(v))
-        is BigInteger -> return real(BasicReal(v))
-        else -> throw IllegalArgumentException("Unrecognized parameter")
+        is InternalReal -> return object : RealPrimitive, Number() {
+            override val value : InternalReal = v
+        }
+        else -> return real(ee.intReal(v))
     }
 }
 
-fun real(r: InternalReal): RealPrimitive = object : RealPrimitive, Number() {
-    override val value = r
-}
-
-fun real(s: String): RealPrimitive = real(BasicReal(s))
+fun real(s: String): RealPrimitive = real(basicReal(s))
 
 fun Number.toReal(): RealPrimitive = real(this)
 

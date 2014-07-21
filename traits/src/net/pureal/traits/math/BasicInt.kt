@@ -4,40 +4,36 @@ import java.math.BigInteger
 import kotlin.math.*
 import java.lang.Math.*
 
-
-/** Basic Int:
- *  Subtype of BasicReal that is always Integer with exp 0
- *  to facilitate calculations ...
- */
 public trait BasicInt : BasicReal {
 
-    fun toBasicReal(): BasicReal = BasicReal(this, 0)
+    fun toBasicReal(): BasicReal = basicReal(this)
 
-    override fun minus(): BasicInt = BasicInt(-number)
+    override fun minus(): BasicInt = basicInt(-number)
 
     final override fun isInteger(): Boolean = true
 
     final override val exponent: Long get() = 0
 
 
-    override fun exponentialFactor(): BigInteger = BigInteger.ONE
-    override fun doubleExponentialFactor(): Double = 1.0
+    final override fun exponentialFactor(): BigInteger = BigInteger.ONE
+    final override fun doubleExponentialFactor(): Double = 1.0
 }
 
 /** MAIN CONSTRUCTOR **/
-fun BasicInt(num: BigInteger): BasicInt = object : BasicInt, Number() {
-    override val number: BigInteger = num
+fun basicInt(it: Any?): BasicInt {
+    return when(it) {
+        is BasicInt -> basicInt(it.number)
+        is String -> basicInt(BigInteger(it))
+        is Long -> basicInt(BigInteger(it))
+        is Int -> basicInt(BigInteger(it))
+        is Short -> basicInt(BigInteger(it))
+        is Byte -> basicInt(BigInteger(it))
+        is BigInteger -> object : BasicInt, Number() {
+            override val number: BigInteger = it
+        }
+        else -> throw IllegalArgumentException("Cannot create a BasicInt of given '{$it}'")
+    }
 }
-
-fun BasicInt(i: Int): BasicInt = BasicInt(i.toString())
-
-fun BasicInt(s: Short): BasicInt = BasicInt(s.toString())
-
-fun BasicInt(b: Byte): BasicInt = BasicInt(b.toString())
-
-fun BasicInt(l: Long): BasicInt = BasicInt(l.toString())
-
-fun BasicInt(s: String): BasicInt = BasicInt(BigInteger(s))
 
 fun BigInteger(b: Byte): BigInteger = BigInteger(b.toString())
 fun BigInteger(s: Short): BigInteger = BigInteger(s.toString())

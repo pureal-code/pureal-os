@@ -10,7 +10,6 @@ public trait Real : Number {
     val isApproximate: Boolean get() = false
 
     fun simplify(): Real {
-        // TODO: return sympy.simplify(toMathematicalString()) - is to be inherited by all sub-traits in the end
         return this
     }
 
@@ -36,17 +35,19 @@ public trait Real : Number {
         return false
     }
 
-    fun plus(other: Real): Real = additionValue(this, other)
+    fun plus(): Real = this
+    fun minus(): Real = ee.subVal(0.toReal(), this)
 
-    fun minus(): Real = subtractionValue(0.toReal(), this)
 
-    fun minus(other: Real): Real = subtractionValue(this, other)
+    fun plus(other: Real): Real = ee.addVal(this, other)
 
-    fun times(other: Real): Real = multiplicationValue(this, other)
+    fun minus(other: Real): Real = ee.subVal(this, other)
 
-    fun div(other: Real): Real = divisionValue(this, other)
+    fun times(other: Real): Real = ee.mulVal(this, other)
 
-    fun invert(): Real = divisionValue(1.toReal(), this)
+    fun div(other: Real): Real = ee.divVal(this, other)
+
+    fun invert(): Real = ee.divVal(1.toReal(), this)
 
 
     override fun toDouble(): Double = approximate().toDouble()

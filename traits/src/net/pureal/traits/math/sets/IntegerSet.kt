@@ -2,8 +2,8 @@ package net.pureal.traits.math.sets
 
 import net.pureal.traits.math.*
 
-public object IntegerSet : Set {
-    override fun contains(other: Set): Boolean {
+public object IntegerSet : Set<Number> {
+    override fun contains(other: Set<Number>): Boolean {
         return false
     }
     override fun contains(other: Number): Boolean {

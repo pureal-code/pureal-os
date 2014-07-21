@@ -8,7 +8,7 @@ public trait RealConstant : Symbol, RealPrimitive {
     override val isKnown: Boolean get() = true
 
     override fun approximate(): InternalReal {
-        return calculation_fn.invoke().approximate()
+        return calculation_fn().approximate()
     }
 
     protected val calculation_fn: (() -> Real)
