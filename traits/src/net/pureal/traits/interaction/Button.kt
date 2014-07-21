@@ -3,7 +3,6 @@ package net.pureal.traits.interaction
 import net.pureal.traits.*
 import net.pureal.traits.graphics.*
 import net.pureal.traits.math.*
-import java.util.Date
 
 trait Button : Clickable<Trigger<Unit>> {
     override fun onClick(location: Vector2) = content()

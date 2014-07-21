@@ -1,3 +1,9 @@
 package net.pureal.traits.graphics
 
-trait Text : Element<String>
+trait TextDisplay : Element<String> {
+
+}
+
+trait TextInput : Element<String> {
+
+}
