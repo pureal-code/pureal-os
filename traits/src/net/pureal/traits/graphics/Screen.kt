@@ -9,7 +9,7 @@ trait Screen {
 
     fun absoluteTransform(element: Element<*>): Transform2
 
-    fun registerPointerInput(pointerInput: PointerInput) = {
+    fun registerPointerInput(pointerInput: Pointer) = {
         pointerInput.click += {(location) -> content.elementsAt(location).forEach { if (it is Clickable<*>) it.onClick(absoluteTransform(it)(location)) } }
     }
 
