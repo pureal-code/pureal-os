@@ -24,9 +24,9 @@ public trait DivisionValue : RealBinaryOperation {
     }
 
 
-    override fun simplify(): Real {
-        val s1: Real = value1.simplify()
-        val s2: Real = value2.simplify()
+    override fun calculate(): Real {
+        val s1: Real = value1.calculate()
+        val s2: Real = value2.calculate()
         if (s1 is RealPrimitive && s2 is RealPrimitive) {
             try {
                 val res = s1.value / s2.value

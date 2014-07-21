@@ -9,7 +9,11 @@ import net.pureal.traits.math.operations.divisionValue
 public trait Real : Number {
     val isApproximate: Boolean get() = false
 
-    fun simplify(): Real {
+    final fun simplify() : Real {
+        return ee.simplifier.simplify(this)
+    }
+
+    fun calculate(): Real {
         return this
     }
 

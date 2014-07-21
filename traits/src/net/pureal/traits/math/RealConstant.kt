@@ -13,7 +13,7 @@ public trait RealConstant : Symbol, RealPrimitive {
 
     protected val calculation_fn: (() -> Real)
 
-    override val isApproximate: Boolean get() = false
+    override val isApproximate: Boolean get() = calculation_fn().isApproximate
 
 }
 

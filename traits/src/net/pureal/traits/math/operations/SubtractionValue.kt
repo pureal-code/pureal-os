@@ -24,9 +24,9 @@ public trait SubtractionValue : RealBinaryOperation {
     }
 
     // TODO: remove after symPy is imported
-    override fun simplify(): Real {
-        val s1: Real = value1.simplify()
-        val s2: Real = value2.simplify()
+    override fun calculate(): Real {
+        val s1: Real = value1.calculate()
+        val s2: Real = value2.calculate()
         if (s1 is RealPrimitive && s2 is RealPrimitive) return real(s1.value - s2.value)
 
         // return this if no simplification is possible

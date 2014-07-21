@@ -11,7 +11,7 @@ public trait RealBinaryOperation : Real {
     val value1: Real
     val value2: Real
 
-    override fun simplify(): Real
+    override fun calculate(): Real
 
     override fun approximate(): InternalReal
 
