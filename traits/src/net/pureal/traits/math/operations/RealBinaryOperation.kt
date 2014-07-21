@@ -1,5 +1,6 @@
-package net.pureal.traits.math
+package net.pureal.traits.math.operations
 
+import net.pureal.traits.math.*
 
 public trait RealBinaryOperation : Real {
     val description: String
@@ -31,4 +32,8 @@ public trait RealBinaryOperation : Real {
         val v2str = getSubString(value2)
         return "${v1str} ${operationSign} ${v2str}"
     }
+
+    override fun equals(other: Any?) : Boolean =
+            other is RealBinaryOperation && other.operationSign == operationSign
+            && ((other.value1 == value1 && other.value2 == value2) || (!isOrderDependent && other.value2 == value1 && other.value1 == value2))
 }

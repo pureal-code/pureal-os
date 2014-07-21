@@ -5,7 +5,7 @@ public trait RealConstant : Symbol, RealPrimitive {
 
     override fun toString(): String = super<Symbol>.toString()
 
-    override val isKnown: Boolean get() = true
+    override fun equals(other: Any?): Boolean = super<Symbol>.equals(other) || (other is RealConstant && value == other.value)
 
     override fun approximate(): InternalReal {
         return calculation_fn().approximate()

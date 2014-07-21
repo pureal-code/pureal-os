@@ -13,14 +13,14 @@ public class BasicRealSpecs : Spek() {{
             val br = basicReal("212")
             it("should be 212E+0") {
                 shouldEqual(0L,br.exponent)
-                shouldEqual(BigInteger(212),br.number)
+                shouldEqual(BigInteger(212), br.number)
             }
         }
         on("creating a basic Real of '1.23'") {
             val br = basicReal("1.23")
             it("should be 123E-2") {
                 shouldEqual(-2L,br.exponent)
-                shouldEqual(BigInteger(123),br.number)
+                shouldEqual(net.pureal.traits.math.BigInteger(123),br.number)
                 shouldBeFalse(br.sign)
             }
         }
@@ -30,7 +30,7 @@ public class BasicRealSpecs : Spek() {{
             val br1 = basicReal(str1)
             val br2 = basicReal(str2)
             it("should be 0") {
-                shouldEqual(0L,br1.exponent)
+                shouldEqual(0L, br1.exponent)
                 shouldEqual(BigInteger(0),br1.number)
                 shouldEqual(0L,br2.exponent)
                 shouldEqual(BigInteger(0),br2.number)
@@ -41,13 +41,13 @@ public class BasicRealSpecs : Spek() {{
             it("should be -101E+1") {
                 shouldEqual(1L,br.exponent)
                 shouldEqual(BigInteger(-101),br.number)
-            shouldBeTrue(br.sign)
+                shouldBeTrue(br.sign)
             }
         }
         on("creating a basic Real of '0.03302'") {
             val br = basicReal("0.03302")
             it("should be 3302E-5") {
-                shouldEqual(-5L,br.exponent)
+                shouldEqual(-5L, br.exponent)
                 shouldEqual(BigInteger(3302),br.number)
                 shouldBeFalse(br.sign)
             }
@@ -103,9 +103,9 @@ public class BasicRealSpecs : Spek() {{
             }
         }
         on("adding 15 + .02 + 560") {
-            val res = basicReal("15") + basicReal(".02") + basicReal("560")
+            val res = net.pureal.traits.math.basicReal("15") + basicReal(".02") + basicReal("560")
             it("should be 575.02") {
-                shouldEqual(BigInteger(57502), res.number)
+                shouldEqual(net.pureal.traits.math.BigInteger(57502), res.number)
                 shouldEqual(-2L, res.exponent)
             }
         }
@@ -118,7 +118,7 @@ public class BasicRealSpecs : Spek() {{
             }
         }
         on("subtracting -10 with -3000") {
-            val res = basicReal(-10) - basicReal(-3000)
+            val res = basicReal(-10) - net.pureal.traits.math.basicReal(-3000)
             it("should be 299E+1") {
                 shouldEqual(BigInteger(299), res.number)
                 shouldEqual(+1L, res.exponent)
@@ -137,7 +137,7 @@ public class BasicRealSpecs : Spek() {{
             }
         }
         on("multiplying 2.4E+7 with 1.1E+4") {
-            val res = basicReal("2.4E+7") * basicReal("1.1E+4")
+            val res = net.pureal.traits.math.basicReal("2.4E+7") * net.pureal.traits.math.basicReal("1.1E+4")
             it("should be 2.64E+11") {
                 shouldEqual(BigInteger(264), res.number)
                 shouldEqual(+9L, res.exponent)
@@ -160,14 +160,14 @@ public class BasicRealSpecs : Spek() {{
             }
         }
         on("dividing 160 by .1") {
-            val res = basicReal("160") / basicReal(".1")
+            val res = net.pureal.traits.math.basicReal("160") / basicReal(".1")
             it("should be 16E+2") {
                 shouldEqual(BigInteger(16), res.number)
                 shouldEqual(2L, res.exponent)
             }
         }
         on("dividing 63 by 9000") {
-            val res = basicReal(63) / basicReal(9000)
+            val res = net.pureal.traits.math.basicReal(63) / basicReal(9000)
             it("should be 7E-3") {
                 shouldEqual(BigInteger(7), res.number)
                 shouldEqual(-3L, res.exponent)
@@ -189,7 +189,7 @@ public class BasicRealSpecs : Spek() {{
         on("minimizing 10000E+0") {
             val b = basicReal(BigInteger(10000), 0).minimize()
             it("should be 1E+4") {
-                shouldEqual(BigInteger(1), b.number)
+                shouldEqual(net.pureal.traits.math.BigInteger(1), b.number)
                 shouldEqual(4L, b.exponent)
             }
         }
@@ -203,7 +203,7 @@ public class BasicRealSpecs : Spek() {{
         on("minimizing -1.3200E-1") {
             val b = basicReal(BigInteger(-13200), -5).minimize()
             it("should be -132E-3") {
-                shouldEqual(BigInteger(-132), b.number)
+                shouldEqual(net.pureal.traits.math.BigInteger(-132), b.number)
                 shouldEqual(-3L, b.exponent)
             }
         }

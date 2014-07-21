@@ -8,6 +8,7 @@ fun simplify(r: Real): Real {
     var r_back: Real
     do {
         r_back = r
+        // TODO: transform shit
         r = r.calculate()
     } while (r_back != r)
     return r

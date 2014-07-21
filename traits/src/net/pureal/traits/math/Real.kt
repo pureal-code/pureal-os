@@ -5,9 +5,10 @@ import net.pureal.traits.math.operations.multiplicationValue
 import net.pureal.traits.math.operations.subtractionValue
 import net.pureal.traits.math.operations.divisionValue
 
-// TODO: cast to Number when compiler works correctly with it
 public trait Real : Number {
     val isApproximate: Boolean get() = false
+
+    fun matchWithThisPattern(other: Real) : Boolean = this == other // true if other matches the pattern defined by this
 
     final fun simplify() : Real {
         return ee.simplifier.simplify(this)
@@ -22,6 +23,7 @@ public trait Real : Number {
     }
 
     override fun equals(other: Any?): Boolean {
+        // TODO: this is bullshit as well
         when (other) {
             null -> return false
             is Real -> {
@@ -29,8 +31,6 @@ public trait Real : Number {
                     return this.approximate() == other.approximate()
                 }
                 return false
-                // return this.approximate() == other.approximate()
-                // TODO: actually pretty dirty checking, to be refined later
             }
             is Number -> {
                 return this.approximate() == other

@@ -10,12 +10,20 @@ public class RealSpecs : Spek() {{
         val a = 2.toReal()
         val b = 3.toReal()
         val c = 4.toReal()
+        val sum = a + b
         on("adding 2 and 3")
         {
-            val sum = (a + b).simplify()
             it("should be the real number 5", {
-                shouldEqual(sum, 5)
+                shouldEqual(sum.simplify(), 5)
             })
+        }
+        val sum2 = b + a
+        on("swapping the summands") {
+            it("should be equal") {
+                shouldEqual(sum2.simplify(), 5)
+                shouldEqual(sum2, sum)
+                shouldEqual(sum.simplify(), sum2.simplify())
+            }
         }
         on("adding all three")
         {
@@ -86,7 +94,7 @@ public class RealSpecs : Spek() {{
     }
     given("the constant pi as approximate")
     {
-        val pi = realConstant("pi"){real("3.1415926535")}
+        val pi = net.pureal.traits.math.realConstant("pi") { real("3.1415926535") }
         on("getting string representation")
         {
             it("should be 'pi'", {

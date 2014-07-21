@@ -23,7 +23,6 @@ public trait SubtractionValue : RealBinaryOperation {
         return value1.approximate() - value2.approximate()
     }
 
-    // TODO: remove after symPy is imported
     override fun calculate(): Real {
         val s1: Real = value1.calculate()
         val s2: Real = value2.calculate()

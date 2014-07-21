@@ -1,10 +1,7 @@
 package net.pureal.tests.traits.math
 
-
 import org.spek.*
 import net.pureal.traits.math.*
-import java.math.BigInteger
-import net.pureal.tests.traits.shouldThrow
 import net.pureal.traits.math.sets.*
 
 public class SetSpecs : Spek() {{
