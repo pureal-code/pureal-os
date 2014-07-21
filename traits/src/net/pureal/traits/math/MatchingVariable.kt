@@ -18,7 +18,8 @@ public trait MatchingVariable : Variable {
 
     override fun calculate(): Real = matchingReal?.calculate() ?: this
     override fun equals(other: Any?): Boolean {
-        if(other is Variable)
+        if(other is Variable) return other.name == name && other.requiredSet == requiredSet
         if(matchingReal != null) return matchingReal == other
+        return false
     }
 }
