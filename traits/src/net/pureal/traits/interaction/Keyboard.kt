@@ -2,26 +2,38 @@ package net.pureal.traits.interaction
 
 import net.pureal.traits.*
 
-trait Keyboard {
-    val keys: Iterable<Key>
-    val pressedKeys: Iterable<Key>
+trait KeyDefinition {
+    val command: Command
+    val alternativeCommands: Iterable<Command> get() = listOf()
+    val name: String get() = command.name
+}
+
+fun keyDefinition(command: Command, alternativeCommands: Iterable<Command> = listOf(), name: String = command.name) = object : KeyDefinition {
+    override val command = command
+    override val alternativeCommands = alternativeCommands
+    override val name = name
 }
 
 trait Key {
-    val primaryCommand: Command
-    val alternativeCommands: Iterable<Command> get() = listOf()
+    val definition: KeyDefinition
+    val pressed : Boolean
     val down: Observable<Unit>
     val up: Observable<Unit>
 }
 
-trait Command {
-    val id: String
-
-    override fun equals(other : Any?) = if(other is Command) id == other.id else false
+fun test () {
+    val v = vector(2, 3)
+    val r = object: Vector2 { override val x = 2; override val y = 3}
 }
 
-fun command(id : String) = object : Command {
-    override val id = id
+trait Command {
+    val name: String
+
+    override fun equals(other : Any?) = if(other is Command) name == other.name else false
+}
+
+fun command(name : String) = object : Command {
+    override val name = name
 }
 
 trait CharacterCommand : Command {
@@ -31,26 +43,27 @@ trait CharacterCommand : Command {
 object Commands {
     object Keyboard {
         fun character(char: Char) = object : CharacterCommand {
-            override val id = String(charArray(char))
+            override val name = String(charArray(char))
             override val character = char
         }
 
-        fun specialWithCharacter(id: String, character: Char) = object : CharacterCommand {
-            override val id = id
+        fun specialWithCharacter(name: String, character: Char) = object : CharacterCommand {
+            override val name = name
             override val character = character
         }
 
         val control = command("control")
         val alt = command("alt")
-        val altGr = command("altGr")
+        val shift = command("shift")
+        val altGr = command("alt gr")
         val start = command("start")
         val menu = command("menu")
         val escape = command("escape")
-        val printScreen = command("printScreen")
+        val printScreen = command("print screen")
 
-        val scrollLock = command("scrollLock")
-        val numLock = command("numLock")
-        val capsLock = command("capsLock")
+        val scrollLock = command("scroll lock")
+        val numLock = command("num lock")
+        val capsLock = command("caps lock")
 
         val space = specialWithCharacter("space", character = ' ')
         val tab = specialWithCharacter("tab", character = '\t')
@@ -59,7 +72,7 @@ object Commands {
         val backspace = command("backspace")
         val insert = command("insert")
 
-        val f1 = command("f1")
+        val f1 = command("f17")
         val f2 = command("f2")
         val f3 = command("f3")
         val f4 = command("f4")
@@ -85,16 +98,16 @@ object Commands {
         val down = command("down")
         val home = command("home")
         val end = command("end")
-        val pageUp = command("pageUp")
-        val pageDown = command("pageDown")
-        val navigateBackward = command("navigateBackward")
-        val navigateForward = command("navigateForward")
+        val pageUp = command("pag up")
+        val pageDown = command("page down")
+        val navigateBackward = command("navigate backward")
+        val navigateForward = command("navigate forward")
     }
 
     object Media {
         val toggle = command("toggleMedia")
-        val increaseVolume = command("increaseVolume")
-        val decreaseVolume = command("decreaseVolume")
+        val increaseVolume = command("increase volume")
+        val decreaseVolume = command("decrease volume")
         val mute = command("mute")
     }
 
@@ -103,6 +116,12 @@ object Commands {
         val sleep = command("sleep")
         val wake = command("wake")
     }
+}
+
+object KeyDefinitions {
+    fun left(command: Command, alternativeCommands: Iterable<Command> = listOf()) = keyDefinition(command, alternativeCommands, "left ${command.name}")
+    fun right(command: Command, alternativeCommands: Iterable<Command> = listOf()) = keyDefinition(command, alternativeCommands, "right ${command.name}")
+    fun numPad(command: Command, alternativeCommands: Iterable<Command> = listOf()) = keyDefinition(command, alternativeCommands, "num pad ${command.name}")
 }
 
 trait KeyCombination {
