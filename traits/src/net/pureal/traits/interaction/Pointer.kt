@@ -4,7 +4,7 @@ import net.pureal.traits.*
 
 trait Pointer {
     val moved: Observable<Pointer>
-    val position: Vector2
+    val location: Vector2
 }
 
 trait PointerKey  {

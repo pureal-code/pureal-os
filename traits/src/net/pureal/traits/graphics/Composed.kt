@@ -11,12 +11,22 @@ fun transformedElement<T>(element : Element<T>, transform : Transform2 = Transfo
     override val transform = transform
 }
 
+trait LocationOnElement<T> {
+    val element: Element<out T>
+    val location: Vector2
+}
+
+fun locationOnElement<T>(element: Element<out T>, location: Vector2) = object : LocationOnElement<T> {
+    override val element = element
+    override val location = location
+}
+
 trait Composed<T> : Element<T>, ObservableIterable<TransformedElement<*>> {
-    fun elementsAt(location: Vector2): Iterable<Element<*>> = this flatMap {
+    fun elementsAt(location: Vector2): Iterable<LocationOnElement<*>> = this flatMap {
         val transformedLocation = it transform location
         val contains = it.shape.contains(transformedLocation)
 
-        if (!contains) listOf<Element<*>>() else if (it is Composed<*>) it.elementsAt(transformedLocation) else listOf(it)
+        if (!contains) listOf<LocationOnElement<*>>() else if (it is Composed<*>) it.elementsAt(transformedLocation) else listOf(locationOnElement(it, transformedLocation))
     }
 }
 

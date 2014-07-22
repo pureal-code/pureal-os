@@ -12,8 +12,7 @@ class Shell(val screen: Screen, val pointers: ObservableIterable<PointerKeys>, v
         registerInputs()
         val halfWidth = (screen.shape as Rectangle).size.x.toDouble() / 2
         fun logoRect(angle : Number) = button(
-                shape = rectangle(vector(300, 100)),
-                transform = Transforms2.translation(vector(-70, 60)) before Transforms2.rotation(angle) before Transforms2.scale(0.5 * angle.toDouble()),
+                shape = rectangle(vector(300, 100)) transformed (Transforms2.translation(vector(-70, 60)) before Transforms2.rotation(angle) before Transforms2.scale(0.5 * angle.toDouble())),
                 fill = Fills.solid(Colors.white),
                 onClick = {println("This is da fucking Pureal logo!")})
 
@@ -34,6 +33,8 @@ class Shell(val screen: Screen, val pointers: ObservableIterable<PointerKeys>, v
     }
 
     fun registerInputs() = {
-        //pointers.added += {it.pressed += {screen.content.elementsAt(it.pointer.position).forEach { if (it is Clickable<*>) it.onClick(absoluteTransform(it)(location))}}
+        val x = {(it : PointerKeys) -> it.pressed += {screen.content.elementsAt(it.pointer.location).forEach { if (it is Clickable<*>) it.onClick(absoluteTransform(it)(location))}}
+        pointers.added += x
+        pointers.removed += x
     }
 }
