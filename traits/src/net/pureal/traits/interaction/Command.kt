@@ -1,43 +1,17 @@
 package net.pureal.traits.interaction
 
-import net.pureal.traits.*
-
-trait KeyDefinition {
-    val command: Command
-    val alternativeCommands: Iterable<Command> get() = listOf()
-    val name: String get() = command.name
-}
-
-fun keyDefinition(command: Command, alternativeCommands: Iterable<Command> = listOf(), name: String = command.name) = object : KeyDefinition {
-    override val command = command
-    override val alternativeCommands = alternativeCommands
-    override val name = name
-}
-
-trait Key {
-    val definition: KeyDefinition
-    val pressed : Boolean
-    val down: Observable<Unit>
-    val up: Observable<Unit>
-}
-
-fun test () {
-    val v = vector(2, 3)
-    val r = object: Vector2 { override val x = 2; override val y = 3}
-}
-
 trait Command {
     val name: String
 
-    override fun equals(other : Any?) = if(other is Command) name == other.name else false
+    override fun equals(other: Any?) = if(other is Command) name == other.name else false
 }
 
-fun command(name : String) = object : Command {
+fun command(name: String) = object : Command {
     override val name = name
 }
 
 trait CharacterCommand : Command {
-    val character : Char
+    val character: Char
 }
 
 object Commands {
@@ -87,8 +61,13 @@ object Commands {
     }
 
     object Mouse {
-        val primary = command("primary")
-        val secondary = command("secondary")
+        val primary = command("primary mouse button")
+        val secondary = command("secondary mouse button")
+        val middle = command("middle mouse button")
+    }
+
+    object Touch {
+        val touch = command("touch")
     }
 
     object Navigation {
@@ -98,14 +77,14 @@ object Commands {
         val down = command("down")
         val home = command("home")
         val end = command("end")
-        val pageUp = command("pag up")
+        val pageUp = command("page up")
         val pageDown = command("page down")
-        val navigateBackward = command("navigate backward")
-        val navigateForward = command("navigate forward")
+        val backward = command("backward")
+        val forward = command("forward")
     }
 
     object Media {
-        val toggle = command("toggleMedia")
+        val playOrPause = command("play or pause")
         val increaseVolume = command("increase volume")
         val decreaseVolume = command("decrease volume")
         val mute = command("mute")
@@ -116,15 +95,4 @@ object Commands {
         val sleep = command("sleep")
         val wake = command("wake")
     }
-}
-
-object KeyDefinitions {
-    fun left(command: Command, alternativeCommands: Iterable<Command> = listOf()) = keyDefinition(command, alternativeCommands, "left ${command.name}")
-    fun right(command: Command, alternativeCommands: Iterable<Command> = listOf()) = keyDefinition(command, alternativeCommands, "right ${command.name}")
-    fun numPad(command: Command, alternativeCommands: Iterable<Command> = listOf()) = keyDefinition(command, alternativeCommands, "num pad ${command.name}")
-}
-
-trait KeyCombination {
-    val keys: Iterable<Key>
-    val meaning : Command?
 }

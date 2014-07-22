@@ -15,10 +15,14 @@ trait Observable<out T> {
     }
 }
 
-fun observable<T>(vararg observables: Observable<T>) = object : Observable<T> {
+fun observable<T, I>(observables: Iterable<Observable<I>>, map : (I)->T) = object : Observable<T> {
     {
         for (observable in observables) {
-            observable += { ::notifyObservers }
+            observable += { notifyObservers(map(it)) }
         }
     }
 }
+
+fun observable<T>(observables: Iterable<Observable<T>>) : Observable<T> = observable(observables) { it }
+
+fun observable<T>(vararg observables: Observable<T>)  : Observable<T> = observable(object : Iterable<Observable<T>> { override fun iterator() = observables.iterator() })

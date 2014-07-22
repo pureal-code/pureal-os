@@ -34,16 +34,14 @@ class GlScreen (activity: Activity, onReady: (GlScreen) -> Unit) : GLSurfaceView
         })
         //setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY)
     }
-    private var glContent: GlComposed = GlComposed(composed(listOf()), this)
+    private var glContent: GlComposed = GlComposed(composed(observableIterable(listOf())), this)
     override var content: Composed<*>
         get() = glContent
         set(value) {
             glContent = value as? GlComposed ?: GlComposed(value, this)
         }
-    override fun absoluteTransform(element: Element<*>): Transform2 {
-        throw UnsupportedOperationException()
-    }
-    override val rectangle: Rectangle get () = rectangle(vector(this@GlScreen.getWidth(), this@GlScreen.getHeight()))
+
+    override val shape: Rectangle get() = rectangle(vector(this@GlScreen.getWidth(), this@GlScreen.getHeight()))
 }
 
 fun createProgram(): Int {

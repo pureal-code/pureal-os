@@ -7,7 +7,10 @@ import net.pureal.traits.math.*
 
 class ComposedSpecs : Spek() {{
     given("a composed element") {
-        val x = composed(elements = listOf(coloredElement(content = Unit.VALUE, shape = circle(0.6), fill = Fills.solid(Colors.red)), coloredElement(content = Unit.VALUE, shape = rectangle(vector(1,1)), fill = Fills.solid(Colors.blue))))
+        val elements = listOf<Element<Unit>>(
+                coloredElement(content = Unit.VALUE, shape = circle(0.6), fill = Fills.solid(Colors.red)),
+                coloredElement(content = Unit.VALUE, shape = rectangle(vector(1,1)), fill = Fills.solid(Colors.blue)))
+        val x = composed(observableIterable(elements))
 
         on("getting the shape") {
             val s = x.shape
