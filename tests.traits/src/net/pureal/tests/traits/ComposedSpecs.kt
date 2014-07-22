@@ -10,7 +10,7 @@ class ComposedSpecs : Spek() {{
         val elements = listOf<Element<Unit>>(
                 coloredElement(content = Unit.VALUE, shape = circle(0.6), fill = Fills.solid(Colors.red)),
                 coloredElement(content = Unit.VALUE, shape = rectangle(vector(1,1)), fill = Fills.solid(Colors.blue)))
-        val x = composed(observableIterable(elements))
+        val x = composed(observableIterable(elements map {transformedElement(it)}))
 
         on("getting the shape") {
             val s = x.shape
