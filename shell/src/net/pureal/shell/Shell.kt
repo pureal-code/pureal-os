@@ -34,7 +34,6 @@ class Shell(val screen: Screen, val pointers: ObservableIterable<PointerKeys>, v
     }
 
     fun registerInputs() = {
-        val touchKey = (keys filter {it.definition.command == Commands.Touch.touch}).single()
-        pointers.forEach {it.click += {(location) -> content.elementsAt(location).forEach { if (it is Clickable<*>) it.onClick(absoluteTransform(it)(location)) } }
+        //pointers.added += {it.pressed += {screen.content.elementsAt(it.pointer.position).forEach { if (it is Clickable<*>) it.onClick(absoluteTransform(it)(location))}}
     }
 }

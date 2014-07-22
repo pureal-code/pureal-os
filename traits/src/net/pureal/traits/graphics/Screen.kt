@@ -5,6 +5,6 @@ import net.pureal.traits.interaction.*
 import net.pureal.traits.math.*
 
 trait Screen {
-    var content: Element<*>
+    var content: Composed<*>
     val shape: Shape
 }
