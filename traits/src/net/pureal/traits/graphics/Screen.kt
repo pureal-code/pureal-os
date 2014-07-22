@@ -6,15 +6,5 @@ import net.pureal.traits.math.*
 
 trait Screen {
     var content: Composed<*>
-
-    fun absoluteTransform(element: Element<*>): Transform2
-
-    fun registerPointerInput(pointerInput: PointerInput) = {
-        pointerInput.click += {(location) -> content.elementsAt(location).forEach { if (it is Clickable<*>) it.onClick(absoluteTransform(it)(location)) } }
-    }
-
-    val rectangle: Rectangle
-    val size: Vector2 get() = rectangle.size
+    val shape: Shape
 }
-
-//fun screen(content : Composed<*>, rectangle : Rectangle) = null!!
