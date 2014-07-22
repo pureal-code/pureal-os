@@ -1,6 +1,6 @@
 package net.pureal.traits.math
 
-public trait InternalReal : Number, Comparable<Any?> {
+public trait InternalReal : Calculatable {
 
     override fun toDouble(): Double
     override fun toFloat(): Float = toDouble().toFloat()
@@ -14,9 +14,6 @@ public trait InternalReal : Number, Comparable<Any?> {
 
     fun toMathematicalString(): String // NOTE: i would like the environment to do the conversion, using a xxxRealConverter trait
 
-    override fun compareTo(other: Any?): Int
-
-
     override fun equals(other: Any?): Boolean {
         try {
             return compareTo(other) == 0
@@ -25,14 +22,14 @@ public trait InternalReal : Number, Comparable<Any?> {
         }
     }
 
-    fun plus(other: Any?): InternalReal
-    fun minus(other: Any?): InternalReal
-    fun times(other: Any?): InternalReal
-    fun div(other: Any?): InternalReal
+    override fun plus(other: Any?): InternalReal
+    override fun minus(other: Any?): InternalReal
+    override fun times(other: Any?): InternalReal
+    override fun div(other: Any?): InternalReal
     /// throws RuntimeException for
 
-    fun minus(): InternalReal
-    fun plus() = this
+    override fun minus(): InternalReal
+    override fun plus() = this
 
     fun signum(): Int
 

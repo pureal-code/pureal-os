@@ -28,7 +28,7 @@ fun basicInt(it: Any?): BasicInt {
         is Int -> basicInt(BigInteger(it))
         is Short -> basicInt(BigInteger(it))
         is Byte -> basicInt(BigInteger(it))
-        is BigInteger -> object : BasicInt, Number() {
+        is BigInteger -> object : BasicInt, Calculatable() {
             override val number: BigInteger = it
         }
         else -> throw IllegalArgumentException("Cannot create a BasicInt of given '{$it}'")

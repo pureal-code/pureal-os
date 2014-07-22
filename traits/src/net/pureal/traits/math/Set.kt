@@ -1,6 +1,6 @@
 package net.pureal.traits.math
 
-public trait Set<T> {
-    fun contains(other: Set<T>): Boolean
-    fun contains(other: T): Boolean
+public trait Set {
+    fun contains(other: Set): Boolean
+    fun contains(other: Number): Boolean
 }

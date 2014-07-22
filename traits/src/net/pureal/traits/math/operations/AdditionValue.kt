@@ -34,7 +34,7 @@ public trait AdditionValue : RealBinaryOperation {
 
 }
 
-fun additionValue(a: Real, b: Real): AdditionValue = object : AdditionValue, Number() {
+fun additionValue(a: Real, b: Real): AdditionValue = object : AdditionValue, Calculatable() {
     override val value1 = a
     override val value2 = b
 }

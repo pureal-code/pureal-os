@@ -21,6 +21,9 @@ public class SetSpecs : Spek() {{
             }
         }
     }
+    given("some numbers to test in a range") {
+
+    }
 
 
 }}

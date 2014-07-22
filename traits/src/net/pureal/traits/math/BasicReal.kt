@@ -270,7 +270,7 @@ public trait BasicReal : InternalReal {
 }
 
 /** MAIN CONSTRUCTOR **/
-fun basicReal(num: BigInteger, exp: Long): BasicReal = object : BasicReal, Number() {
+fun basicReal(num: BigInteger, exp: Long): BasicReal = object : BasicReal, Calculatable() {
     override val number: BigInteger = num
     override val exponent: Long = exp
 }

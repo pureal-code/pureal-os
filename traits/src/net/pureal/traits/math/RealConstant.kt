@@ -17,7 +17,7 @@ public trait RealConstant : Symbol, RealPrimitive {
 
 }
 
-fun realConstant(n: String, u: String? = null, fn: (() -> Real)): RealConstant = object : RealConstant, Number() {
+fun realConstant(n: String, u: String? = null, fn: (() -> Real)): RealConstant = object : RealConstant, Calculatable() {
     override val name: String = n
     override val unit: String? = u
     override val calculation_fn = fn

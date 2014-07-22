@@ -39,7 +39,7 @@ public trait MultiplicationValue : RealBinaryOperation {
 
 }
 
-fun multiplicationValue(a: Real, b: Real): MultiplicationValue = object : MultiplicationValue, Number() {
+fun multiplicationValue(a: Real, b: Real): MultiplicationValue = object : MultiplicationValue, Calculatable() {
     override val value1 = a
     override val value2 = b
 }

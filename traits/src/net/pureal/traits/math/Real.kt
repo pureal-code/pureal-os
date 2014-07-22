@@ -5,7 +5,7 @@ import net.pureal.traits.math.operations.multiplicationValue
 import net.pureal.traits.math.operations.subtractionValue
 import net.pureal.traits.math.operations.divisionValue
 
-public trait Real : Number {
+public trait Real : Calculatable {
     val isApproximate: Boolean get() = false
 
     fun matchWithThisPattern(other: Real) : Boolean = this == other // true if other matches the pattern defined by this
@@ -39,17 +39,19 @@ public trait Real : Number {
         return false
     }
 
-    fun plus(): Real = this
-    fun minus(): Real = ee.subVal(0.toReal(), this)
+    override fun compareTo(other: Any?): Int = approximate().compareTo(other)
+
+    override fun plus() = this
+    override fun minus(): Real = ee.subVal(0.toReal(), this)
 
 
-    fun plus(other: Real): Real = ee.addVal(this, other)
+    override fun plus(other: Any?): Real = ee.addVal(this, real(other))
 
-    fun minus(other: Real): Real = ee.subVal(this, other)
+    override fun minus(other: Any?): Real = ee.subVal(this, real(other))
 
-    fun times(other: Real): Real = ee.mulVal(this, other)
+    override fun times(other: Any?): Real = ee.mulVal(this, real(other))
 
-    fun div(other: Real): Real = ee.divVal(this, other)
+    override fun div(other: Any?): Real = ee.divVal(this, real(other))
 
     fun invert(): Real = ee.divVal(1.toReal(), this)
 
@@ -63,3 +65,17 @@ public trait Real : Number {
     override fun toChar(): Char = approximate().toChar()
 
 }
+
+fun real(v: Any?, isApprox : Boolean = false): Real {
+    when (v) {
+        is Real -> return v
+        is InternalReal -> return object : RealPrimitive, Calculatable() {
+            override val value : InternalReal = v
+            override val isApproximate : Boolean = isApprox
+        }
+        null -> throw IllegalArgumentException("Cannot create a real out of nothing")
+        else -> return real(ee.intReal(v), isApprox)
+    }
+}
+
+fun Number.toReal(): Real = real(this)

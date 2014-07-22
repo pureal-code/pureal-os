@@ -2,7 +2,7 @@ package net.pureal.traits.math
 
 public trait SpecialValue : InternalReal {
     public class object {
-        public val positiveInfinity: SpecialValue = object : SpecialValue, Number() {
+        public val positiveInfinity: SpecialValue = object : SpecialValue, Calculatable() {
             override fun toDouble() = java.lang.Double.POSITIVE_INFINITY
             override fun compareTo(other: Any?): Int {
                 when (other) {
@@ -17,7 +17,7 @@ public trait SpecialValue : InternalReal {
             override fun toString() = "Infinity"
             override fun signum() = 1
         }
-        public val negativeInfinity: SpecialValue = object : SpecialValue, Number() {
+        public val negativeInfinity: SpecialValue = object : SpecialValue, Calculatable() {
             override fun toDouble() = java.lang.Double.NEGATIVE_INFINITY
             override fun compareTo(other: Any?): Int {
                 when (other) {
