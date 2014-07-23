@@ -13,12 +13,12 @@ fun transformedElement<T>(element : Element<T>, transform : Transform2 = Transfo
 
 trait LocationOnElement<T> {
     val element: Element<out T>
-    val location: Vector2
+    val relativeLocation: Vector2
 }
 
 fun locationOnElement<T>(element: Element<out T>, location: Vector2) = object : LocationOnElement<T> {
     override val element = element
-    override val location = location
+    override val relativeLocation = location
 }
 
 trait Composed<T> : Element<T>, ObservableIterable<TransformedElement<*>> {
