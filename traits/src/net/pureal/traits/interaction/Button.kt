@@ -4,8 +4,8 @@ import net.pureal.traits.*
 import net.pureal.traits.graphics.*
 import net.pureal.traits.math.*
 
-trait Button : Clickable<Trigger<Unit>> {
-    override fun onClick(location: Vector2) = content()
+trait Button : Clickable<Trigger<Unit>>, ColoredElement<Trigger<Unit>> {
+    override fun onClick(pointerKey: PointerKey) = content()
 }
 
 fun button(
