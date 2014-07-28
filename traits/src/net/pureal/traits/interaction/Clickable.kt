@@ -18,7 +18,7 @@ trait Clickable<T> : PointersElement<T> {
         }
     }
 
-    override fun onPointerLeaved(pointer : Pointer) {
+    override fun onPointerLeaved(pointer: Pointer) {
         if (pressedKeysThatCouldLeadToClick.contains(pointer)) {
             pressedKeysThatCouldLeadToClick.remove(pointer)
         }
@@ -30,9 +30,9 @@ trait Clickable<T> : PointersElement<T> {
 trait PointersElement<T> : Element<T> {
     fun onPointerKeyPressed(pointerKey: PointerKey) {}
     fun onPointerKeyReleased(pointerKey: PointerKey) {}
-    fun onPointerMoved(pointer : Pointer) {}
-    fun onPointerEntered(pointer : Pointer) {}
-    fun onPointerLeaved(pointer : Pointer) {}
+    fun onPointerMoved(pointer: Pointer) {}
+    fun onPointerEntered(pointer: Pointer) {}
+    fun onPointerLeaved(pointer: Pointer) {}
 }
 
 trait KeysElement<T> : Element<T> {

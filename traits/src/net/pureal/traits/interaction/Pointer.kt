@@ -5,8 +5,12 @@ import net.pureal.traits.*
 trait Pointer {
     val moved: Observable<Pointer>
     val location: Vector2
-}
 
+    fun relativeTo(transform: Transform2) : Pointer = object : Pointer {
+        override val moved: Observable<Pointer> = observable(this@Pointer.moved) {this@Pointer}
+        override val location: Vector2 = transform(this@Pointer.location)
+    }
+}
 trait PointerKey  {
     val pointer: Pointer
     val key : Key
