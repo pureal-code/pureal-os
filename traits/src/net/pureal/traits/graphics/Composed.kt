@@ -3,33 +3,35 @@ package net.pureal.traits.graphics
 import net.pureal.traits.math.*
 import net.pureal.traits.*
 
-trait Composed<T> : Element<T>, ObservableIterable<Element<*>> {
-    fun elementsAt(location: Vector2): Iterable<Element<*>> = this flatMap {
+trait TransformedElement<T> : Element<T> {
+    val transform: Transform2
+}
+
+fun transformedElement<T>(element : Element<T>, transform : Transform2 = Transforms2.identity) : TransformedElement<T> = object : TransformedElement<T>, Element<T> by element {
+    override val transform = transform
+}
+
+trait Composed<T> : Element<T>, ObservableIterable<TransformedElement<*>> {
+    fun elementsAt(location: Vector2): Iterable<TransformedElement<*>> = this flatMap {
         val transformedLocation = it transform location
         val contains = it.shape.contains(transformedLocation)
 
-        if (!contains) listOf<Element<*>>() else if (it is Composed) it.elementsAt(transformedLocation) else listOf(it)
-    }
+        if (!contains) listOf<TransformedElement<*>>() else if (it is Composed<*>) it.elementsAt(transformedLocation) map {(x) -> transformedElement(it, it.transform before x.transform)} else listOf(it)   }
 }
 
 fun composed<T>(
         content: T,
-        elements: ObservableIterable<Element<*>>,
-        transform: Transform2 = Transforms2.identity,
+        elements: ObservableIterable<TransformedElement<*>>,
         changed: Observable<Unit> = observable<Unit>()) = object : Composed<T> {
     override val content = content
     override val added = elements.added
     override val removed = elements.removed
     override fun iterator() = elements.iterator()
     override val shape = concatenatedShape(elements map { it.shape })
-    override val transform = transform
     override val changed = changed
 }
 
-fun composed(
-        elements: ObservableIterable<Element<*>>,
-        transform: Transform2 = Transforms2.identity,
-        changed: Observable<Unit> = observable<Unit>()): Composed<Unit> = composed(Unit.VALUE, elements, transform, changed)
+fun composed(elements: ObservableIterable<TransformedElement<*>>, changed: Observable<Unit> = observable<Unit>()) = composed(Unit.VALUE, elements, changed)
 
 fun observableIterable<T>(
         elements: Iterable<T>,

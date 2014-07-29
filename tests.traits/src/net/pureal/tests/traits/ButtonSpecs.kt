@@ -18,7 +18,7 @@ class ButtonSpecs : Spek() {{
         var s = State.neverClicked
 
         on("appeding a handler and invoking the button") {
-            b.content += { s = State.clicked }
+            b.content addObserver { s = State.clicked }
             b.content.invoke()
 
             it("should be clicked") {

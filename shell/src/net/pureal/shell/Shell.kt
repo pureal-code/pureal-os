@@ -9,31 +9,26 @@ import net.pureal.traits.*
 
 class Shell(val screen: Screen, val pointers: ObservableIterable<PointerKeys>, val keys: ObservableIterable<Key>) {
     {
+        screen.content = exampleContent()
         registerInputs()
-        val halfWidth = (screen.shape as Rectangle).size.x.toDouble() / 2
-        fun logoRect(angle : Number) = button(
-                shape = rectangle(vector(300, 100)),
-                transform = Transforms2.translation(vector(-70, 60)) before Transforms2.rotation(angle) before Transforms2.scale(0.5 * angle.toDouble()),
-                fill = Fills.solid(Colors.white),
-                onClick = {println("This is da fucking Pureal logo!")})
-
-        fun star(count : Int) = count.indices map {logoRect(it * 3.14159 * 2 / count - Math.PI / 2)}
-
-        screen.content = composed(elements = observableIterable(star(7)))
-
-        /* composed(elements = setOf(button(
-                shape = rectangle(vector(halfWidth, halfWidth)),
-                fill = Fills.solid(Colors.blue),
-                onClick = { println("Biatch!")}
-        ), button(
-                shape = rectangle(vector(halfWidth, halfWidth)),
-                transform = Transforms2.translation(vector(halfWidth / 2, 0)),
-                fill = Fills.solid(Colors.red),
-                onClick = { println("Yeah!")}
-        ))) */
     }
 
     fun registerInputs() = {
-        //pointers.added += {it.pressed += {screen.content.elementsAt(it.pointer.position).forEach { if (it is Clickable<*>) it.onClick(absoluteTransform(it)(location))}}
+        pointers.observables {it.pressed} startKeepingAllObserved {(p) ->
+            screen.content.elementsAt(p.pointer.location).forEach {
+                if (it is Clickable<*>) it.onClick(pointerKey(p.pointer.relativeTo(it.transform), p.key))
+            }
+        }
     }
+}
+
+fun exampleContent() : Composed<*> {
+    fun logoRect(angle : Number) = button(
+            shape = rectangle(vector(300, 100)) transformed (Transforms2.translation(vector(-70, 60)) before Transforms2.rotation(angle) before Transforms2.scale(0.5 * angle.toDouble())),
+            fill = Fills.solid(Colors.white),
+            onClick = {println("This is da fucking Pureal logo!")})
+
+    fun star(count : Int) = count.indices map {transformedElement(logoRect(it * 3.14159 * 2 / count - Math.PI / 2))}
+
+    return composed(elements = observableIterable(star(7)))
 }
