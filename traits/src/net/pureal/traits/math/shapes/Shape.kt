@@ -4,7 +4,7 @@ import net.pureal.traits.*
 
 trait Shape {
     fun contains(location: Vector2): Boolean
-    fun transformed(transform: Transform2): TransformedShape = object : TransformedShape {
+    fun transformed(transform: Transform2): Shape = object : TransformedShape {
         override val original = this@Shape
         override val transform = transform
     }
@@ -12,14 +12,15 @@ trait Shape {
 
 trait BoundedShape : Shape {
     val size: Vector2
-    val bound: Vector2 get() = size / 2
+    val halfSize: Vector2 get() = size / 2
+    val bound: Rectangle get() = rectangle(size)
 }
 
 fun shape(contains: (Vector2) -> Boolean) = object : Shape {
     override fun contains(location: Vector2) = contains(location)
 }
 
-fun concatenatedShape(shapes: Iterable<Shape>) = shape({ location -> shapes.any({ it.contains(location) }) })
+fun concatenatedShape(shapes: Iterable<Shape>) = shape({location -> shapes.any({it.contains(location)})})
 
 trait TransformedShape : Shape {
     val original: Shape

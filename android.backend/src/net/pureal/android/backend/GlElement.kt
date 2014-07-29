@@ -28,7 +28,7 @@ fun glElement(original: Element<*>, screen: GlScreen): GlElement {
 }
 
 class GlComposed(override val original: Composed<*>, screen: GlScreen) : GlElement(original, screen), Composed<Any?> {
-    val elements = (original map { glElement(it, screen) }).toArrayList()
+    val elements = (original mapObservable { glElement(it, screen) }).toArrayList()
     override fun iterator() = elements.iterator()
     override val added = trigger<GlElement>()
     override val removed = trigger<GlElement>();

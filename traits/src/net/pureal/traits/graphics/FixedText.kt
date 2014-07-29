@@ -3,17 +3,18 @@ package net.pureal.traits.graphics
 import net.pureal.traits.math.*
 import net.pureal.traits.*
 
-trait FixedText : Element<String> {
+trait FixedText : ColoredElement<String> {
     val font: Font
-    override val shape: Rectangle get() = font.bound(content)
+    override val shape: BoundedShape get() = font.shape(content)
 }
 
-fun fixedText(content: String, font: Font) = object : FixedText {
-    override val font = font
+fun fixedText(content: String, font: Font, fill: Fill) = object : FixedText {
     override val content = content
+    override val font = font
+    override val fill = fill
 }
 
 trait Font {
-    val height: Number
-    fun bound(text: String): Rectangle
+    val size: Number
+    fun shape(text: String): BoundedShape
 }

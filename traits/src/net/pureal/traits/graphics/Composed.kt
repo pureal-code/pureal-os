@@ -16,7 +16,7 @@ trait Composed<T> : Element<T>, ObservableIterable<TransformedElement<*>> {
         val transformedLocation = it transform location
         val contains = it.shape.contains(transformedLocation)
 
-        if (!contains) listOf<TransformedElement<*>>() else if (it is Composed<*>) it.elementsAt(transformedLocation) map {(x) -> transformedElement(it, it.transform before x.transform)} else listOf(it)   }
+        if (!contains) listOf<TransformedElement<*>>() else if (it is Composed<*>) it.elementsAt(transformedLocation) map {x -> transformedElement(it, it.transform before x.transform)} else listOf(it)}
 }
 
 fun composed<T>(
@@ -27,7 +27,7 @@ fun composed<T>(
     override val added = elements.added
     override val removed = elements.removed
     override fun iterator() = elements.iterator()
-    override val shape = concatenatedShape(elements map { it.shape })
+    override val shape = concatenatedShape(elements mapObservable { it.shape })
     override val changed = changed
 }
 

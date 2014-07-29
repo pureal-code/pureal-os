@@ -14,9 +14,9 @@ class Shell(val screen: Screen, val pointers: ObservableIterable<PointerKeys>, v
     }
 
     fun registerInputs() = {
-        pointers.observables {it.pressed} startKeepingAllObserved {(p) ->
-            screen.content.elementsAt(p.pointer.location).forEach {
-                if (it is Clickable<*>) it.onClick(pointerKey(p.pointer.relativeTo(it.transform), p.key))
+        pointers mapObservable {it.pressed} startKeepingAllObserved {p ->
+            screen.content.elementsAt(p.pointer.location) forEach {
+                if (it is Clickable<*>) it.onClick(pointerKey(p.pointer relativeTo it.transform, p.key))
             }
         }
     }
