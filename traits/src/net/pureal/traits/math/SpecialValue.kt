@@ -21,8 +21,8 @@ public trait SpecialValue : InternalReal {
             override fun toDouble() = java.lang.Double.NEGATIVE_INFINITY
             override fun compareTo(other: Any?): Int {
                 when (other) {
-                    is Double -> return if (other == java.lang.Double.NEGATIVE_INFINITY) 0; else -1
-                    is Float -> return if (other == java.lang.Float.NEGATIVE_INFINITY) 0; else -1
+                    is Double -> return if (other == java.lang.Double.NEGATIVE_INFINITY) 0; else 1
+                    is Float -> return if (other == java.lang.Float.NEGATIVE_INFINITY) 0; else 1
                     is InternalReal -> return compareTo(other.toDouble())
                     is Number -> return -1
                     else -> throw IllegalArgumentException()
@@ -33,7 +33,7 @@ public trait SpecialValue : InternalReal {
             override fun signum() = -1
         }
     }
-
+    // Invalidate super functions
     override fun toString(): String {
         throw UnsupportedOperationException()
     }
@@ -66,6 +66,19 @@ public trait SpecialValue : InternalReal {
         throw UnsupportedOperationException()
     }
     override fun signum(): Int {
+        throw UnsupportedOperationException()
+    }
+
+    override fun floor(): InternalReal {
+        throw UnsupportedOperationException()
+    }
+    override fun ceil(): InternalReal {
+        throw UnsupportedOperationException()
+    }
+    override fun round(): InternalReal {
+        throw UnsupportedOperationException()
+    }
+    override fun abs(): InternalReal {
         throw UnsupportedOperationException()
     }
 

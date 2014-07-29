@@ -20,6 +20,12 @@ public abstract class Calculatable : Number(), Comparable<Any?> {
     abstract fun minus(other: Any?): Calculatable
     abstract fun times(other: Any?): Calculatable
     abstract fun div(other: Any?): Calculatable
+
+    abstract fun floor(): Calculatable
+    abstract fun ceil(): Calculatable
+    abstract fun round(): Calculatable
+
+    abstract fun abs(): Calculatable
 }
 
 fun Number.asCalculatable(): Calculatable = if(this is Calculatable) this; else ee.intReal(this)

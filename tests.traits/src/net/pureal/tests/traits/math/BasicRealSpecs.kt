@@ -225,6 +225,51 @@ public class BasicRealSpecs : Spek() {{
                 shouldBeTrue(basicReal(-4) < basicReal(-2))
             }
         }
+        on("testing if -1 < -.999") {
+            it("should be true") {
+                shouldBeTrue(basicReal(-1) < basicReal(-.999))
+            }
+        }
+        on("testing if .99 > .8") {
+            it("should be true") {
+                shouldBeTrue(basicReal(.99) > basicReal(.8))
+            }
+        }
+    }
+    given("basic Reals for rounding tests") {
+        on("floor-ing some numbers") {
+            it("should be 2 for 2.7") {
+                shouldEqual(basicReal(2.7).floor(),2)
+            }
+            it("should be -12 for -11.01") {
+                shouldEqual(basicReal("-11.01").floor(), -12)
+            }
+            it("should be 2.4E4 for 2.4E4") {
+                shouldEqual(basicReal("2.4E4").floor(), 24000)
+            }
+        }
+        on("ceil-ing some numbers") {
+            it("should be 3 for 2.7") {
+                shouldEqual(basicReal(2.7).ceil(),3)
+            }
+            it("should be -11 for -11.01") {
+                shouldEqual(basicReal("-11.01").ceil(), -11)
+            }
+            it("should be 2.4E4 for 2.4E4") {
+                shouldEqual(basicReal("2.4E4").ceil(), 24000)
+            }
+        }
+        on("round-ing some numbers") {
+            it("should be 3 for 2.7") {
+                shouldEqual(basicReal(2.7).round(),3)
+            }
+            it("should be -11 for -11.01") {
+                shouldEqual(basicReal("-11.01").round(), -11)
+            }
+            it("should be 2.4E4 for 2.4E4") {
+                shouldEqual(basicReal("2.4E4").round(), 24000)
+            }
+        }
     }
 
 

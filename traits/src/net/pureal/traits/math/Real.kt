@@ -64,6 +64,11 @@ public trait Real : Calculatable {
     override fun toByte(): Byte = approximate().toByte()
     override fun toChar(): Char = approximate().toChar()
 
+    override fun floor(): Calculatable = approximate().floor()
+    override fun ceil(): Calculatable = approximate().ceil()
+    override fun round(): Calculatable = approximate().round()
+
+    override fun abs(): Calculatable = approximate().abs() // TODO: we want an operator for this
 }
 
 fun real(v: Any?, isApprox : Boolean = false): Real {

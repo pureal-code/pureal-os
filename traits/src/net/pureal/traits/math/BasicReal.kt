@@ -8,7 +8,7 @@ import kotlin.math.*
 public trait BasicReal : InternalReal {
     class object {
         final fun getLowestExponent(o1: BasicReal, o2: BasicReal): Long = min(o1.exponent, o2.exponent)
-        final fun exponentialFactor(exp: Long): BigInteger = BigInteger.TEN.pow(abs(exp.toInt()))!!
+        final fun exponentialFactor(exp: Long): BigInteger = BigInteger.TEN.pow(abs(exp.toInt()))
 
         final fun fromString(s : String) : BasicReal {
             var str: String = s.capitalize()
@@ -122,7 +122,6 @@ public trait BasicReal : InternalReal {
                 if (this.signum() != other.signum()) {
                     return this.signum() - other.signum()
                 }
-                if (compareExponentTo(other) != 0L) return compareExponentTo(other).toInt() * this.signum()
                 return (this - other).number.compareTo(BigInteger.ZERO)
             }
             is InternalReal -> return other.compareTo(this)
@@ -203,9 +202,27 @@ public trait BasicReal : InternalReal {
                 val targetExp = exponent - other.exponent
                 val br1 = setToExponent(exponent - activeEnvironment.accuracy)
                 val c = br1.number.divideAndRemainder(other.number)
-                if (activeEnvironment.requireExactCalculation && c[1]!! != BigInteger.ZERO)
+                if (activeEnvironment.requireExactCalculation && c[1] != BigInteger.ZERO)
                     throw RuntimeException("Accurate Division is not possible")
-                return basicReal(c[0]!!, targetExp - activeEnvironment.accuracy).minimize()
+                return basicReal(c[0], targetExp - activeEnvironment.accuracy).minimize()
+            }
+            else -> throw IllegalArgumentException()
+        }
+    }
+    // TODO: do mod on the Calculatable class
+    fun mod(other: Any?): BasicReal {
+        when (other) {
+            is Byte -> return this % basicInt(other)
+            is Short -> return this % basicInt(other)
+            is Int -> return this % basicInt(other)
+            is Long -> return this % basicInt(other)
+            is Double -> return this % basicReal(other)
+            is Float -> return this % basicReal(other)
+            is BasicReal -> {
+                val minexp = getLowestExponent(this, other)
+                val br1 = this.setToExponent(minexp)
+                val br2 = other.setToExponent(minexp)
+                return basicReal(br1.number mod br2.number, minexp)
             }
             else -> throw IllegalArgumentException()
         }
@@ -221,7 +238,7 @@ public trait BasicReal : InternalReal {
             var p = BigInteger.TEN.pow(stepSize)
             var c = array(tmp, BigInteger.ZERO)
             while (c[1] == BigInteger.ZERO) {
-                tmp = c[0]!!
+                tmp = c[0]
                 powers += stepSize
                 c = tmp.divideAndRemainder(p)
             }
@@ -267,6 +284,18 @@ public trait BasicReal : InternalReal {
             else -> basicReal(number * exponentialFactor(exp - exponent), exp)
         }
     }
+
+    override fun floor(): BasicReal = if(isInteger()) this; else {
+        if(sign) (setToExponent(0)-1).minimize(); else setToExponent(0).minimize() // TODO
+    }
+    override fun ceil(): BasicReal = if(isInteger()) this; else {
+        if(sign) setToExponent(0).minimize(); else (setToExponent(0)+1).minimize() // TODO
+    }
+    override fun round(): BasicReal = if(isInteger()) this; else {
+        if(this % basicInt(1) < basicReal(BigInteger(5),-1L)) floor(); else ceil()
+    }
+
+    override fun abs(): BasicReal = if(sign) -this; else this
 }
 
 /** MAIN CONSTRUCTOR **/

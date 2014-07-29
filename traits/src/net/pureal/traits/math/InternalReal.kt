@@ -31,6 +31,12 @@ public trait InternalReal : Calculatable {
     override fun minus(): InternalReal
     override fun plus() = this
 
+
+    override fun floor(): InternalReal
+    override fun ceil(): InternalReal
+    override fun round(): InternalReal
+    override fun abs(): InternalReal
+
     fun signum(): Int
 
     val sign: Boolean get() = signum() < 0
