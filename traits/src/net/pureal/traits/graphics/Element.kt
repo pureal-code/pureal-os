@@ -6,5 +6,5 @@ import net.pureal.traits.interaction.*
 
 trait Element<out T> : Interactive<T> {
     val shape: Shape
-    val changed: Observable<Unit>
+    val changed: Observable<Unit> get() = observable()
 }
