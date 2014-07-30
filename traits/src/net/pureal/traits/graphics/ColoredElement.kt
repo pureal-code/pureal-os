@@ -14,3 +14,5 @@ fun coloredElement<T>(content: T, shape: Shape, fill: Fill, changed: Observable<
     override val fill = fill
     override val changed = changed
 }
+
+fun coloredElement(shape: Shape, fill: Fill, changed: Observable<Unit> = observable()) = coloredElement(Unit.VALUE, shape, fill, changed)

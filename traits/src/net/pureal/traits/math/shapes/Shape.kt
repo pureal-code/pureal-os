@@ -10,12 +10,6 @@ trait Shape {
     }
 }
 
-trait BoundedShape : Shape {
-    val size: Vector2
-    val halfSize: Vector2 get() = size / 2
-    val bound: Rectangle get() = rectangle(size)
-}
-
 fun shape(contains: (Vector2) -> Boolean) = object : Shape {
     override fun contains(location: Vector2) = contains(location)
 }
@@ -27,3 +21,5 @@ trait TransformedShape : Shape {
     val transform: Transform2
     override fun contains(location: Vector2) = original.contains(transform.inverse()(location))
 }
+
+val foo = rectangle(vector(java.lang.Double.POSITIVE_INFINITY, java.lang.Double.POSITIVE_INFINITY))
