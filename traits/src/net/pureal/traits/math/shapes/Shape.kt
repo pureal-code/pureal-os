@@ -22,4 +22,9 @@ trait TransformedShape : Shape {
     override fun contains(location: Vector2) = original.contains(transform.inverse()(location))
 }
 
+fun transformedShape (original: Shape, transform: Transform2) = object : TransformedShape {
+    override val original = original
+    override val transform = transform
+}
+
 val foo = rectangle(vector(java.lang.Double.POSITIVE_INFINITY, java.lang.Double.POSITIVE_INFINITY))

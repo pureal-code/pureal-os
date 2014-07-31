@@ -11,7 +11,6 @@ import java.util.ArrayList
 
 
 abstract class GlElement(open val original: Element<*>, val screen: GlScreen) : Element<Any?> {
-    override val transform: Transform2 get() = original.transform
     override val shape: GlShape get() = glShape(original.shape)
     override val changed: Observable<Unit> get() = original.changed
     override val content: Any? get() = original.content;
@@ -22,38 +21,53 @@ fun glElement(original: Element<*>, screen: GlScreen): GlElement {
     return when (original) {
         is GlElement -> original
         is Composed<*> -> GlComposed(original, screen)
+        is TextElement -> GlTextElement(original, screen)
         is ColoredElement<*> -> GlColoredElement(original, screen)
         else -> throw UnsupportedOperationException("No OpenGL implementation for element '${original}'.")
     }
 }
 
+trait GlTransformedElement : TransformedElement<Any?> {
+    override val element: GlElement
+    override val transform: Transform2
+}
+
+fun glTransformedElement(element : GlElement, transform : Transform2 = Transforms2.identity) = object : GlTransformedElement {
+    override val element = element
+    override val transform = transform
+}
+
+fun glTransformedElement(element : TransformedElement<*>, screen : GlScreen) = glTransformedElement(glElement(element.element, screen), element.transform)
+
 class GlComposed(override val original: Composed<*>, screen: GlScreen) : GlElement(original, screen), Composed<Any?> {
-    val elements = (original mapObservable { glElement(it, screen) }).toArrayList()
+    val elements = (original mapObservable { glTransformedElement(it, screen) }).toArrayList()
     override fun iterator() = elements.iterator()
-    override val added = trigger<GlElement>()
-    override val removed = trigger<GlElement>();
+    override val added = trigger<GlTransformedElement>()
+    override val removed = trigger<GlTransformedElement>();
     {
-        original.added += {(addedElement) ->
-            val glElement = glElement(addedElement, screen)
+        original.added addObserver {(addedElement) ->
+            val glElement = glTransformedElement(addedElement, screen)
             elements.add(glElement)
             added(glElement)
         }
-        original.removed += {(removedElement) ->
-            val glElement = (elements.singleOrNull { element -> element.original === removedElement })
+        original.removed addObserver {(removedElement) ->
+            val glElement = (elements.singleOrNull { element -> element.element.original === removedElement })
             if (glElement != null) {
                 elements.remove(glElement)
                 removed(glElement)
             }
         }
     }
-    override fun draw(parentTransform: Transform2) = elements.reverse() forEach { it.draw(this.transform before parentTransform) }
+    override fun draw(parentTransform: Transform2) = elements.reverse() forEach { it.element.draw(it.transform before parentTransform) }
 }
 
-class GlColoredElement(override val original: ColoredElement<*>, screen: GlScreen) : GlElement(original, screen), ColoredElement<Any?> {
-    override val shape: GlShape get() = glShape(original.shape)
+
+
+open class GlColoredElement(override val original: ColoredElement<*>, screen: GlScreen) : GlElement(original, screen), ColoredElement<Any?> {
+    override val shape: GlShape  get () = glShape
     override val fill: Fill get() = original.fill
     override fun draw(parentTransform: Transform2) {
-        val transform = this.transform before parentTransform
+        val transform = parentTransform
         val matrixHandle = GLES20.glGetUniformLocation(screen.program!!, "matrix");
         val m = transform.matrix
         val glMatrix = floatArray(
@@ -77,6 +91,7 @@ class GlColoredElement(override val original: ColoredElement<*>, screen: GlScree
                 GLES20.GL_UNSIGNED_SHORT, drawListBuffer)
         GLES20.glDisableVertexAttribArray(positionHandle);
     }
+    private var glShape : GlShape = glShape(original.shape)
     private var vertexBuffer = buildVertexBuffer()
     private var drawListBuffer = buildDrawListBuffer()
     fun buildVertexBuffer(): FloatBuffer {
@@ -94,7 +109,8 @@ class GlColoredElement(override val original: ColoredElement<*>, screen: GlScree
         return shortBuffer
     }
     {
-        changed += {
+        changed addObserver {
+            glShape = glShape(original.shape)
             vertexBuffer = buildVertexBuffer()
             drawListBuffer = buildDrawListBuffer()
             // how? redraw()

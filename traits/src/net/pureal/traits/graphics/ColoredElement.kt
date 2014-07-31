@@ -3,7 +3,7 @@ package net.pureal.traits.graphics
 import net.pureal.traits.*
 import net.pureal.traits.math.*
 
-trait ColoredElement<T> : Element<T> {
+trait ColoredElement<out T> : Element<T> {
     val fill: Fill
     fun colorAt(location: Vector2) = if (shape.contains(location)) fill.colorAt(location) else null
 }

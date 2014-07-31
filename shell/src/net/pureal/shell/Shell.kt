@@ -21,8 +21,8 @@ class Shell(val screen: Screen, val pointers: ObservableIterable<PointerKeys>, v
         }
 
         fun someText(font: Font) : Composed<*> {
-            val k = transformedElement(textElement("Kotlin rocks!", font, size = 0.1, fill = Fills.solid(Colors.white)), Transforms2.rotation(-Math.PI / 10))
-            val h = transformedElement(textElement("like a hardcore banana", font, size = 0.1, fill = Fills.solid(Colors.white)), Transforms2.scale(0.5) before Transforms2.translation(vector(0,(screen.shape as Rectangle).size.y.toDouble() / 3.0)))
+            val k = transformedElement(textElement("Kotlin rocks!", font, size = 24, fill = Fills.solid(Colors.white)), Transforms2.rotation(-Math.PI / 10))
+            val h = transformedElement(textElement("like a hardcore banana", font, size = 24, fill = Fills.solid(Colors.white)), Transforms2.scale(0.5) before Transforms2.translation(vector(0,-(screen.shape as Rectangle).size.y.toDouble() / 3.0)))
             return composed(observableIterable(listOf(k, h)))
         }
     }
