@@ -1,18 +1,42 @@
 package net.pureal.traits.math.sets
 
 import net.pureal.traits.math.*
+import net.pureal.traits.*
 
 public trait RealSet : Set {
-    public class object : RealSet {
+
+    public class object : RealSet, Constructor4<RealSet, Number, Number, Boolean, Boolean>, Constructor2<RealSet, Number, Number> {
+
+        override fun invoke(le: Number, he: Number) = invoke(le, he, true, true)
+
+        override fun invoke(lEnd: Number, hEnd: Number, lClosed: Boolean, hClosed: Boolean): RealSet {
+            var le = lEnd.asCalculatable()
+            var he = hEnd.asCalculatable()
+            if(le > he) {
+                val tmp = le
+                le = he
+                he = tmp
+            }
+            assert((-Infinity != le || !lClosed) && (Infinity != he || !hClosed), "A Set cannot be closed in the infinite")
+            return object: RealSet {
+                override val lowEnd: Calculatable = le
+                override val highEnd: Calculatable = he
+                override val lowClosed: Boolean = lClosed
+                override val highClosed: Boolean = hClosed
+            }
+        }
+
         override val lowEnd: Calculatable = -Infinity
         override val highEnd: Calculatable = Infinity
         override val lowClosed: Boolean = false
         override val highClosed: Boolean = false
+
         public val Full: RealSet = RealSet
-        public val PositiveAndZero: RealSet = realSet(0,Infinity,true,false)
-        public val Positive: RealSet = openRealSet(0,Infinity)
-        public val NegativeAndZero: RealSet = realSet(-Infinity,0,false,true)
-        public val Negative: RealSet = openRealSet(-Infinity,0)
+        public val PositiveAndZero: RealSet = invoke(0,Infinity,true,false)
+        public val Positive: RealSet = invoke(0,Infinity,false,false)
+        public val NegativeAndZero: RealSet = invoke(-Infinity,0,false,true)
+        public val Negative: RealSet = invoke(-Infinity,0,false,false)
+
     }
     val lowEnd: Calculatable
     val highEnd: Calculatable
@@ -24,7 +48,7 @@ public trait RealSet : Set {
         when(other) {
             is SetUnion -> return contains(other.subset1) && contains(other.subset2)
             is SetIntersection -> {
-                val u = other.combineSets()
+                val u = other.simplifySets()
                 if(u is SetIntersection) return contains(other.superset1) || contains(other.superset2)
                 return contains(u)
             }
@@ -47,21 +71,6 @@ public trait RealSet : Set {
 
 }
 
-fun realSet(lEnd: Number, hEnd: Number, lClosed: Boolean = true, hClosed: Boolean = true): RealSet {
-    var le = lEnd.asCalculatable()
-    var he = hEnd.asCalculatable()
-    if(le > he) {
-        val tmp = le
-        le = he
-        he = tmp
-    }
-    assert((-Infinity != le || !lClosed) && (Infinity != he || !hClosed), "A Set cannot be closed in the infinite")
-    return object: RealSet {
-        override val lowEnd: Calculatable = le
-        override val highEnd: Calculatable = he
-        override val lowClosed: Boolean = lClosed
-        override val highClosed: Boolean = hClosed
-    }
-}
+val realSet = RealSet
 
-fun openRealSet(lEnd: Number, hEnd: Number) = realSet(lEnd, hEnd, false, false)
+fun openRealSet(le: Number, he: Number) = realSet(lEnd = le, hEnd = he, lClosed = false, hClosed = false)

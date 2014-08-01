@@ -1,11 +1,25 @@
 package net.pureal.traits.math
 
-import net.pureal.traits.math.operations.additionValue
-import net.pureal.traits.math.operations.multiplicationValue
-import net.pureal.traits.math.operations.subtractionValue
-import net.pureal.traits.math.operations.divisionValue
+import net.pureal.traits.Constructor1
+import net.pureal.traits.Constructor2
 
 public trait Real : Calculatable {
+
+    public class object : Constructor1<Real, Any?>, Constructor2<Real, Any?, Boolean> {
+        override fun invoke(it: Any?): Real = invoke(it, false)
+        override fun invoke(v: Any?, isApprox: Boolean): Real {
+            when (v) {
+                is Real -> return v
+                is InternalReal -> return object : RealPrimitive, Calculatable() {
+                    override val value : InternalReal = v
+                    override val isApproximate : Boolean = isApprox
+                }
+                null -> throw IllegalArgumentException("Cannot create a real out of nothing")
+                else -> return real(ee.intReal(v), isApprox)
+            }
+        }
+    }
+
     val isApproximate: Boolean get() = false
 
     fun matchWithThisPattern(other: Real) : Boolean = this == other // true if other matches the pattern defined by this
@@ -71,16 +85,6 @@ public trait Real : Calculatable {
     override fun abs(): Calculatable = approximate().abs() // TODO: we want an operator for this
 }
 
-fun real(v: Any?, isApprox : Boolean = false): Real {
-    when (v) {
-        is Real -> return v
-        is InternalReal -> return object : RealPrimitive, Calculatable() {
-            override val value : InternalReal = v
-            override val isApproximate : Boolean = isApprox
-        }
-        null -> throw IllegalArgumentException("Cannot create a real out of nothing")
-        else -> return real(ee.intReal(v), isApprox)
-    }
-}
+val real = Real
 
 fun Number.toReal(): Real = real(this)

@@ -6,7 +6,7 @@ public trait SetUnion : Set {
     val subset1: Set
     val subset2: Set
 
-    fun combineSets(): Set {
+    fun simplifySets(): Set {
         // TODO
         return this
     }

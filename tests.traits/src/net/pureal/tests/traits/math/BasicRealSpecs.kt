@@ -103,7 +103,7 @@ public class BasicRealSpecs : Spek() {{
             }
         }
         on("adding 15 + .02 + 560") {
-            val res = net.pureal.traits.math.basicReal("15") + basicReal(".02") + basicReal("560")
+            val res = basicReal("15") + basicReal(".02") + basicReal("560")
             it("should be 575.02") {
                 shouldEqual(net.pureal.traits.math.BigInteger(57502), res.number)
                 shouldEqual(-2L, res.exponent)
@@ -118,7 +118,7 @@ public class BasicRealSpecs : Spek() {{
             }
         }
         on("subtracting -10 with -3000") {
-            val res = basicReal(-10) - net.pureal.traits.math.basicReal(-3000)
+            val res = basicReal(-10) - basicReal(-3000)
             it("should be 299E+1") {
                 shouldEqual(BigInteger(299), res.number)
                 shouldEqual(+1L, res.exponent)
@@ -137,7 +137,7 @@ public class BasicRealSpecs : Spek() {{
             }
         }
         on("multiplying 2.4E+7 with 1.1E+4") {
-            val res = net.pureal.traits.math.basicReal("2.4E+7") * net.pureal.traits.math.basicReal("1.1E+4")
+            val res = basicReal("2.4E+7") * basicReal("1.1E+4")
             it("should be 2.64E+11") {
                 shouldEqual(BigInteger(264), res.number)
                 shouldEqual(+9L, res.exponent)
@@ -160,14 +160,14 @@ public class BasicRealSpecs : Spek() {{
             }
         }
         on("dividing 160 by .1") {
-            val res = net.pureal.traits.math.basicReal("160") / basicReal(".1")
+            val res = basicReal("160") / basicReal(".1")
             it("should be 16E+2") {
                 shouldEqual(BigInteger(16), res.number)
                 shouldEqual(2L, res.exponent)
             }
         }
         on("dividing 63 by 9000") {
-            val res = net.pureal.traits.math.basicReal(63) / basicReal(9000)
+            val res = basicReal(63) / basicReal(9000)
             it("should be 7E-3") {
                 shouldEqual(BigInteger(7), res.number)
                 shouldEqual(-3L, res.exponent)

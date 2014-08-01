@@ -3,8 +3,29 @@ package net.pureal.traits.math
 import java.math.BigInteger
 import kotlin.math.*
 import java.lang.Math.*
+import net.pureal.traits.Constructor1
 
 public trait BasicInt : BasicReal {
+    public class object : Constructor1<BasicInt, Any?> {
+        override fun invoke(it: Any?): BasicInt {
+            return when(it) {
+                is BasicInt -> basicInt(it.number)
+                is BasicReal -> {
+                    if(!it.isInteger()) throw IllegalArgumentException("The given BasicReal is not integer");
+                    else basicInt(it.number * it.exponentialFactor())
+                }
+                is String -> basicInt(BigInteger(it))
+                is Long -> basicInt(BigInteger(it))
+                is Int -> basicInt(BigInteger(it))
+                is Short -> basicInt(BigInteger(it))
+                is Byte -> basicInt(BigInteger(it))
+                is BigInteger -> object : BasicInt, Calculatable() {
+                    override val number: BigInteger = it
+                }
+                else -> throw IllegalArgumentException("Cannot create a BasicInt of given '{$it}'")
+            }
+        }
+    }
 
     fun toBasicReal(): BasicReal = basicReal(this)
 
@@ -19,21 +40,7 @@ public trait BasicInt : BasicReal {
     final override fun doubleExponentialFactor(): Double = 1.0
 }
 
-/** MAIN CONSTRUCTOR **/
-fun basicInt(it: Any?): BasicInt {
-    return when(it) {
-        is BasicInt -> basicInt(it.number)
-        is String -> basicInt(BigInteger(it))
-        is Long -> basicInt(BigInteger(it))
-        is Int -> basicInt(BigInteger(it))
-        is Short -> basicInt(BigInteger(it))
-        is Byte -> basicInt(BigInteger(it))
-        is BigInteger -> object : BasicInt, Calculatable() {
-            override val number: BigInteger = it
-        }
-        else -> throw IllegalArgumentException("Cannot create a BasicInt of given '{$it}'")
-    }
-}
+val basicInt = BasicInt
 
 fun BigInteger(b: Byte): BigInteger = BigInteger(b.toString())
 fun BigInteger(s: Short): BigInteger = BigInteger(s.toString())

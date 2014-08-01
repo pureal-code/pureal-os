@@ -60,7 +60,15 @@ public class SetSpecs : Spek() {{
                 shouldBeFalse(e in IntegerSet)
             }
         }
-        on("testing with SetIntersections")
+        on("testing with SetIntersections") {
+            it("should be empty, intersected with (2, 4)") {
+                shouldEqual(EmptySet, setIntersection(e,openRealSet(2,4)).simplifySets())
+            }
+            it("should be (0,1] when intersecting with (0,1]") {
+                val f = realSet(0,1,false,true)
+                shouldEqual(f, setIntersection(e,f).simplifySets())
+            }
+        }
     }
 
 
