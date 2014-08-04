@@ -18,7 +18,8 @@ fun button(
     override val shape = shape
     override val fill = fill
     override val changed = changed
+
     {
-        content addObserver { onClick() }
+        content addObserver {onClick()}
     }
 }

@@ -12,7 +12,7 @@ trait Matrix3 : Numbers {
     val i: Number
 
     fun times(other: Matrix3): Matrix3 = matrix3 {(x, y) -> other.column(y) * row(x) }
-    fun times(other: Vector3) = vector3 { other * row(it) }
+    fun times(other: Vector3) = vector3 {index -> other * row(index)}
     fun times(other: Number): Matrix3 = matrix3 {(x, y) -> other.toDouble() * get(x, y).toDouble() }
     fun div(other: Number) = times(1.0 / other.toDouble())
 
