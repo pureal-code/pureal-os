@@ -73,6 +73,25 @@ public class SetSpecs : Spek() {{
             }
         }
     }
+    given("a [-1, Infinity) Multiple Set of pi")
+    {
+        val pi = ee.intReal("3.1415926") // whatever
+        val s = multipleOfSet(pi, -1, Infinity)
+        on("checking numbers that should be in the set"){
+            array<Number>(pi * -1, 0, pi*5, pi, 31415926).forEach {
+                it("$it should be in that set") {
+                    shouldBeTrue(it in s)
+                }
+            }
+        }
+        on("checking numbers that should not be in the set"){
+            array<Number>(pi * -2, Infinity, 3.14, 314159, 20000).forEach {
+                it("$it should NOT be in that set") {
+                    shouldBeTrue(it !in s)
+                }
+            }
+        }
+    }
 
 
 
