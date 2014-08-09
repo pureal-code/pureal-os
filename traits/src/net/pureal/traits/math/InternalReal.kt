@@ -26,7 +26,8 @@ public trait InternalReal : Calculatable {
     override fun minus(other: Any?): InternalReal
     override fun times(other: Any?): InternalReal
     override fun div(other: Any?): InternalReal
-    /// throws RuntimeException for
+    override fun mod(other: Any?): InternalReal
+    /// throws RuntimeException for other == 0
 
     override fun minus(): InternalReal
     override fun plus() = this

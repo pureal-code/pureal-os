@@ -20,6 +20,7 @@ public abstract class Calculatable : Number(), Comparable<Any?> {
     abstract fun minus(other: Any?): Calculatable
     abstract fun times(other: Any?): Calculatable
     abstract fun div(other: Any?): Calculatable
+    abstract fun mod(other: Any?): Calculatable
 
     abstract fun floor(): Calculatable
     abstract fun ceil(): Calculatable

@@ -67,6 +67,9 @@ public trait Real : Calculatable {
 
     override fun div(other: Any?): Real = ee.divVal(this, real(other))
 
+    // TODO:
+    override fun mod(other: Any?): Calculatable = approximate() % other
+
     fun invert(): Real = ee.divVal(1.toReal(), this)
 
 

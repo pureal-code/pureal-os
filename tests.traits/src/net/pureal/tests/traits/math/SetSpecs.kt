@@ -61,6 +61,9 @@ public class SetSpecs : Spek() {{
             }
         }
         on("testing with SetIntersections") {
+            it("should be empty, intersected with EmptySet") {
+                shouldEqual(EmptySet, setIntersection(e,EmptySet).simplifySets())
+            }
             it("should be empty, intersected with (2, 4)") {
                 shouldEqual(EmptySet, setIntersection(e,openRealSet(2,4)).simplifySets())
             }

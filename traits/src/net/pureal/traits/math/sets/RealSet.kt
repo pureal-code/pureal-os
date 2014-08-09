@@ -44,6 +44,8 @@ public trait RealSet : Set {
     val lowClosed: Boolean
     val highClosed: Boolean
 
+    override fun toString(): String = "realSet(${lowEnd},${highEnd},${lowClosed},${highClosed})"
+
     override fun contains(other: Set): Boolean {
         when(other) {
             is SetUnion -> return contains(other.subset1) && contains(other.subset2)
@@ -68,6 +70,12 @@ public trait RealSet : Set {
         // TODO
         return false
     }
+
+    override fun equals(other: Any?): Boolean {
+        return other is RealSet &&
+                lowEnd == other.lowEnd && highEnd == other.highEnd && lowClosed == other.lowClosed && highClosed == other.highClosed
+    }
+
 
 }
 

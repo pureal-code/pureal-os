@@ -14,18 +14,20 @@ public trait SetIntersection : Set {
     val superset1: Set
     val superset2: Set
 
+    override fun toString(): String = "setIntersection(${superset1},${superset2})"
+
     fun simplifySets(): Set {
         var s_ss1: Set = superset1
         var s_ss2: Set = superset2
         when(s_ss1) {
             is SetIntersection -> s_ss1 = (s_ss1 as SetIntersection).simplifySets()
             is SetUnion -> s_ss1 = (s_ss1 as SetIntersection).simplifySets()
-            EmptySet -> return EmptySet
+            is EmptySet -> return EmptySet
         }
         when(s_ss2) {
             is SetIntersection -> s_ss2 = (s_ss2 as SetIntersection).simplifySets()
             is SetUnion -> s_ss2 = (s_ss1 as SetIntersection).simplifySets()
-            EmptySet -> return EmptySet
+            is EmptySet -> return EmptySet
         }
         if(s_ss1 !is RealSet || s_ss2 !is RealSet) return setIntersection(s_ss1, s_ss2)
         val t_ss1: RealSet = s_ss1 as RealSet
@@ -49,7 +51,7 @@ public trait SetIntersection : Set {
         if(t_ss1.highEnd == t_ss2.highEnd) {
             he = t_ss1.highEnd
             hc = t_ss1.highClosed && t_ss2.highClosed
-        } else if (t_ss1.highEnd < t_ss2.highEnd){
+        } else if (t_ss1.highEnd > t_ss2.highEnd){
             he = t_ss2.highEnd
             hc = t_ss2.highClosed
         } else {
@@ -59,10 +61,11 @@ public trait SetIntersection : Set {
 
         if(le > he) return EmptySet
         if(le == he && !(lc && hc)) return EmptySet
-
-        // TODO: A Clever solution for this would be nice
-        if(t_ss1 is IntegerSet || t_ss2 is IntegerSet) return integerSet(le, he, lc, hc)
-        return realSet(le,he,lc,hc)
+        var f: Calculatable? = null
+        if(t_ss1 is MultipleOfSet) f = t_ss1.factor
+        if(t_ss2 is MultipleOfSet) f = if(f == null) t_ss2.factor; else t_ss2.factor * f
+        if(f == null) return realSet(le, he, lc, hc)
+        return multipleOfSet(f!!, realSet(le,he,lc,hc))
     }
 
     override fun hasCommonElementsWith(other: Set): Boolean {
@@ -73,6 +76,9 @@ public trait SetIntersection : Set {
     override fun contains(other: Number): Boolean {
         return other in superset1 && other in superset2
     }
+
+    override fun equals(other: Any?): Boolean = other is SetIntersection &&
+            ((superset1 == other.superset1 && superset2 == other.superset2) || (superset2 == other.superset1 && superset1 == other.superset2))
 }
 
 val setIntersection = SetIntersection

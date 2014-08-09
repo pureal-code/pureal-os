@@ -1,5 +1,7 @@
 package net.pureal.traits.math
 
+import net.pureal.traits.InvalidateFun
+
 public trait SpecialValue : InternalReal {
     public class object {
         public val positiveInfinity: SpecialValue = object : SpecialValue, Calculatable() {
@@ -34,53 +36,27 @@ public trait SpecialValue : InternalReal {
         }
     }
     // Invalidate super functions
-    override fun toString(): String {
-        throw UnsupportedOperationException()
-    }
+    override fun toString(): String = InvalidateFun()
 
-    override fun toMathematicalString(): String {
-        throw UnsupportedOperationException()
-    }
+    override fun toMathematicalString(): String = InvalidateFun()
 
-    override fun toDouble(): Double {
-        throw UnsupportedOperationException()
-    }
-    override fun toLong(): Long {
-        throw UnsupportedOperationException()
-    }
+    override fun toDouble(): Double = InvalidateFun()
+    override fun toLong(): Long = InvalidateFun()
 
 
-    override fun plus(other: Any?): InternalReal {
-        throw UnsupportedOperationException()
-    }
-    override fun minus(other: Any?): InternalReal {
-        throw UnsupportedOperationException()
-    }
-    override fun times(other: Any?): InternalReal {
-        throw UnsupportedOperationException()
-    }
-    override fun div(other: Any?): InternalReal {
-        throw UnsupportedOperationException()
-    }
-    override fun minus(): InternalReal {
-        throw UnsupportedOperationException()
-    }
-    override fun signum(): Int {
-        throw UnsupportedOperationException()
-    }
+    override fun plus(other: Any?): InternalReal = InvalidateFun()
+    override fun minus(other: Any?): InternalReal = InvalidateFun()
+    override fun times(other: Any?): InternalReal = InvalidateFun()
+    override fun div(other: Any?): InternalReal = InvalidateFun()
+    override fun mod(other: Any?): InternalReal = InvalidateFun()
 
-    override fun floor(): InternalReal {
-        throw UnsupportedOperationException()
-    }
-    override fun ceil(): InternalReal {
-        throw UnsupportedOperationException()
-    }
-    override fun round(): InternalReal {
-        throw UnsupportedOperationException()
-    }
-    override fun abs(): InternalReal {
-        throw UnsupportedOperationException()
-    }
+    override fun minus(): InternalReal = InvalidateFun()
+    override fun signum(): Int = InvalidateFun()
+
+    override fun floor(): InternalReal = InvalidateFun()
+    override fun ceil(): InternalReal = InvalidateFun()
+    override fun round(): InternalReal = InvalidateFun()
+    override fun abs(): InternalReal = InvalidateFun()
 
     override fun compareTo(other: Any?): Int
     override fun isInteger(): Boolean = false

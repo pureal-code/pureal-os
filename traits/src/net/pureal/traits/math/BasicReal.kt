@@ -232,7 +232,7 @@ public trait BasicReal : InternalReal {
         }
     }
     // TODO: do mod on the Calculatable class
-    fun mod(other: Any?): BasicReal {
+    override fun mod(other: Any?): BasicReal {
         when (other) {
             is Byte -> return this % basicInt(other)
             is Short -> return this % basicInt(other)
