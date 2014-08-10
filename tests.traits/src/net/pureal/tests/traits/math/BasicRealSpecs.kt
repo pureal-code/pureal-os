@@ -7,6 +7,7 @@ import java.math.BigInteger
 import net.pureal.tests.traits.shouldThrow
 
 public class BasicRealSpecs : Spek() {{
+    private class to(val a: Number, val b: Number, val r: Number){}
     given("Strings that are to be converted to BasicReal"){
 
         on("creating a basic Real of '212'") {
@@ -268,6 +269,24 @@ public class BasicRealSpecs : Spek() {{
             }
             it("should be 2.4E4 for 2.4E4") {
                 shouldEqual(basicReal("2.4E4").round(), 24000)
+            }
+        }
+    }
+    given("numbers for gcd tests") {
+        array(to(4,2,2), to(33,0,33), to(.3,2,.1), to(36,36,36), to(20,44,4)).forEach {
+            on("calculating the gcd of ${it.a} and ${it.b}") {
+                it("should be ${it.r}") {
+                    shouldEqual(it.r.asCalculatable(),gcd(it.a,it.b))
+                }
+            }
+        }
+    }
+    given("numbers for lcm tests") {
+        array(to(4,2,4), to(33,0,0), to(.3,2,6), to(36,36,36), to(20,44,220)).forEach {
+            on("calculating the lcm of ${it.a} and ${it.b}") {
+                it("should be ${it.r}") {
+                    shouldEqual(it.r.asCalculatable(),lcm(it.a,it.b))
+                }
             }
         }
     }

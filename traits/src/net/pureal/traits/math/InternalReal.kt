@@ -12,7 +12,7 @@ public trait InternalReal : Calculatable {
 
     override fun toString(): String
 
-    fun toMathematicalString(): String // NOTE: i would like the environment to do the conversion, using a xxxRealConverter trait
+    fun toMathematicalString(): String // TODO: i would like the environment to do the conversion, using a xxxRealConverter trait
 
     override fun equals(other: Any?): Boolean {
         try {

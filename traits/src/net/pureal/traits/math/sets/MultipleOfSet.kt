@@ -4,8 +4,10 @@ import net.pureal.traits.math.*
 import net.pureal.traits.*
 
 public trait MultipleOfSet : RealSet, Set {
-    public class object : Constructor3<MultipleOfSet, Number, Number, Number>, Constructor2<MultipleOfSet, Number, RealSet> {
-        override fun invoke(factor: Number, lEnd: Number, hEnd: Number): MultipleOfSet {
+    public class object : Constructor3<Set, Number, Number, Number>, Constructor2<Set, Number, RealSet> {
+        override fun invoke(factor: Number, lEnd: Number, hEnd: Number): Set {
+            val factor = factor.asCalculatable().abs()
+            if(factor == Infinity) return EmptySet
             var le = lEnd.asCalculatable()
             var he = hEnd.asCalculatable()
             if(le > he) {
@@ -13,40 +15,18 @@ public trait MultipleOfSet : RealSet, Set {
                 le = he
                 he = tmp
             }
-            try {
-                le = le.ceil() * factor
-            } catch(e: Exception) {
-                // leave le as it is
-            }
-            try {
-                he = he.floor() * factor
-            } catch(e: Exception) {
-                // leave he as it is
-            }
+            le = le.ceil() * factor
+            he = he.floor() * factor
             return object : MultipleOfSet {
-                override val factor = factor.asCalculatable()
+                override val factor = factor
                 override val lowEnd = le
                 override val highEnd = he
             }
         }
-        override fun invoke(factor: Number, s: RealSet): MultipleOfSet = invoke(factor, s.lowEnd, s.highEnd)
+        override fun invoke(factor: Number, s: RealSet): Set = invoke(factor, s.lowEnd, s.highEnd)
     }
 
-    override fun toString(): String {
-        var le = lowEnd
-        var he = highEnd
-        try {
-            le = le / factor
-        } catch(e: Exception) {
-            // leave le as it is
-        }
-        try {
-            he = he / factor
-        } catch(e: Exception) {
-            // leave he as it is
-        }
-        return "multipleOfSet(${factor}, ${le}, ${he})"
-    }
+    override fun toString(): String = "multipleOfSet(${factor}, ${lowEnd / factor}, ${highEnd / factor})"
 
     override fun contains(other: Number): Boolean {
         try{
