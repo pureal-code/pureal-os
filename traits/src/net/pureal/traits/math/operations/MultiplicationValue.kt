@@ -1,8 +1,17 @@
 package net.pureal.traits.math.operations
 
 import net.pureal.traits.math.*
+import net.pureal.traits.Constructor2
 
 public trait MultiplicationValue : RealBinaryOperation {
+
+    public class object : Constructor2<MultiplicationValue, Real, Real> {
+        override fun invoke(a: Real, b: Real): MultiplicationValue = object : MultiplicationValue, Calculatable() {
+            override val value1 = a
+            override val value2 = b
+        }
+    }
+
     final override val priority: Int
         get() = +5
 
@@ -35,11 +44,6 @@ public trait MultiplicationValue : RealBinaryOperation {
 
 
     // Code easter-egg: The first factor gets discriminated by this function, it always feels negative afterwards
-    override fun minus(): MultiplicationValue = multiplicationValue(-value1, value2)
+    override fun minus(): MultiplicationValue = MultiplicationValue.invoke(-value1, value2)
 
-}
-
-fun multiplicationValue(a: Real, b: Real): MultiplicationValue = object : MultiplicationValue, Number() {
-    override val value1 = a
-    override val value2 = b
 }

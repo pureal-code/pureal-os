@@ -94,7 +94,7 @@ public class RealSpecs : Spek() {{
     }
     given("the constant pi as approximate")
     {
-        val pi = net.pureal.traits.math.realConstant("pi") { real("3.1415926535") }
+        val pi = realConstant("pi") { real("3.1415926535") }
         on("getting string representation")
         {
             it("should be 'pi'", {

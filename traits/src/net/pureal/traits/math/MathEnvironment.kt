@@ -1,15 +1,16 @@
 package net.pureal.traits.math
 
 import net.pureal.traits.math.operations.*
+import net.pureal.traits.*
 
 public trait MathEnvironment {
     class object {
         public abstract class DefaultFunctionEnv : MathEnvironment {
-            override val intReal: (Any?) -> InternalReal = {basicReal(it)}
-            override val addVal: (Real, Real) -> Real = {a,b -> additionValue(a,b)}
-            override val subVal: (Real, Real) -> Real = {a,b -> subtractionValue(a,b)}
-            override val mulVal: (Real, Real) -> Real = {a,b -> multiplicationValue(a,b)}
-            override val divVal: (Real, Real) -> Real = {a,b -> divisionValue(a,b)}
+            override val intReal: Constructor1<InternalReal, Any?> = BasicReal
+            override val addVal: Constructor2<RealBinaryOperation, Real, Real> = AdditionValue
+            override val subVal: Constructor2<RealBinaryOperation, Real, Real> = SubtractionValue
+            override val mulVal: Constructor2<RealBinaryOperation, Real, Real> = MultiplicationValue
+            override val divVal: Constructor2<RealBinaryOperation, Real, Real> = DivisionValue
             override val simplifier: RealSimplifier = object : RealSimplifier {
                 override fun simplify(r: Real): Real {
                     return net.pureal.traits.math.simplifier.simplify(r)
@@ -25,11 +26,11 @@ public trait MathEnvironment {
     var accuracy: Int
     var requireExactCalculation: Boolean
 
-    val intReal: (Any?) -> InternalReal
-    val addVal: (Real, Real) -> Real
-    val subVal: (Real, Real) -> Real
-    val mulVal: (Real, Real) -> Real
-    val divVal: (Real, Real) -> Real
+    val intReal: Constructor1<InternalReal, Any?>
+    val addVal: Constructor2<RealBinaryOperation, Real, Real>
+    val subVal: Constructor2<RealBinaryOperation, Real, Real>
+    val mulVal: Constructor2<RealBinaryOperation, Real, Real>
+    val divVal: Constructor2<RealBinaryOperation, Real, Real>
 
     val simplifier: RealSimplifier
     // TODO: make up more things that should be controlled by the environment

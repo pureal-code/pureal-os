@@ -1,11 +1,25 @@
 package net.pureal.traits.math
 
-import net.pureal.traits.math.operations.additionValue
-import net.pureal.traits.math.operations.multiplicationValue
-import net.pureal.traits.math.operations.subtractionValue
-import net.pureal.traits.math.operations.divisionValue
+import net.pureal.traits.Constructor1
+import net.pureal.traits.Constructor2
 
-public trait Real : Number {
+public trait Real : Calculatable {
+
+    public class object : Constructor1<Real, Any?>, Constructor2<Real, Any?, Boolean> {
+        override fun invoke(it: Any?): Real = invoke(it, false)
+        override fun invoke(v: Any?, isApprox: Boolean): Real {
+            when (v) {
+                is Real -> return v
+                is InternalReal -> return object : RealPrimitive, Calculatable() {
+                    override val value : InternalReal = v
+                    override val isApproximate : Boolean = isApprox
+                }
+                null -> throw IllegalArgumentException("Cannot create a real out of nothing")
+                else -> return real(ee.intReal(v), isApprox)
+            }
+        }
+    }
+
     val isApproximate: Boolean get() = false
 
     fun matchWithThisPattern(other: Real) : Boolean = this == other // true if other matches the pattern defined by this
@@ -39,17 +53,22 @@ public trait Real : Number {
         return false
     }
 
-    fun plus(): Real = this
-    fun minus(): Real = ee.subVal(0.toReal(), this)
+    override fun compareTo(other: Any?): Int = approximate().compareTo(other)
+
+    override fun plus() = this
+    override fun minus(): Real = ee.subVal(0.toReal(), this)
 
 
-    fun plus(other: Real): Real = ee.addVal(this, other)
+    override fun plus(other: Any?): Real = ee.addVal(this, real(other))
 
-    fun minus(other: Real): Real = ee.subVal(this, other)
+    override fun minus(other: Any?): Real = ee.subVal(this, real(other))
 
-    fun times(other: Real): Real = ee.mulVal(this, other)
+    override fun times(other: Any?): Real = ee.mulVal(this, real(other))
 
-    fun div(other: Real): Real = ee.divVal(this, other)
+    override fun div(other: Any?): Real = ee.divVal(this, real(other))
+
+    // TODO:
+    override fun mod(other: Any?): Calculatable = approximate() % other
 
     fun invert(): Real = ee.divVal(1.toReal(), this)
 
@@ -62,4 +81,13 @@ public trait Real : Number {
     override fun toByte(): Byte = approximate().toByte()
     override fun toChar(): Char = approximate().toChar()
 
+    override fun floor(): Calculatable = approximate().floor()
+    override fun ceil(): Calculatable = approximate().ceil()
+    override fun round(): Calculatable = approximate().round()
+
+    override fun abs(): Calculatable = approximate().abs() // TODO: we want an operator for this
 }
+
+val real = Real
+
+fun Number.toReal(): Real = real(this)

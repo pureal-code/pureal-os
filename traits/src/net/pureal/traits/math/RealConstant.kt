@@ -1,6 +1,16 @@
 package net.pureal.traits.math
 
+import net.pureal.traits.*
+
 public trait RealConstant : Symbol, RealPrimitive {
+    public class object {
+        fun invoke(n: String, u: String? = null, fn: (() -> Real)): RealConstant = object : RealConstant, Calculatable() {
+            override val name: String = n
+            override val unit: String? = u
+            override val calculation_fn = fn
+        }
+    }
+
     override val value: InternalReal get() = approximate()
 
     override fun toString(): String = super<Symbol>.toString()
@@ -17,9 +27,4 @@ public trait RealConstant : Symbol, RealPrimitive {
 
 }
 
-fun realConstant(n: String, u: String? = null, fn: (() -> Real)): RealConstant = object : RealConstant, Number() {
-    override val name: String = n
-    override val unit: String? = u
-    override val calculation_fn = fn
-}
-
+val realConstant = RealConstant

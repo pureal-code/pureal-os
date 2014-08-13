@@ -1,8 +1,16 @@
 package net.pureal.traits.math.operations
 
 import net.pureal.traits.math.*
+import net.pureal.traits.*
 
 public trait SubtractionValue : RealBinaryOperation {
+
+    public class object : Constructor2<SubtractionValue, Real, Real> {
+        override fun invoke(a: Real, b: Real): SubtractionValue = object : SubtractionValue, Calculatable() {
+            override val value1 = a
+            override val value2 = b
+        }
+    }
 
     final override val priority: Int
         get() = 0
@@ -32,12 +40,7 @@ public trait SubtractionValue : RealBinaryOperation {
         return this
     }
 
-    override fun minus(): SubtractionValue = subtractionValue(-value1, -value2)
+    override fun minus(): SubtractionValue = SubtractionValue.invoke(-value1, -value2)
 
-}
-
-fun subtractionValue(a: Real, b: Real): SubtractionValue = object : SubtractionValue, Number() {
-    override val value1 = a
-    override val value2 = b
 }
 
