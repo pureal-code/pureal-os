@@ -29,21 +29,19 @@ trait TextInput : Composed<String>, KeysElement<String>, PointersElement<String>
     var cursorPosition: Int
     val textChanged: Observable<String>
 }
-/*
-fun textInput(content: String = "", bound: Rectangle, font: Font, fontFill: Fill, backgroundFill: Fill) = object : TextInput {
-    {
-        text = content
-    }
 
-    private fun textElement() = textElement(text, font, fontFill)
+fun textInput(text: String = "", bound: Rectangle, font: Font, fontFill: Fill, size: Number, backgroundFill: Fill) = object : TextInput {
+    override var text = text
+
+    private fun textElement() = graphics.textElement(text, font, size, fontFill)
     private fun cursor() = coloredElement(rectangle(vector(0,0)), fontFill)
-    private val background = coloredElement(bound, backgroundFill)
+    private fun background() = coloredElement(bound, backgroundFill)
 
-    private var elements: Iterable<Element<*>> = listOf()
+    override val elements = observableListOf()
 
     private fun refresh() {
-        elements = listOf(textElement(), cursor(), background)
+        elements.setTo(textElement(), cursor(), background())
     }
 
     override fun iterator() = (elements map {transformedElement(it)}).iterator()
-}*/
+}

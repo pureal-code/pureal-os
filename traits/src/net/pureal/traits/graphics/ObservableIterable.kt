@@ -2,6 +2,8 @@ package net.pureal.traits.graphics
 
 import net.pureal.traits.Observable
 import net.pureal.traits.observable
+import java.util.ArrayList
+import net.pureal.traits.trigger
 
 trait ObservableIterable<out T> : Iterable<T> {
     val added: Observable<T>
@@ -24,4 +26,31 @@ fun <T> ObservableIterable<Observable<T>>.stopKeepingAllObserved(observer: (T)->
     forEach {it removeObserver observer}
     added removeObserver {it removeObserver observer}
     removed removeObserver {it removeObserver observer}
+}
+
+trait ObservableList<T> : ObservableIterable<T>, MutableList<T>
+
+fun observableListOf<T>(vararg values: T) : ObservableList<T> {
+    val elements = ArrayList(values map {it})
+    return object : MutableList<T> by elements, ObservableList<T> {
+        override val removed = trigger<T>()
+        override val added = trigger<T>()
+
+        override fun add(e: T) : Boolean {
+            elements.add(e)
+            added(e)
+
+            return true
+        }
+
+        override fun remove(o: Any?) : Boolean {
+            if(!elements.remove(o)) return false
+
+            removed(o as T)
+
+            return true
+        }
+
+        override fun removeAll(c : Collection<Any?>) = c.fold(initial=false) {(removedAny, it) -> remove(it) or removedAny}
+    }
 }

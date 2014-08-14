@@ -11,12 +11,14 @@ fun transformedElement<T>(element : Element<T>, transform : Transform2 = Transfo
     override val transform = transform
 }
 
-trait Composed<T> : Element<T>, ObservableIterable<TransformedElement<*>> {
-    fun elementsAt(location: Vector2): Iterable<TransformedElement<*>> = this flatMap {
+trait Composed<T> : Element<T> {
+    fun elementsAt(location: Vector2): Iterable<TransformedElement<*>> = elements flatMap {
         val transformedLocation = it transform location
         val contains = it.shape.contains(transformedLocation)
 
         if (!contains) listOf<TransformedElement<*>>() else if (it is Composed<*>) it.elementsAt(transformedLocation) map {x -> transformedElement(it, it.transform before x.transform)} else listOf(it)}
+
+    val elements : ObservableIterable<TransformedElement<*>>
 }
 
 fun composed<T>(
@@ -24,9 +26,7 @@ fun composed<T>(
         elements: ObservableIterable<TransformedElement<*>>,
         changed: Observable<Unit> = observable<Unit>()) = object : Composed<T> {
     override val content = content
-    override val added = elements.added
-    override val removed = elements.removed
-    override fun iterator() = elements.iterator()
+    override val elements = elements
     override val shape = concatenatedShape(elements mapObservable { it.shape })
     override val changed = changed
 }

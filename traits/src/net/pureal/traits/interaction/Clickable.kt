@@ -26,18 +26,3 @@ trait Clickable<T> : PointersElement<T> {
 
     fun onClick(pointerKey: PointerKey) {}
 }
-
-trait PointersElement<T> : Element<T> {
-    fun onPointerKeyPressed(pointerKey: PointerKey) {}
-    fun onPointerKeyReleased(pointerKey: PointerKey) {}
-    fun onPointerMoved(pointer: Pointer) {}
-    fun onPointerEntered(pointer: Pointer) {}
-    fun onPointerLeaved(pointer: Pointer) {}
-}
-
-trait KeysElement<T> : Element<T> {
-    fun onKeyPressed(key: Key) {}
-    fun onKeyReleased(key: Key) {}
-    fun onGotKeysFocus(keys: Iterable<Key>) {}
-    fun onLostKeysFocus(keys: Iterable<Key>) {}
-}
