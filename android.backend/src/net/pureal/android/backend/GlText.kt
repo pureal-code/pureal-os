@@ -100,35 +100,45 @@ fun glFont(original: Font): GlFont {
 
 class GlGlyphs(val font: GlFont, val text: String) : GlShape() {
     override val textureName: Int = font.textureName
-    override val vertexCoordinates = FloatArray(text.length * 3 * 6)
-    override val textureCoordinates = FloatArray(text.length * 2 * 6)
+    override val vertexCoordinates = FloatArray(text.length * 3 * 4)
+    override val textureCoordinates = FloatArray(text.length * 2 * 4 * 2)
     override val drawOrder = ShortArray(text.length * 6)
     override val glVertexMode: Int = GLES20.GL_TRIANGLES
     {
         var ic = 0
         var it = 0
-        var n: Short = 0
+        var n : Short = 0
+
+        fun wtfIt() : Int {
+            val wtf = it xor (it shr 5 shl 1) xor (it shr 8 shl 1)
+            println("${it}->${wtf}")
+            it++
+            return wtf
+        }
+
         fun addVertex(x: Float, y: Float, tx: Float, ty: Float): Short {
             vertexCoordinates[ic++] = x / 40
             vertexCoordinates[ic++] = y / 40
             vertexCoordinates[ic++] = 0f // z
-            textureCoordinates[it++] = tx / 1024
-            textureCoordinates[it++] = ty / 1024
+            textureCoordinates[wtfIt()] = tx / 1024
+            textureCoordinates[wtfIt()] = ty / 1024
             return n++
         }
 
         var id = 0
         fun addQuad(x: Float, y: Float, w: Float, h: Float, tx: Float, ty: Float) {
-            fun bl() = addVertex(x, y, tx, ty + h)
-            fun br() = addVertex(x + w, y, tx + w, ty + h)
-            fun tr() = addVertex(x + w, y + h, tx + w, ty)
-            fun tl() = addVertex(x, y + h, tx, ty)
-            drawOrder[id++] = tl()
-            drawOrder[id++] = bl()
-            drawOrder[id++] = br()
-            drawOrder[id++] = tl()
-            drawOrder[id++] = br()
-            drawOrder[id++] = tr()
+            var bl = addVertex(x, y, tx, ty + h)
+            var br = addVertex(x + w, y, tx + w, ty + h)
+            var tr = addVertex(x + w, y + h, tx + w, ty)
+            var tl = addVertex(x, y + h, tx, ty)
+
+            drawOrder[id++] = bl
+            drawOrder[id++] = br
+            drawOrder[id++] = tl
+            drawOrder[id++] = tr
+            drawOrder[id++] = tl
+            drawOrder[id++] = br
+
         }
 
         var cx = 0f
@@ -139,6 +149,10 @@ class GlGlyphs(val font: GlFont, val text: String) : GlShape() {
                     glyph.width.toFloat(), glyph.height.toFloat(),
                     glyph.x.toFloat(), glyph.y.toFloat())
             cx += glyph.xAdvance
+            if (char == 10.toChar()) {
+                cx = 0f
+                cy -= 40
+            }
         }
     }
     //override fun contains(location: Vector2): Boolean = //TODO

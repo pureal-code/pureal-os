@@ -8,6 +8,8 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.ShortBuffer
 import java.util.ArrayList
+import android.opengl.GLES10
+import java.nio.IntBuffer
 
 
 abstract class GlElement(open val original: Element<*>, val screen: GlScreen) : Element<Any?> {
@@ -80,15 +82,15 @@ open class GlColoredElement(override val original: ColoredElement<*>, screen: Gl
 
         val positionHandle = GLES20.glGetAttribLocation(screen.program!!, "a_Position")
         GLES20.glEnableVertexAttribArray(positionHandle)
-        GLES20.glVertexAttribPointer(positionHandle, 3, GLES20.GL_FLOAT, false, 0, vertexBuffer)
+        GLES20.glVertexAttribPointer(positionHandle, 3, GLES20.GL_FLOAT, false, 3*4, vertexBuffer)
 
         val texCoordHandle = GLES20.glGetAttribLocation(screen.program!!, "a_TexCoord")
         GLES20.glEnableVertexAttribArray(texCoordHandle)
-        GLES20.glVertexAttribPointer(texCoordHandle, 2, GLES20.GL_FLOAT, false, 0, uvBuffer)
+        GLES20.glVertexAttribPointer(texCoordHandle, 2, GLES20.GL_FLOAT, false, 2*4, uvBuffer)
 
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, shape.textureName)
-        val samplerHandle = GLES20.glGetUniformLocation(screen.program!!, "s_Texture")
+        val samplerHandle = GLES20.glGetUniformLocation(screen.program!!, "u_Texture")
         GLES20.glUniform1i(samplerHandle, 0)
 
 
@@ -100,11 +102,9 @@ open class GlColoredElement(override val original: ColoredElement<*>, screen: Gl
                 color.b.toFloat(),
                 color.a.toFloat()), 0)
 
-        GLES20.glDrawArrays(shape.glVertexMode, 0, shape.textureCoordinates.size)
-
-        /*GLES20.glDrawElements(
+        GLES20.glDrawElements(
                 shape.glVertexMode, shape.drawOrder.size,
-                GLES20.GL_UNSIGNED_SHORT, drawListBuffer)*/
+                GLES20.GL_UNSIGNED_SHORT, drawListBuffer)
 
         GLES20.glDisableVertexAttribArray(positionHandle);
         GLES20.glDisableVertexAttribArray(texCoordHandle)

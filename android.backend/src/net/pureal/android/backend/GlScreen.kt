@@ -20,6 +20,8 @@ class GlScreen (activity: Activity, onReady: (GlScreen) -> Unit) : GLSurfaceView
         setRenderer(object : Renderer {
             override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
                 GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f)
+                GLES20.glEnable(GLES20.GL_BLEND);
+                GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
                 program = createProgram();
                 GLES20.glUseProgram(program!!);
                 onReady(this@GlScreen);
@@ -58,9 +60,12 @@ fun createProgram(): Int {
     val fragmentShaderCode = """
                     uniform vec4 u_Color;
                     varying vec2 v_TexCoord;
-                    uniform sampler2D s_Texture;
+                    uniform sampler2D u_Texture;
+                    const float smoothing = 1.0/8.0;
                     void main() {
-                        gl_FragColor = u_Color - texture2D(s_Texture, v_TexCoord);
+                        float distance = texture2D(u_Texture, v_TexCoord).a;
+                        float alpha = smoothstep(0.5 - smoothing, 0.5 + smoothing, distance);
+                        gl_FragColor = vec4(u_Color.rgb, alpha);
                     }
                 """
     val vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, vertexShaderCode)
