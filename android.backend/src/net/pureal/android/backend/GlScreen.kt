@@ -46,17 +46,21 @@ class GlScreen (activity: Activity, onReady: (GlScreen) -> Unit) : GLSurfaceView
 
 fun createProgram(): Int {
     val vertexShaderCode = """
-                    uniform mat4 matrix;
-                    attribute vec4 position;
+                    uniform mat4 u_Matrix;
+                    attribute vec4 a_Position;
+                    attribute vec2 a_TexCoord;
+                    varying vec2 v_TexCoord;
                     void main() {
-                        gl_Position = matrix * position;
+                        v_TexCoord = a_TexCoord;
+                        gl_Position = u_Matrix * a_Position;
                     }
                 """
     val fragmentShaderCode = """
-                    precision mediump float;
-                    uniform vec4 color;
+                    uniform vec4 u_Color;
+                    varying vec2 v_TexCoord;
+                    uniform sampler2D s_Texture;
                     void main() {
-                        gl_FragColor = color;
+                        gl_FragColor = u_Color - texture2D(s_Texture, v_TexCoord);
                     }
                 """
     val vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, vertexShaderCode)

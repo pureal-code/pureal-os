@@ -68,7 +68,8 @@ open class GlColoredElement(override val original: ColoredElement<*>, screen: Gl
     override val fill: Fill get() = original.fill
     override fun draw(parentTransform: Transform2) {
         val transform = parentTransform
-        val matrixHandle = GLES20.glGetUniformLocation(screen.program!!, "matrix");
+
+        val matrixHandle = GLES20.glGetUniformLocation(screen.program!!, "u_Matrix");
         val m = transform.matrix
         val glMatrix = floatArray(
                 m.a.toFloat(), m.d.toFloat(), 0f, m.g.toFloat(),
@@ -76,42 +77,74 @@ open class GlColoredElement(override val original: ColoredElement<*>, screen: Gl
                 0f, 0f, 1f, 0f,
                 m.c.toFloat(), m.f.toFloat(), 0f, m.i.toFloat())
         GLES20.glUniformMatrix4fv(matrixHandle, 1, false, glMatrix, 0);
-        val positionHandle = GLES20.glGetAttribLocation(screen.program!!, "position")
+
+        val positionHandle = GLES20.glGetAttribLocation(screen.program!!, "a_Position")
         GLES20.glEnableVertexAttribArray(positionHandle)
-        GLES20.glVertexAttribPointer(positionHandle, 3, GLES20.GL_FLOAT, false, 3 * 4, vertexBuffer)
-        val colorHandle = GLES20.glGetUniformLocation(screen.program!!, "color")
+        GLES20.glVertexAttribPointer(positionHandle, 3, GLES20.GL_FLOAT, false, 0, vertexBuffer)
+
+        val texCoordHandle = GLES20.glGetAttribLocation(screen.program!!, "a_TexCoord")
+        GLES20.glEnableVertexAttribArray(texCoordHandle)
+        GLES20.glVertexAttribPointer(texCoordHandle, 2, GLES20.GL_FLOAT, false, 0, uvBuffer)
+
+        GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, shape.textureName)
+        val samplerHandle = GLES20.glGetUniformLocation(screen.program!!, "s_Texture")
+        GLES20.glUniform1i(samplerHandle, 0)
+
+
+        val colorHandle = GLES20.glGetUniformLocation(screen.program!!, "u_Color")
         val color = fill.colorAt(vector(0, 0))
         GLES20.glUniform4fv(colorHandle, 1, floatArray(
                 color.r.toFloat(),
                 color.g.toFloat(),
                 color.b.toFloat(),
                 color.a.toFloat()), 0)
-        GLES20.glDrawElements(
-                GLES20.GL_TRIANGLE_FAN, shape.drawOrder.size,
-                GLES20.GL_UNSIGNED_SHORT, drawListBuffer)
+
+        GLES20.glDrawArrays(shape.glVertexMode, 0, shape.textureCoordinates.size)
+
+        /*GLES20.glDrawElements(
+                shape.glVertexMode, shape.drawOrder.size,
+                GLES20.GL_UNSIGNED_SHORT, drawListBuffer)*/
+
         GLES20.glDisableVertexAttribArray(positionHandle);
+        GLES20.glDisableVertexAttribArray(texCoordHandle)
     }
     private var glShape : GlShape = glShape(original.shape)
     private var vertexBuffer = buildVertexBuffer()
+    private var uvBuffer = buildUvBuffer()
     private var drawListBuffer = buildDrawListBuffer()
     fun buildVertexBuffer(): FloatBuffer {
         // 4 bytes per float
-        val byteBuffer = ByteBuffer.allocateDirect(shape.coordinates.size * 4)!! order ByteOrder.nativeOrder()!!;
+        val byteBuffer = ByteBuffer.allocateDirect(shape.vertexCoordinates.size * 4)!!
+        byteBuffer order ByteOrder.nativeOrder()!!;
         val floatBuffer = byteBuffer.asFloatBuffer()!!
-        floatBuffer put shape.coordinates position 0
+        floatBuffer put shape.vertexCoordinates
+        floatBuffer position 0
+        return floatBuffer
+    }
+    fun buildUvBuffer(): FloatBuffer {
+        // 4 bytes per float
+        val byteBuffer = ByteBuffer.allocateDirect(shape.textureCoordinates.size * 4)!!
+        byteBuffer order ByteOrder.nativeOrder()!!;
+        val floatBuffer = byteBuffer.asFloatBuffer()!!
+        floatBuffer put shape.textureCoordinates
+        floatBuffer position 0
         return floatBuffer
     }
     fun buildDrawListBuffer(): ShortBuffer {
         // 2 bytes per short
-        val byteBuffer = ByteBuffer.allocateDirect(shape.coordinates.size * 2)!! order ByteOrder.nativeOrder()!!;
+        val byteBuffer = ByteBuffer.allocateDirect(shape.drawOrder.size * 2)!!
+        byteBuffer order ByteOrder.nativeOrder()!!;
         val shortBuffer = byteBuffer.asShortBuffer()!!
-        shortBuffer put shape.drawOrder position 0
+        shortBuffer put shape.drawOrder
+        shortBuffer position 0
         return shortBuffer
     }
     {
         changed addObserver {
             glShape = glShape(original.shape)
             vertexBuffer = buildVertexBuffer()
+            uvBuffer = buildUvBuffer()
             drawListBuffer = buildDrawListBuffer()
             // how? redraw()
         }

@@ -29,7 +29,7 @@ fun composed<T>(
     override val added = elements.added
     override val removed = elements.removed
     override fun iterator() = elements.iterator()
-    override val shape = concatenatedShape(elements mapObservable { transformedShape(it.element.shape, it.transform) })
+    override val shape = concatenatedShape(elements mapObservable { it.element.shape transformed it.transform })
     override val changed = changed
 }
 

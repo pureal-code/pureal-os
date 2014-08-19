@@ -7,7 +7,9 @@ import net.pureal.traits.math.Shape
 import android.content.res.Resources
 import java.util.HashMap
 import java.io.InputStreamReader
-import net.pureal.traits.Vector2
+import android.opengl.GLES20
+import android.graphics.BitmapFactory
+import android.opengl.GLUtils
 
 //TODO: override val original (runtime compiler barf)
 class GlTextElement(val originalText: TextElement, screen: GlScreen) : TextElement, GlColoredElement(originalText, screen) {
@@ -21,11 +23,11 @@ class GlTextElement(val originalText: TextElement, screen: GlScreen) : TextEleme
 class GlFont(resources: Resources) : Font {
 
     class Page(val id: Int, val file: String)
-    class Char(val id: Int, val x: Int, val y: Int, val width: Int, val height: Int,
-               val xOffset: Int, val yOffset: Int, val xAdvance: Int, val page: Int)
+    class Glyph(val id: Int, val x: Int, val y: Int, val width: Int, val height: Int,
+                val xOffset: Int, val yOffset: Int, val xAdvance: Int, val page: Int)
 
     val pages = HashMap<Int, Page>()
-    val chars = HashMap<Int, Char>()
+    val glyphs = HashMap<Char, Glyph>()
     val kernings = HashMap<Int, HashMap<Int, Int>>();
 
     {
@@ -45,7 +47,7 @@ class GlFont(resources: Resources) : Font {
                     if (tag == ("page")) {
                         pages.put(id, Page(id, values["file"] ?: ""))
                     } else if (tag == ("char")) {
-                        chars.put(id, Char(id,
+                        glyphs.put(id.toChar(), Glyph(id,
                                 values["x"]?.toInt() ?: 0, values["y"]?.toInt() ?: 0,
                                 values["width"]?.toInt() ?: 0, values["height"]?.toInt() ?: 0,
                                 values["xoffset"]?.toInt() ?: 0, values["yoffset"]?.toInt() ?: 0,
@@ -62,6 +64,21 @@ class GlFont(resources: Resources) : Font {
         } finally {
             stream.close()
         }
+    }
+    private val textureNames: IntArray = IntArray(1);
+    val textureName : Int get() = textureNames[0]
+    {
+        GLES20.glGenTextures(textureNames.size, textureNames, 0);
+        val bmp = BitmapFactory.decodeResource(resources, R.drawable.roboto_regular)!!;
+
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureName);
+        // Set filtering
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
+        GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
+        // Load the bitmap into the bound texture.
+        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bmp, 0);
+        // We are done using the bitmap so we should recycle it.
+        bmp.recycle();
 
     }
 
@@ -82,20 +99,47 @@ fun glFont(original: Font): GlFont {
 }
 
 class GlGlyphs(val font: GlFont, val text: String) : GlShape() {
+    override val textureName: Int = font.textureName
+    override val vertexCoordinates = FloatArray(text.length * 3 * 6)
+    override val textureCoordinates = FloatArray(text.length * 2 * 6)
+    override val drawOrder = ShortArray(text.length * 6)
+    override val glVertexMode: Int = GLES20.GL_TRIANGLES
+    {
+        var ic = 0
+        var it = 0
+        var n: Short = 0
+        fun addVertex(x: Float, y: Float, tx: Float, ty: Float): Short {
+            vertexCoordinates[ic++] = x / 40
+            vertexCoordinates[ic++] = y / 40
+            vertexCoordinates[ic++] = 0f // z
+            textureCoordinates[it++] = tx / 1024
+            textureCoordinates[it++] = ty / 1024
+            return n++
+        }
 
+        var id = 0
+        fun addQuad(x: Float, y: Float, w: Float, h: Float, tx: Float, ty: Float) {
+            fun bl() = addVertex(x, y, tx, ty + h)
+            fun br() = addVertex(x + w, y, tx + w, ty + h)
+            fun tr() = addVertex(x + w, y + h, tx + w, ty)
+            fun tl() = addVertex(x, y + h, tx, ty)
+            drawOrder[id++] = tl()
+            drawOrder[id++] = bl()
+            drawOrder[id++] = br()
+            drawOrder[id++] = tl()
+            drawOrder[id++] = br()
+            drawOrder[id++] = tr()
+        }
 
-    override val coordinates: FloatArray get() {
-        val x = 1f
-        val y = 1f
-        val z = 0f
-        return floatArray(
-                +x, +y, z, // 0 top right
-                -x, +y, z, // 1 top left
-                -x, -y, z, // 2 bottom left
-                +x, -y, z  // 3 bottom right
-        )
+        var cx = 0f
+        var cy = 0f
+        for (char in text) {
+            val glyph = font.glyphs[char] ?: font.glyphs[' ']!!
+            addQuad(cx + glyph.xOffset, cy - glyph.height - glyph.yOffset,
+                    glyph.width.toFloat(), glyph.height.toFloat(),
+                    glyph.x.toFloat(), glyph.y.toFloat())
+            cx += glyph.xAdvance
+        }
     }
-    override val drawOrder = shortArray(0, 1, 2, 3)
-
-    override fun contains(location: Vector2): Boolean = false //TODO
+    //override fun contains(location: Vector2): Boolean = //TODO
 }
