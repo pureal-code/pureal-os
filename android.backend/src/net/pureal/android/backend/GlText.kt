@@ -109,19 +109,12 @@ class GlGlyphs(val font: GlFont, val text: String) : GlShape() {
         var it = 0
         var n : Short = 0
 
-        fun wtfIt() : Int {
-            val wtf = it xor (it shr 5 shl 1) xor (it shr 8 shl 1)
-            println("${it}->${wtf}")
-            it++
-            return wtf
-        }
-
         fun addVertex(x: Float, y: Float, tx: Float, ty: Float): Short {
-            vertexCoordinates[ic++] = x / 40
-            vertexCoordinates[ic++] = y / 40
+            vertexCoordinates[ic++] = x // / 40
+            vertexCoordinates[ic++] = y // / 40
             vertexCoordinates[ic++] = 0f // z
-            textureCoordinates[wtfIt()] = tx / 1024
-            textureCoordinates[wtfIt()] = ty / 1024
+            textureCoordinates[it++] = tx / 1024
+            textureCoordinates[it++] = ty / 1024
             return n++
         }
 

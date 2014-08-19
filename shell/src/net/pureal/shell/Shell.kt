@@ -36,7 +36,7 @@ old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia
 looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum
 passage, and going through the cites of the word in classical literature,
 discovered the undoubtable source."""
-            val t = transformedElement(textElement(text, font, size = 40, fill = Fills.solid(Colors.white)), Transforms2.translation(vector(-1100, 500)))
+            val t = transformedElement(textElement(text, font, size = 60, fill = Fills.solid(Colors.white)), Transforms2.translation(vector(-1100, 500)))
             //val k = transformedElement(textElement("Kotlin rocks!", font, size = 24, fill = Fills.solid(Colors.white)), Transforms2.rotation(-Math.PI / 10))
             //val h = transformedElement(textElement("like a hardcore banana", font, size = 24, fill = Fills.solid(Colors.white)), Transforms2.scale(0.5) before Transforms2.translation(vector(0,-(screen.shape as Rectangle).size.y.toDouble() / 3.0)))
             return composed(observableIterable(listOf(t)))//k, h)))
