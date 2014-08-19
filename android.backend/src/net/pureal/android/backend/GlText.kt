@@ -100,8 +100,8 @@ fun glFont(original: Font): GlFont {
 
 class GlGlyphs(val font: GlFont, val text: String) : GlShape() {
     override val textureName: Int = font.textureName
-    override val vertexCoordinates = FloatArray(text.length * 3 * 4)
-    override val textureCoordinates = FloatArray(text.length * 2 * 4 * 2)
+    override val vertexCoordinates = FloatArray(text.length * 2 * 4)
+    override val textureCoordinates = FloatArray(text.length * 2 * 4)
     override val drawOrder = ShortArray(text.length * 6)
     override val glVertexMode: Int = GLES20.GL_TRIANGLES
     {
@@ -110,9 +110,8 @@ class GlGlyphs(val font: GlFont, val text: String) : GlShape() {
         var n : Short = 0
 
         fun addVertex(x: Float, y: Float, tx: Float, ty: Float): Short {
-            vertexCoordinates[ic++] = x // / 40
-            vertexCoordinates[ic++] = y // / 40
-            vertexCoordinates[ic++] = 0f // z
+            vertexCoordinates[ic++] = x / 40
+            vertexCoordinates[ic++] = y / 40
             textureCoordinates[it++] = tx / 1024
             textureCoordinates[it++] = ty / 1024
             return n++

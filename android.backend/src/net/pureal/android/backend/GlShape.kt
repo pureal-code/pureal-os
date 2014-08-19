@@ -29,15 +29,14 @@ class GlTransformedShape(override val original: TransformedShape) : GlShape(orig
     val glOriginal = glShape(original.original)
     override val vertexCoordinates: FloatArray get() {
         val originalCoordinates = glOriginal.vertexCoordinates
-        //TODO: THIS SHIT IS FUCKING BROKEN!
         val result = FloatArray(originalCoordinates.size)
-        val transformed = (glOriginal.vertexCoordinates.withIndices() groupBy { it.first / 3 }).values() flatMap {
-            original.transform(vector(it[0].second, it[1].second)) + listOf(it[2].second) map { it.toFloat() }
+        val transformed = (glOriginal.vertexCoordinates.withIndices() groupBy { it.first / 2 }).toSortedMap().values() flatMap {
+            original.transform(vector(it[0].second, it[1].second)) map { it.toFloat() }
         }
         for (i in transformed.withIndices()) {
             result[i.first] = i.second
         }
-        return originalCoordinates//result
+        return result
     }
     override val textureCoordinates: FloatArray get() = glOriginal.textureCoordinates
     override val textureName: Int get() = glOriginal.textureName

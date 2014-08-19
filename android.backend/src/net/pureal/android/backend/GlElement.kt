@@ -82,11 +82,11 @@ open class GlColoredElement(override val original: ColoredElement<*>, screen: Gl
 
         val positionHandle = GLES20.glGetAttribLocation(screen.program!!, "a_Position")
         GLES20.glEnableVertexAttribArray(positionHandle)
-        GLES20.glVertexAttribPointer(positionHandle, 3, GLES20.GL_FLOAT, false, 3*4, vertexBuffer)
+        GLES20.glVertexAttribPointer(positionHandle, 2, GLES20.GL_FLOAT, false, 0, vertexBuffer)
 
         val texCoordHandle = GLES20.glGetAttribLocation(screen.program!!, "a_TexCoord")
         GLES20.glEnableVertexAttribArray(texCoordHandle)
-        GLES20.glVertexAttribPointer(texCoordHandle, 2, GLES20.GL_FLOAT, false, 2*4, uvBuffer)
+        GLES20.glVertexAttribPointer(texCoordHandle, 2, GLES20.GL_FLOAT, false, 0, uvBuffer)
 
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, shape.textureName)

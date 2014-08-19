@@ -20,11 +20,11 @@ class GlScreen (activity: Activity, onReady: (GlScreen) -> Unit) : GLSurfaceView
         setRenderer(object : Renderer {
             override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
                 GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f)
-                GLES20.glEnable(GLES20.GL_BLEND);
-                GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
-                program = createProgram();
-                GLES20.glUseProgram(program!!);
-                onReady(this@GlScreen);
+                GLES20.glEnable(GLES20.GL_BLEND)
+                GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA)
+                program = createProgram()
+                GLES20.glUseProgram(program!!)
+                onReady(this@GlScreen)
             }
             override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
                 GLES20.glViewport(0, 0, width, height)
