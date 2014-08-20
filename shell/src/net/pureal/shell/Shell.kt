@@ -4,6 +4,7 @@ import net.pureal.traits.interaction.*
 import net.pureal.traits.graphics.*
 import net.pureal.traits.math.*
 import net.pureal.traits.*
+import java.util.Date
 
 // TODO brings reference barf: import org.jetbrains.jet.codegen.*
 
@@ -21,24 +22,25 @@ class Shell(val screen: Screen, val pointers: ObservableIterable<PointerKeys>, v
         }
 
         fun someText(font: Font) : Composed<*> {
-            val text = """Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-when an unknown printer took a galley of type and scrambled it to make a type
-specimen book. It has survived not only five centuries, but also the leap into
-electronic typesetting, remaining essentially unchanged. It was popularised in
-the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-and more recently with desktop publishing software like Aldus PageMaker including
-versions of Lorem Ipsum.
-
-Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots
-in a piece of classical Latin literature from 45 BC, making it over 2000 years
-old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia,
-looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum
-passage, and going through the cites of the word in classical literature,
-discovered the undoubtable source.
-
-TEST: AYA �¶Ѽ†◊²³"""
-            val t = transformedElement(textElement(text, font, size = 60, fill = Fills.solid(Colors.white)), Transforms2.translation(vector(-1100, 500)))
+            val text = """Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing
+elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
+dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
+est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
+et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+takimata sanctus est Lorem ipsum dolor sit amet. AYA �¶Ѽ†◊²³"""
+            val t = transformedElement(
+                    textElement(text, font, size = 60, fill = Fills.solid(Colors.white)),
+                    object: Transform2 {
+                        override val matrix : Matrix3 get() = (Transforms2.translation(vector(-1000, 400)) before Transforms2.rotation(Date().getTime()*0.0005) before Transforms2.scale(.2+Math.pow(1+Math.pow(Math.sin(Date().getTime()*0.0003),5.0),4.0))).matrix
+                    }
+            )
             //val k = transformedElement(textElement("Kotlin rocks!", font, size = 24, fill = Fills.solid(Colors.white)), Transforms2.rotation(-Math.PI / 10))
             //val h = transformedElement(textElement("like a hardcore banana", font, size = 24, fill = Fills.solid(Colors.white)), Transforms2.scale(0.5) before Transforms2.translation(vector(0,-(screen.shape as Rectangle).size.y.toDouble() / 3.0)))
             return composed(observableIterable(listOf(t)))//k, h)))

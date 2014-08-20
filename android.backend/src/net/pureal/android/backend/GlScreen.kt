@@ -61,9 +61,9 @@ fun createProgram(): Int {
                     uniform vec4 u_Color;
                     varying vec2 v_TexCoord;
                     uniform sampler2D u_Texture;
-                    const float smoothing = 1.0/8.0;
                     void main() {
                         float distance = texture2D(u_Texture, v_TexCoord).a;
+                        float smoothing = 128*length(vec2(dFdx(v_TexCoord.x), dFdy(v_TexCoord.x)));
                         float alpha = smoothstep(0.5 - smoothing, 0.5 + smoothing, distance);
                         gl_FragColor = vec4(u_Color.rgb, alpha);
                     }
