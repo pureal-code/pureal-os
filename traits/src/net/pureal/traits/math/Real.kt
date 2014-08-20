@@ -20,6 +20,25 @@ public trait Real : Calculatable {
         }
     }
 
+    val subReals: Array<Real> get() = array<Real>()
+
+    fun replaceSubReals(vararg a: Real): Real = this
+
+    fun filterRecursive(successCond: (Real) -> Boolean): Array<Real> {
+        if(successCond(this)) return array(this)
+        var a: Array<Real> = array()
+        for (i in subReals.indices) a += subReals[i].filterRecursive(successCond)
+        return a
+    }
+
+    fun filterRecursiveCond(continueCond: (Real) -> Boolean, successCond: (Real) -> Boolean): Array<Real> {
+        if(!continueCond(this)) return array()
+        if(successCond(this)) return array(this)
+        var a: Array<Real> = array()
+        for (i in subReals.indices) a += subReals[i].filterRecursiveCond(continueCond, successCond)
+        return a
+    }
+
     val isApproximate: Boolean get() = false
 
     fun matchWithThisPattern(other: Real) : Boolean = this == other // true if other matches the pattern defined by this
@@ -86,6 +105,9 @@ public trait Real : Calculatable {
     override fun round(): Calculatable = approximate().round()
 
     override fun abs(): Calculatable = approximate().abs() // TODO: we want an operator for this
+
+    val isZero: Boolean get() = false // Means zero in the way it is written, not considering variables
+    val isPositive: Boolean get() = true // Means positive in the way it is written, not considering variables
 }
 
 val real = Real

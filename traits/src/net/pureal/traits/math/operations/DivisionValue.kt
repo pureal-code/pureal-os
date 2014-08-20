@@ -7,10 +7,11 @@ public trait DivisionValue : RealBinaryOperation {
 
     public class object : Constructor2<DivisionValue, Real, Real> {
         override fun invoke(a: Real, b: Real): DivisionValue = object : DivisionValue, Calculatable() {
-            override val value1 = a
-            override val value2 = b
+            override val subReals: Array<Real> = array(a,b)
         }
     }
+
+    private val constructor: Constructor2<DivisionValue, Real, Real> get() = DivisionValue
 
     final override val priority: Int
         get() = +5
@@ -23,10 +24,6 @@ public trait DivisionValue : RealBinaryOperation {
 
     final override val isOrderDependent: Boolean
         get() = true
-
-
-    override val value1: Real
-    override val value2: Real
 
     override fun approximate(): InternalReal {
         return value1.approximate() / value2.approximate()

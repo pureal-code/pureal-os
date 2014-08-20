@@ -1,6 +1,7 @@
 package net.pureal.traits.math.operations
 
 import net.pureal.traits.math.*
+import net.pureal.traits.Constructor2
 
 public trait RealBinaryOperation : Real {
     val description: String
@@ -9,8 +10,15 @@ public trait RealBinaryOperation : Real {
 
     val isOrderDependent: Boolean
 
-    val value1: Real
-    val value2: Real
+    final val value1: Real get() = subReals[0]
+    final val value2: Real get() = subReals[1]
+
+    private val constructor : Constructor2<RealBinaryOperation, Real, Real>
+
+    override fun replaceSubReals(vararg a: Real): Real {
+        assert(a.size == 2)
+        return constructor(a[0], a[1])
+    }
 
     override fun calculate(): Real
 

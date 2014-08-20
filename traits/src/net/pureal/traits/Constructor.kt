@@ -20,3 +20,7 @@ public trait Constructor3<out V, T1, T2, T3> {
 public trait Constructor4<out V, T1, T2, T3, T4> {
     fun invoke(a: T1, b: T2, c: T3, d: T4): V
 }
+
+public trait ConstructorVar<out V, T> {
+    fun invoke(vararg a: T): V
+}

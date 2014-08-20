@@ -7,10 +7,11 @@ public trait SubtractionValue : RealBinaryOperation {
 
     public class object : Constructor2<SubtractionValue, Real, Real> {
         override fun invoke(a: Real, b: Real): SubtractionValue = object : SubtractionValue, Calculatable() {
-            override val value1 = a
-            override val value2 = b
+            override val subReals: Array<Real> = array(a,b)
         }
     }
+
+    private val constructor: Constructor2<SubtractionValue, Real, Real> get() = SubtractionValue
 
     final override val priority: Int
         get() = 0
@@ -23,9 +24,6 @@ public trait SubtractionValue : RealBinaryOperation {
 
     final override val isOrderDependent: Boolean
         get() = true
-
-    override val value1: Real
-    override val value2: Real
 
     override fun approximate(): InternalReal {
         return value1.approximate() - value2.approximate()
