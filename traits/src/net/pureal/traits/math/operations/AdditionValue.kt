@@ -43,4 +43,5 @@ public trait AdditionValue : RealBinaryOperation {
 
     override fun minus(): AdditionValue = AdditionValue.invoke(-value1, -value2)
 
+    override val isPositive: Boolean get() = value1.isPositive || value2.isPositive
 }

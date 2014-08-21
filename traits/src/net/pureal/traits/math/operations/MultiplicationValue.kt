@@ -42,4 +42,8 @@ public trait MultiplicationValue : RealBinaryOperation {
     // Code easter-egg: The first factor gets discriminated by this function, it always feels negative afterwards
     override fun minus(): MultiplicationValue = MultiplicationValue.invoke(-value1, value2)
 
+    override val isZero: Boolean get() = value1.isZero || value2.isZero
+
+    override val isPositive: Boolean get() = !(value1.isPositive xor value2.isPositive)
+
 }

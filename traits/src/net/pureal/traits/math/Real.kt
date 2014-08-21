@@ -106,8 +106,10 @@ public trait Real : Calculatable {
 
     override fun abs(): Calculatable = approximate().abs() // TODO: we want an operator for this
 
-    val isZero: Boolean get() = false // Means zero in the way it is written, not considering variables
-    val isPositive: Boolean get() = true // Means positive in the way it is written, not considering variables
+    val isZero: Boolean get() = false
+        // Means zero in the way it is written, not considering variables
+    val isPositive: Boolean get() = true
+        // Means positive in the way it is written, not considering variables (if it CAN be positive)
 }
 
 val real = Real

@@ -40,5 +40,6 @@ public trait SubtractionValue : RealBinaryOperation {
 
     override fun minus(): SubtractionValue = SubtractionValue.invoke(-value1, -value2)
 
+    override val isPositive: Boolean get() = value1.isPositive || !value2.isPositive
 }
 

@@ -1,6 +1,4 @@
-package net.pureal.traits.math
-
-import net.pureal.traits.*
+package net.pureal.traits
 
 fun <T> Array<T>.replaceElements(fn: (T) -> T): Array<T> {
     var t = this
