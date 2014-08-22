@@ -9,6 +9,7 @@ import android.app.Activity
 import net.pureal.traits.graphics.*
 import net.pureal.traits.math.*
 import net.pureal.traits.*
+import android.util.Log
 
 class GlScreen (activity: Activity, onReady: (GlScreen) -> Unit) : GLSurfaceView(activity), Screen {
     {
@@ -52,18 +53,24 @@ fun createProgram(): Int {
                     attribute vec4 a_Position;
                     attribute vec2 a_TexCoord;
                     varying vec2 v_TexCoord;
+                    varying vec2 v_TexCoord2;
                     void main() {
                         v_TexCoord = a_TexCoord;
+                        v_TexCoord2 = 64.0*a_TexCoord;
                         gl_Position = u_Matrix * a_Position;
                     }
                 """
     val fragmentShaderCode = """
+                    #extension GL_OES_standard_derivatives : require
+                    precision mediump float;
                     uniform vec4 u_Color;
                     varying vec2 v_TexCoord;
+                    varying highp vec2 v_TexCoord2;
                     uniform sampler2D u_Texture;
                     void main() {
                         float distance = texture2D(u_Texture, v_TexCoord).a;
-                        float smoothing = 128*length(vec2(dFdx(v_TexCoord.x), dFdy(v_TexCoord.x)));
+                        float smoothing = length(vec2(dFdx(v_TexCoord2.x), dFdy(v_TexCoord2.x))) +
+                                          length(vec2(dFdx(v_TexCoord2.y), dFdy(v_TexCoord2.y)));
                         float alpha = smoothstep(0.5 - smoothing, 0.5 + smoothing, distance);
                         gl_FragColor = vec4(u_Color.rgb, alpha);
                     }

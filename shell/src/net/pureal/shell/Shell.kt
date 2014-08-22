@@ -38,7 +38,7 @@ takimata sanctus est Lorem ipsum dolor sit amet. AYA �¶Ѽ†◊²³"""
             val t = transformedElement(
                     textElement(text, font, size = 60, fill = Fills.solid(Colors.white)),
                     object: Transform2 {
-                        override val matrix : Matrix3 get() = (Transforms2.translation(vector(-1000, 400)) before Transforms2.rotation(Date().getTime()*0.0005) before Transforms2.scale(.2+Math.pow(1+Math.pow(Math.sin(Date().getTime()*0.0003),5.0),4.0))).matrix
+                        override val matrix : Matrix3 get() = (Transforms2.translation(vector(-1000, 400)) before Transforms2.rotation(Date().getTime()*0.0005) before Transforms2.scale(.2+Math.pow(1+Math.pow(Math.sin(Date().getTime()*0.0002),5.0),5.0))).matrix
                     }
             )
             //val k = transformedElement(textElement("Kotlin rocks!", font, size = 24, fill = Fills.solid(Colors.white)), Transforms2.rotation(-Math.PI / 10))
