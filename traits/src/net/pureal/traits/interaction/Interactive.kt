@@ -1,5 +1,5 @@
 package net.pureal.traits.interaction
 
-trait Interactive<T> {
+trait Interactive<out T> {
     val content: T
 }

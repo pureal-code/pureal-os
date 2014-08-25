@@ -8,10 +8,11 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.ShortBuffer
 import java.util.ArrayList
+import android.opengl.GLES10
+import java.nio.IntBuffer
 
 
 abstract class GlElement(open val original: Element<*>, val screen: GlScreen) : Element<Any?> {
-    override val transform: Transform2 get() = original.transform
     override val shape: GlShape get() = glShape(original.shape)
     override val changed: Observable<Unit> get() = original.changed
     override val content: Any? get() = original.content;
@@ -22,39 +23,55 @@ fun glElement(original: Element<*>, screen: GlScreen): GlElement {
     return when (original) {
         is GlElement -> original
         is Composed<*> -> GlComposed(original, screen)
+        is TextElement -> GlTextElement(original, screen)
         is ColoredElement<*> -> GlColoredElement(original, screen)
         else -> throw UnsupportedOperationException("No OpenGL implementation for element '${original}'.")
     }
 }
 
+trait GlTransformedElement : TransformedElement<Any?> {
+    override val element: GlElement
+    override val transform: Transform2
+}
+
+fun glTransformedElement(element : GlElement, transform : Transform2 = Transforms2.identity) = object : GlTransformedElement {
+    override val element = element
+    override val transform = transform
+}
+
+fun glTransformedElement(element : TransformedElement<*>, screen : GlScreen) = glTransformedElement(glElement(element.element, screen), element.transform)
+
 class GlComposed(override val original: Composed<*>, screen: GlScreen) : GlElement(original, screen), Composed<Any?> {
-    val elements = (original mapObservable { glElement(it, screen) }).toArrayList()
+    val elements = (original mapObservable { glTransformedElement(it, screen) }).toArrayList()
     override fun iterator() = elements.iterator()
-    override val added = trigger<GlElement>()
-    override val removed = trigger<GlElement>();
+    override val added = trigger<GlTransformedElement>()
+    override val removed = trigger<GlTransformedElement>();
     {
-        original.added += {(addedElement) ->
-            val glElement = glElement(addedElement, screen)
+        original.added addObserver {(addedElement) ->
+            val glElement = glTransformedElement(addedElement, screen)
             elements.add(glElement)
             added(glElement)
         }
-        original.removed += {(removedElement) ->
-            val glElement = (elements.singleOrNull { element -> element.original === removedElement })
+        original.removed addObserver {(removedElement) ->
+            val glElement = (elements.singleOrNull { element -> element.element.original === removedElement })
             if (glElement != null) {
                 elements.remove(glElement)
                 removed(glElement)
             }
         }
     }
-    override fun draw(parentTransform: Transform2) = elements.reverse() forEach { it.draw(this.transform before parentTransform) }
+    override fun draw(parentTransform: Transform2) = elements.reverse() forEach { it.element.draw(it.transform before parentTransform) }
 }
 
-class GlColoredElement(override val original: ColoredElement<*>, screen: GlScreen) : GlElement(original, screen), ColoredElement<Any?> {
-    override val shape: GlShape get() = glShape(original.shape)
+
+
+open class GlColoredElement(override val original: ColoredElement<*>, screen: GlScreen) : GlElement(original, screen), ColoredElement<Any?> {
+    override val shape: GlShape  get () = glShape
     override val fill: Fill get() = original.fill
     override fun draw(parentTransform: Transform2) {
-        val transform = this.transform before parentTransform
-        val matrixHandle = GLES20.glGetUniformLocation(screen.program!!, "matrix");
+        val transform = parentTransform
+
+        val matrixHandle = GLES20.glGetUniformLocation(screen.program!!, "u_Matrix");
         val m = transform.matrix
         val glMatrix = floatArray(
                 m.a.toFloat(), m.d.toFloat(), 0f, m.g.toFloat(),
@@ -62,40 +79,72 @@ class GlColoredElement(override val original: ColoredElement<*>, screen: GlScree
                 0f, 0f, 1f, 0f,
                 m.c.toFloat(), m.f.toFloat(), 0f, m.i.toFloat())
         GLES20.glUniformMatrix4fv(matrixHandle, 1, false, glMatrix, 0);
-        val positionHandle = GLES20.glGetAttribLocation(screen.program!!, "position")
+
+        val positionHandle = GLES20.glGetAttribLocation(screen.program!!, "a_Position")
         GLES20.glEnableVertexAttribArray(positionHandle)
-        GLES20.glVertexAttribPointer(positionHandle, 3, GLES20.GL_FLOAT, false, 3 * 4, vertexBuffer)
-        val colorHandle = GLES20.glGetUniformLocation(screen.program!!, "color")
+        GLES20.glVertexAttribPointer(positionHandle, 2, GLES20.GL_FLOAT, false, 0, vertexBuffer)
+
+        val texCoordHandle = GLES20.glGetAttribLocation(screen.program!!, "a_TexCoord")
+        GLES20.glEnableVertexAttribArray(texCoordHandle)
+        GLES20.glVertexAttribPointer(texCoordHandle, 2, GLES20.GL_FLOAT, false, 0, uvBuffer)
+
+        GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, shape.textureName)
+        val samplerHandle = GLES20.glGetUniformLocation(screen.program!!, "u_Texture")
+        GLES20.glUniform1i(samplerHandle, 0)
+
+
+        val colorHandle = GLES20.glGetUniformLocation(screen.program!!, "u_Color")
         val color = fill.colorAt(vector(0, 0))
         GLES20.glUniform4fv(colorHandle, 1, floatArray(
                 color.r.toFloat(),
                 color.g.toFloat(),
                 color.b.toFloat(),
                 color.a.toFloat()), 0)
+
         GLES20.glDrawElements(
-                GLES20.GL_TRIANGLE_FAN, shape.drawOrder.size,
+                shape.glVertexMode, shape.drawOrder.size,
                 GLES20.GL_UNSIGNED_SHORT, drawListBuffer)
+
         GLES20.glDisableVertexAttribArray(positionHandle);
+        GLES20.glDisableVertexAttribArray(texCoordHandle)
     }
+    private var glShape : GlShape = glShape(original.shape)
     private var vertexBuffer = buildVertexBuffer()
+    private var uvBuffer = buildUvBuffer()
     private var drawListBuffer = buildDrawListBuffer()
     fun buildVertexBuffer(): FloatBuffer {
         // 4 bytes per float
-        val byteBuffer = ByteBuffer.allocateDirect(shape.coordinates.size * 4)!! order ByteOrder.nativeOrder()!!;
+        val byteBuffer = ByteBuffer.allocateDirect(shape.vertexCoordinates.size * 4)!!
+        byteBuffer order ByteOrder.nativeOrder()!!;
         val floatBuffer = byteBuffer.asFloatBuffer()!!
-        floatBuffer put shape.coordinates position 0
+        floatBuffer put shape.vertexCoordinates
+        floatBuffer position 0
+        return floatBuffer
+    }
+    fun buildUvBuffer(): FloatBuffer {
+        // 4 bytes per float
+        val byteBuffer = ByteBuffer.allocateDirect(shape.textureCoordinates.size * 4)!!
+        byteBuffer order ByteOrder.nativeOrder()!!;
+        val floatBuffer = byteBuffer.asFloatBuffer()!!
+        floatBuffer put shape.textureCoordinates
+        floatBuffer position 0
         return floatBuffer
     }
     fun buildDrawListBuffer(): ShortBuffer {
         // 2 bytes per short
-        val byteBuffer = ByteBuffer.allocateDirect(shape.coordinates.size * 2)!! order ByteOrder.nativeOrder()!!;
+        val byteBuffer = ByteBuffer.allocateDirect(shape.drawOrder.size * 2)!!
+        byteBuffer order ByteOrder.nativeOrder()!!;
         val shortBuffer = byteBuffer.asShortBuffer()!!
-        shortBuffer put shape.drawOrder position 0
+        shortBuffer put shape.drawOrder
+        shortBuffer position 0
         return shortBuffer
     }
     {
-        changed += {
+        changed addObserver {
+            glShape = glShape(original.shape)
             vertexBuffer = buildVertexBuffer()
+            uvBuffer = buildUvBuffer()
             drawListBuffer = buildDrawListBuffer()
             // how? redraw()
         }
