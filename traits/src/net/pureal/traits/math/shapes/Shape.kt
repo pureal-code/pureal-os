@@ -21,5 +21,3 @@ trait TransformedShape : Shape {
     val transform: Transform2
     override fun contains(location: Vector2) = original.contains(transform.inverse()(location))
 }
-
-val foo = rectangle(vector(java.lang.Double.POSITIVE_INFINITY, java.lang.Double.POSITIVE_INFINITY))
