@@ -20,9 +20,9 @@ public trait Real : Calculatable {
         }
     }
 
-    val subReals: Array<Real> get() = array<Real>()
+    val subReals: Array<Real> get() = array()
 
-    fun replaceSubReals(vararg a: Real): Real = this
+    fun replaceSubReals(a: Array<Real>): Real = this
 
     fun filterRecursive(successCond: (Real) -> Boolean): Array<Real> {
         if (successCond(this)) return array(this)
