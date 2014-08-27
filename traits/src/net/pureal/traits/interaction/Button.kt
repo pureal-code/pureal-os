@@ -20,6 +20,6 @@ fun button(
     override val changed = changed
 
     {
-        content addObserver {onClick()}
+        content addObserver { onClick() }
     }
 }

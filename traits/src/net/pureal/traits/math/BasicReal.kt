@@ -13,7 +13,7 @@ public trait BasicReal : InternalReal {
         fun exponentialFactor(exp: Long): BigInteger = BigInteger.TEN.pow(abs(exp.toInt()))
 
         override fun invoke(it: Any?): BasicReal {
-            return when(it) {
+            return when (it) {
                 is BasicReal -> it.minimize()
                 is String -> BasicReal.fromString(it)
                 is Long -> basicReal(BigInteger(it), 0).minimize()
@@ -32,7 +32,7 @@ public trait BasicReal : InternalReal {
             override val exponent: Long = exp
         }
 
-        fun fromString(s : String) : BasicReal {
+        fun fromString(s: String): BasicReal {
             var str: String = s.capitalize()
             var estr: String
             // with regex - remove illegal characters and whitespace
@@ -307,17 +307,17 @@ public trait BasicReal : InternalReal {
         }
     }
 
-    override fun floor(): BasicReal = if(isInteger()) this; else {
-        if(sign) (toExponent(0)-1).minimize(); else toExponent(0).minimize() // TODO
+    override fun floor(): BasicReal = if (isInteger()) this; else {
+        if (sign) (toExponent(0) - 1).minimize(); else toExponent(0).minimize() // TODO
     }
-    override fun ceil(): BasicReal = if(isInteger()) this; else {
-        if(sign) toExponent(0).minimize(); else (toExponent(0)+1).minimize() // TODO
+    override fun ceil(): BasicReal = if (isInteger()) this; else {
+        if (sign) toExponent(0).minimize(); else (toExponent(0) + 1).minimize() // TODO
     }
-    override fun round(): BasicReal = if(isInteger()) this; else {
-        if(this % basicInt(1) < basicReal(BigInteger(5),-1L)) floor(); else ceil()
+    override fun round(): BasicReal = if (isInteger()) this; else {
+        if (this % basicInt(1) < basicReal(BigInteger(5), -1L)) floor(); else ceil()
     }
 
-    override fun abs(): BasicReal = if(sign) -this; else this
+    override fun abs(): BasicReal = if (sign) -this; else this
 }
 
 val basicReal = BasicReal

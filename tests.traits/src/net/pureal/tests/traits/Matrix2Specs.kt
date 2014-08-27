@@ -5,7 +5,7 @@ import net.pureal.traits.*
 
 class Matrix2Specs : Spek() {{
     given("a 2 square matrix") {
-        val m = matrix(1,2.0,-4, 3)
+        val m = matrix(1, 2.0, -4, 3)
 
         on("getting their components") {
             it("should be correct") {
@@ -18,10 +18,10 @@ class Matrix2Specs : Spek() {{
 
         on("getting their components by position") {
             it("should be correct") {
-                shouldEqual(1, m[0,0])
-                shouldEqual(2.0, m[1,0])
-                shouldEqual(-4, m[0,1])
-                shouldEqual(3, m[1,1])
+                shouldEqual(1, m[0, 0])
+                shouldEqual(2.0, m[1, 0])
+                shouldEqual(-4, m[0, 1])
+                shouldEqual(3, m[1, 1])
             }
         }
 
@@ -29,7 +29,7 @@ class Matrix2Specs : Spek() {{
             val x = m.row(1)
 
             it("should be correct") {
-                shouldEqual(vector(-4,3), x)
+                shouldEqual(vector(-4, 3), x)
             }
         }
 
@@ -37,15 +37,15 @@ class Matrix2Specs : Spek() {{
             val x = m.column(0)
 
             it("should be correct") {
-                shouldEqual(vector(1,-4), x)
+                shouldEqual(vector(1, -4), x)
             }
         }
 
         on("multiplying it with a vector") {
-            val x = m * vector(1,4)
+            val x = m * vector(1, 4)
 
             it("should be correct") {
-                shouldEqual(vector(9,8), x)
+                shouldEqual(vector(9, 8), x)
             }
         }
 
@@ -61,7 +61,7 @@ class Matrix2Specs : Spek() {{
             val i = m.inverse()
 
             it("should be correct") {
-                shouldEqual(matrix(3.0/11, -2.0/11, 4.0/11, 1.0/11), i)
+                shouldEqual(matrix(3.0 / 11, -2.0 / 11, 4.0 / 11, 1.0 / 11), i)
             }
         }
 
@@ -69,8 +69,9 @@ class Matrix2Specs : Spek() {{
             val x = m.toString()
 
             it("should be correct") {
-                shouldEqual("matrix(1.0, 2.0, -4.0, 3.0)",x)
+                shouldEqual("matrix(1.0, 2.0, -4.0, 3.0)", x)
             }
         }
     }
-}}
+}
+}

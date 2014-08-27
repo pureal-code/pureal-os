@@ -11,7 +11,7 @@ class ComposedSpecs : Spek() {{
         val r = coloredElement(shape = rectangle(vector(1, 1)), fill = Fills.solid(Colors.blue))
         val elements = listOf<Element<Unit>>(c, r)
 
-        val x = composed(observableIterable(elements map {transformedElement(it)}))
+        val x = composed(observableIterable(elements map { transformedElement(it) }))
 
         on("getting the shape") {
             val s = x.shape
@@ -24,7 +24,7 @@ class ComposedSpecs : Spek() {{
         }
 
         on("getting the elements at a location contained by all elements") {
-            val e = x.elementsAt(vector(0,0))
+            val e = x.elementsAt(vector(0, 0))
 
             it("should return all elements") {
                 shouldEqual(2, e.count())
@@ -41,4 +41,5 @@ class ComposedSpecs : Spek() {{
             }
         }
     }
-}}
+}
+}

@@ -7,5 +7,5 @@ public trait Symbol : Real {
 
     override fun toString() = name
 
-    override fun equals(other: Any?) : Boolean = other is Symbol && name == other.name
+    override fun equals(other: Any?): Boolean = other is Symbol && name == other.name
 }

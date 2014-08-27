@@ -5,13 +5,13 @@ import net.pureal.traits.math.sets.*
 public trait Set {
     override fun toString(): String
     fun contains(other: Set): Boolean {
-        if(other is SetUnion) {
+        if (other is SetUnion) {
             return contains(other.subset1) && contains(other.subset2)
         }
-        if(other is SetIntersection) {
+        if (other is SetIntersection) {
 
         }
-        if(other is EmptySet) return true
+        if (other is EmptySet) return true
         return false
     }
     fun contains(other: Number): Boolean

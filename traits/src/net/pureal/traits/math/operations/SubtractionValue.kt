@@ -7,7 +7,7 @@ public trait SubtractionValue : RealBinaryOperation {
 
     public class object : Constructor2<SubtractionValue, Real, Real> {
         override fun invoke(a: Real, b: Real): SubtractionValue = object : SubtractionValue, Calculatable() {
-            override val subReals: Array<Real> = array(a,b)
+            override val subReals: Array<Real> = array(a, b)
         }
     }
 

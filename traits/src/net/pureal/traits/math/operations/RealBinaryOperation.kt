@@ -13,7 +13,7 @@ public trait RealBinaryOperation : Real {
     final val value1: Real get() = subReals[0]
     final val value2: Real get() = subReals[1]
 
-    private val constructor : Constructor2<RealBinaryOperation, Real, Real>
+    private val constructor: Constructor2<RealBinaryOperation, Real, Real>
 
     override fun replaceSubReals(vararg a: Real): Real {
         assert(a.size == 2)
@@ -41,7 +41,7 @@ public trait RealBinaryOperation : Real {
         return "${v1str} ${operationSign} ${v2str}"
     }
 
-    override fun equals(other: Any?) : Boolean =
+    override fun equals(other: Any?): Boolean =
             other is RealBinaryOperation && other.operationSign == operationSign
-            && ((other.value1 == value1 && other.value2 == value2) || (!isOrderDependent && other.value2 == value1 && other.value1 == value2))
+                    && ((other.value1 == value1 && other.value2 == value2) || (!isOrderDependent && other.value2 == value1 && other.value1 == value2))
 }

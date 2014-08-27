@@ -7,10 +7,10 @@ public trait MultipleOfSet : RealSet, Set {
     public class object : Constructor3<Set, Number, Number, Number>, Constructor2<Set, Number, RealSet> {
         override fun invoke(factor: Number, lEnd: Number, hEnd: Number): Set {
             val factor = factor.asCalculatable().abs()
-            if(factor == Infinity) return EmptySet
+            if (factor == Infinity) return EmptySet
             var le = lEnd.asCalculatable()
             var he = hEnd.asCalculatable()
-            if(le > he) {
+            if (le > he) {
                 val tmp = le
                 le = he
                 he = tmp
@@ -29,7 +29,7 @@ public trait MultipleOfSet : RealSet, Set {
     override fun toString(): String = "multipleOfSet(${factor}, ${lowEnd / factor}, ${highEnd / factor})"
 
     override fun contains(other: Number): Boolean {
-        try{
+        try {
             val o = other.asCalculatable() % factor
             return super<RealSet>.contains(other) && o equals 0
         } catch(e: UnsupportedOperationException) {
@@ -40,7 +40,7 @@ public trait MultipleOfSet : RealSet, Set {
     }
 
     override fun contains(other: Set): Boolean {
-        if(other is MultipleOfSet) return lowEnd <= other.lowEnd && highEnd >= other.lowEnd && other.factor % factor equals 0
+        if (other is MultipleOfSet) return lowEnd <= other.lowEnd && highEnd >= other.lowEnd && other.factor % factor equals 0
         return super<Set>.contains(other)
     }
 

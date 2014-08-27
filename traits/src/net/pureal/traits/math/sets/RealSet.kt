@@ -12,13 +12,13 @@ public trait RealSet : Set {
         override fun invoke(lEnd: Number, hEnd: Number, lClosed: Boolean, hClosed: Boolean): RealSet {
             var le = lEnd.asCalculatable()
             var he = hEnd.asCalculatable()
-            if(le > he) {
+            if (le > he) {
                 val tmp = le
                 le = he
                 he = tmp
             }
             assert((-Infinity != le || !lClosed) && (Infinity != he || !hClosed), "A Set cannot be closed in the infinite")
-            return object: RealSet {
+            return object : RealSet {
                 override val lowEnd: Calculatable = le
                 override val highEnd: Calculatable = he
                 override val lowClosed: Boolean = lClosed
@@ -32,10 +32,10 @@ public trait RealSet : Set {
         override val highClosed: Boolean = false
 
         public val Full: RealSet = RealSet
-        public val PositiveAndZero: RealSet = invoke(0,Infinity,true,false)
-        public val Positive: RealSet = invoke(0,Infinity,false,false)
-        public val NegativeAndZero: RealSet = invoke(-Infinity,0,false,true)
-        public val Negative: RealSet = invoke(-Infinity,0,false,false)
+        public val PositiveAndZero: RealSet = invoke(0, Infinity, true, false)
+        public val Positive: RealSet = invoke(0, Infinity, false, false)
+        public val NegativeAndZero: RealSet = invoke(-Infinity, 0, false, true)
+        public val Negative: RealSet = invoke(-Infinity, 0, false, false)
 
     }
     val lowEnd: Calculatable
@@ -47,23 +47,23 @@ public trait RealSet : Set {
     override fun toString(): String = "realSet(${lowEnd},${highEnd},${lowClosed},${highClosed})"
 
     override fun contains(other: Set): Boolean {
-        when(other) {
+        when (other) {
             is SetUnion -> return contains(other.subset1) && contains(other.subset2)
             is SetIntersection -> {
                 val u = other.simplifySets()
-                if(u is SetIntersection) return contains(other.superset1) || contains(other.superset2)
+                if (u is SetIntersection) return contains(other.superset1) || contains(other.superset2)
                 return contains(u)
             }
             is RealSet -> {
                 return (other.lowEnd in this || (!other.lowClosed && !lowClosed && lowEnd == other.lowEnd))
-                    && (other.highEnd in this || (!other.highClosed && !highClosed && highEnd == other.highEnd))
+                        && (other.highEnd in this || (!other.highClosed && !highClosed && highEnd == other.highEnd))
             }
             else -> return false
         }
     }
     override fun contains(other: Number): Boolean {
         val o = other.asCalculatable()
-        return (if(highClosed) o <= highEnd; else o < highEnd) && (if(lowClosed) o >= lowEnd; else o > lowEnd)
+        return (if (highClosed) o <= highEnd; else o < highEnd) && (if (lowClosed) o >= lowEnd; else o > lowEnd)
     }
 
     override fun hasCommonElementsWith(other: Set): Boolean {

@@ -17,8 +17,8 @@ class Vector2Specs : Spek() {{
     }
 
     given("two unit vectors in x- and y-direction") {
-        val eX = vector(1,0)
-        val eY = vector(0,1)
+        val eX = vector(1, 0)
+        val eY = vector(0, 1)
 
         on("getting the dot product of the two") {
             val p = eX * eY
@@ -28,4 +28,5 @@ class Vector2Specs : Spek() {{
             }
         }
     }
-}}
+}
+}

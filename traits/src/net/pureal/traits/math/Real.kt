@@ -11,8 +11,8 @@ public trait Real : Calculatable {
             when (v) {
                 is Real -> return v
                 is InternalReal -> return object : RealPrimitive, Calculatable() {
-                    override val value : InternalReal = v
-                    override val isApproximate : Boolean = isApprox
+                    override val value: InternalReal = v
+                    override val isApproximate: Boolean = isApprox
                 }
                 null -> throw IllegalArgumentException("Cannot create a real out of nothing")
                 else -> return real(activeEnvironment.intReal(v), isApprox)
@@ -25,15 +25,15 @@ public trait Real : Calculatable {
     fun replaceSubReals(vararg a: Real): Real = this
 
     fun filterRecursive(successCond: (Real) -> Boolean): Array<Real> {
-        if(successCond(this)) return array(this)
+        if (successCond(this)) return array(this)
         var a: Array<Real> = array()
         for (i in subReals.indices) a += subReals[i].filterRecursive(successCond)
         return a
     }
 
     fun filterRecursiveCond(continueCond: (Real) -> Boolean, successCond: (Real) -> Boolean): Array<Real> {
-        if(!continueCond(this)) return array()
-        if(successCond(this)) return array(this)
+        if (!continueCond(this)) return array()
+        if (successCond(this)) return array(this)
         var a: Array<Real> = array()
         for (i in subReals.indices) a += subReals[i].filterRecursiveCond(continueCond, successCond)
         return a
@@ -41,9 +41,9 @@ public trait Real : Calculatable {
 
     val isApproximate: Boolean get() = false
 
-    fun matchWithThisPattern(other: Real) : Boolean = this == other // true if other matches the pattern defined by this
+    fun matchWithThisPattern(other: Real): Boolean = this == other // true if other matches the pattern defined by this
 
-    final fun simplify() : Real {
+    final fun simplify(): Real {
         return env.simplifier.simplify(this)
     }
 
@@ -107,9 +107,11 @@ public trait Real : Calculatable {
     override fun abs(): Calculatable = approximate().abs() // TODO: we want an operator for this
 
     val isZero: Boolean get() = false
-        // Means zero in the way it is written, not considering variables
+    // Means zero in the way it is written, not considering variables
     val isPositive: Boolean get() = true
-        // Means positive in the way it is written, not considering variables (if it CAN be positive)
+    // Means positive in the way it is written, not considering variables (if it CAN be positive)
+    final val isNegative: Boolean get() = !isPositive && !isZero
+    // Means negative in the way it is written, not considering variables
 }
 
 val real = Real

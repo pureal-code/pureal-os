@@ -7,7 +7,7 @@ public trait AdditionValue : RealBinaryOperation {
 
     public class object : Constructor2<AdditionValue, Real, Real> {
         override fun invoke(a: Real, b: Real): AdditionValue = object : AdditionValue, Calculatable() {
-            override val subReals: Array<Real> = array(a,b)
+            override val subReals: Array<Real> = array(a, b)
         }
     }
 
@@ -29,7 +29,6 @@ public trait AdditionValue : RealBinaryOperation {
     override fun approximate(): InternalReal {
         return value1.approximate() + value2.approximate()
     }
-
 
 
     override fun calculate(): Real {

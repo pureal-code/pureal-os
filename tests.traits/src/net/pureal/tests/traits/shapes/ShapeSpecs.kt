@@ -6,7 +6,7 @@ import net.pureal.traits.math.*
 
 class ShapeSpecs : Spek() {{
     given("a translated rectangle translated") {
-        val x = rectangle(vector(1, 3)).transformed(Transforms2.translation(vector(5,5)))
+        val x = rectangle(vector(1, 3)).transformed(Transforms2.translation(vector(5, 5)))
 
         on("calling contains for a point inside the rectangle") {
             val c = x.contains(vector(4.6, 4))
@@ -24,4 +24,5 @@ class ShapeSpecs : Spek() {{
             }
         }
     }
-}}
+}
+}

@@ -35,34 +35,34 @@ public abstract class Calculatable : Number(), Comparable<Any?> {
     }
 }
 
-fun Number.asCalculatable(): Calculatable = if(this is Calculatable) this; else activeEnvironment.intReal(this)
+fun Number.asCalculatable(): Calculatable = if (this is Calculatable) this; else activeEnvironment.intReal(this)
 
 fun gcd(a: Number, b: Number): Calculatable {
     var a = a.asCalculatable().abs()
     var b = b.asCalculatable().abs()
     var c: Calculatable
-    if(a equals 0) return b
-    if(b equals 0) return a
-    if(a > b) {
+    if (a equals 0) return b
+    if (b equals 0) return a
+    if (a > b) {
         c = a
         a = b
         b = c
     }
     var i = 0
-    while(a > 0 && a!=b && i < 2 * activeEnvironment.accuracy) {
+    while (a > 0 && a != b && i < 2 * activeEnvironment.accuracy) {
         c = b % a
         b = a
         a = c
         i++
     }
-    if(i >= 2 * activeEnvironment.accuracy) return 0.asCalculatable()
+    if (i >= 2 * activeEnvironment.accuracy) return 0.asCalculatable()
     return b
 }
 
 fun lcm(a: Number, b: Number): Calculatable {
     val a = a.asCalculatable().abs()
     val b = b.asCalculatable().abs()
-    val g = gcd(a,b)
-    if(g equals 0) return Infinity
+    val g = gcd(a, b)
+    if (g equals 0) return Infinity
     return a * b / g
 }

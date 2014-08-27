@@ -6,7 +6,7 @@ import kotlin.test.assertEquals
 import net.pureal.traits.math.*
 
 public class RealSpecs : Spek() {{
-    given("the real numbers 2, 3 and 4"){
+    given("the real numbers 2, 3 and 4") {
         val a = 2.toReal()
         val b = 3.toReal()
         val c = 4.toReal()
@@ -45,7 +45,7 @@ public class RealSpecs : Spek() {{
                 shouldEqual(sub2, 1)
             })
             it("should be negative if the order is swapped", {
-                shouldEqual(-sub1,sub2)
+                shouldEqual(-sub1, sub2)
             })
         }
         on("multiplying 2 and 4")
@@ -77,8 +77,8 @@ public class RealSpecs : Spek() {{
         }
         on("combining operations - (2+3)*4")
         {
-            val f1 = (a+b)*c
-            val f2 = c*(a+b)
+            val f1 = (a + b) * c
+            val f2 = c * (a + b)
             it("should be (2 + 3) * 4 and other way around")
             {
                 shouldEqual("(real(\"2\") + real(\"3\")) * real(\"4\")", f1.toString())
@@ -98,10 +98,11 @@ public class RealSpecs : Spek() {{
         on("getting string representation")
         {
             it("should be 'pi'", {
-                shouldEqual("pi",pi.toString())
+                shouldEqual("pi", pi.toString())
             })
         }
     }
 
 
-}}
+}
+}

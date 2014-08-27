@@ -8,7 +8,7 @@ trait TransformedElement<T> {
     val transform: Transform2
 }
 
-fun transformedElement<T>(element : Element<T>, transform : Transform2 = Transforms2.identity) : TransformedElement<T> = object : TransformedElement<T> {
+fun transformedElement<T>(element: Element<T>, transform: Transform2 = Transforms2.identity): TransformedElement<T> = object : TransformedElement<T> {
     override val element = element
     override val transform = transform
 }
@@ -18,7 +18,8 @@ trait Composed<T> : Element<T>, ObservableIterable<TransformedElement<*>> {
         val transformedLocation = it transform location
         val contains = it.element.shape.contains(transformedLocation)
 
-        if (!contains) listOf<TransformedElement<*>>() else if (it is Composed<*>) it.elementsAt(transformedLocation) map {x -> transformedElement(it, it.transform before x.transform)} else listOf(it)}
+        if (!contains) listOf<TransformedElement<*>>() else if (it is Composed<*>) it.elementsAt(transformedLocation) map { x -> transformedElement(it, it.transform before x.transform) } else listOf(it)
+    }
 }
 
 fun composed<T>(

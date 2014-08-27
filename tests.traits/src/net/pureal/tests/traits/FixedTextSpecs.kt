@@ -15,18 +15,19 @@ class FixedTextSpecs : Spek() {{
     given("a fixed text element") {
         val s = "Kotlin rocks on the rocks!"
         val x = textElement(
-            content = s,
-            font = object : Font {
-                override fun shape(text: String) = rectangle(vector(text.length(), 1))
-            },
-            fill = Fills.solid(Colors.black), size = 0.01)
+                content = s,
+                font = object : Font {
+                    override fun shape(text: String) = rectangle(vector(text.length(), 1))
+                },
+                fill = Fills.solid(Colors.black), size = 0.01)
 
         on("getting the content") {
             val c = x.content
 
             it("should be the orginal string") {
-                shouldEqual(c,s)
+                shouldEqual(c, s)
             }
         }
     }
-}}
+}
+}

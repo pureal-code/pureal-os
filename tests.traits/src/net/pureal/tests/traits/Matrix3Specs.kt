@@ -7,9 +7,9 @@ import net.pureal.tests.traits.*
 class Matrix3Specs : Spek() {{
     given("an arbitrary 3 square matrix") {
         val m = matrix(
-            1,-1,4,
-            3,4,-5,
-            -2,0,1)
+                1, -1, 4,
+                3, 4, -5,
+                -2, 0, 1)
 
         on("getting the determinant") {
             val x = m.determinant
@@ -20,10 +20,10 @@ class Matrix3Specs : Spek() {{
         }
 
         on("getting a submatrix") {
-            val x = m.subMatrix(1,2)
+            val x = m.subMatrix(1, 2)
 
             it("should be correct") {
-                shouldEqual(matrix(1,-1,-2,0), x)
+                shouldEqual(matrix(1, -1, -2, 0), x)
             }
         }
 
@@ -32,9 +32,9 @@ class Matrix3Specs : Spek() {{
 
             it("should be correct") {
                 shouldEqual(matrix(
-                        1,3,-2,
-                        -1,4,0,
-                        4,-5,1), x)
+                        1, 3, -2,
+                        -1, 4, 0,
+                        4, -5, 1), x)
             }
         }
 
@@ -43,9 +43,9 @@ class Matrix3Specs : Spek() {{
 
             it("should be correct") {
                 shouldEqual(matrix(
-                        4 , 1 , -11,
-                        7 , 9 , 17,
-                        8 , 2 , 7), x)
+                        4, 1, -11,
+                        7, 9, 17,
+                        8, 2, 7), x)
 
             }
         }
@@ -54,7 +54,7 @@ class Matrix3Specs : Spek() {{
             val x = m.row(2)
 
             it("should be correct") {
-                shouldEqual(vector(-2,0,1), x)
+                shouldEqual(vector(-2, 0, 1), x)
             }
         }
 
@@ -62,7 +62,7 @@ class Matrix3Specs : Spek() {{
             val x = m.column(1)
 
             it("should be correct") {
-                shouldEqual(vector(-1,4,0), x)
+                shouldEqual(vector(-1, 4, 0), x)
             }
         }
 
@@ -71,9 +71,9 @@ class Matrix3Specs : Spek() {{
 
             it("should be correct") {
                 shouldEqual(matrix(
-                    4 , 1 , -11,
-                    7 , 9 , 17,
-                    8 , 2 , 7) / 29, i)
+                        4, 1, -11,
+                        7, 9, 17,
+                        8, 2, 7) / 29, i)
             }
         }
 
@@ -81,15 +81,15 @@ class Matrix3Specs : Spek() {{
             val x = m.toString()
 
             it("should be correct") {
-                shouldEqual("matrix(1.0, -1.0, 4.0, 3.0, 4.0, -5.0, -2.0, 0.0, 1.0)",x)
+                shouldEqual("matrix(1.0, -1.0, 4.0, 3.0, 4.0, -5.0, -2.0, 0.0, 1.0)", x)
             }
         }
 
         on("multiplying it with a vector") {
-            val x = m * vector(1,2,3)
+            val x = m * vector(1, 2, 3)
 
             it("should be correct") {
-                shouldEqual(vector(11,-4,1), x)
+                shouldEqual(vector(11, -4, 1), x)
             }
         }
 
@@ -102,7 +102,7 @@ class Matrix3Specs : Spek() {{
         }
 
         on("multiplying it with another matrix with determinant different from 0") {
-            val x = m * matrix(-2,2,3,1,5,-6,-4,0,3)
+            val x = m * matrix(-2, 2, 3, 1, 5, -6, -4, 0, 3)
 
             it("should be correct") {
                 shouldEqual(matrix(-19, -3, 21, 18, 26, -30, 0, -4, -3), x)
@@ -112,9 +112,9 @@ class Matrix3Specs : Spek() {{
 
     given("a 3 square matrix with determinant 0") {
         val m = matrix(
-            1,2,3,
-            4,5,6,
-            7,8,9)
+                1, 2, 3,
+                4, 5, 6,
+                7, 8, 9)
 
         on("getting the determinant") {
             val d = m.determinant
@@ -135,11 +135,12 @@ class Matrix3Specs : Spek() {{
         val m = identityMatrix3
 
         on("multiplying it with an arbitrary vector") {
-            val x = m * vector(0,1,-2.5)
+            val x = m * vector(0, 1, -2.5)
 
             it("should result in an unchanged vector") {
-                shouldEqual(vector(0,1,-2.5), x)
+                shouldEqual(vector(0, 1, -2.5), x)
             }
         }
     }
-}}
+}
+}
