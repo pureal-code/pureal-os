@@ -43,7 +43,7 @@ public trait IntegerSet : MultipleOfSet {
         return false
     }
 
-    final override val factor: Calculatable get() = ee.intReal(1)
+    final override val factor: Calculatable get() = activeEnvironment.intReal(1)
 }
 
 val integerSet = IntegerSet

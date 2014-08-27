@@ -22,14 +22,14 @@ public class SetSpecs : Spek() {{
         }
     }
     given("some numbers to test in a range") {
-        array<Number>(.3, ee.intReal(25.2), 67, 112E5).forEach {
+        array<Number>(.3, activeEnvironment.intReal(25.2), 67, 112E5).forEach {
             on("checking if $it is positive") {
                 it("should Be True") {
                     shouldBeTrue(it in RealSet.Positive)
                 }
             }
         }
-        array<Number>(0, -33, ee.intReal("0.00"), Infinity, -44.4).forEach {
+        array<Number>(0, -33, activeEnvironment.intReal("0.00"), Infinity, -44.4).forEach {
             on("checking if $it is positive") {
                 it("should Be False") {
                     shouldBeFalse(it in RealSet.Positive)
@@ -75,7 +75,7 @@ public class SetSpecs : Spek() {{
     }
     given("a [-1, Infinity) Multiple Set of pi")
     {
-        val pi = ee.intReal("3.1415926") // whatever
+        val pi = activeEnvironment.intReal("3.1415926") // whatever
         val s = multipleOfSet(pi, -1, Infinity)
         on("checking numbers that should be in the set"){
             array<Number>(pi * -1, 0, pi*5, pi, 31415926).forEach {

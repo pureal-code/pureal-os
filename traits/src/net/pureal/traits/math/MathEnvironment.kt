@@ -38,4 +38,4 @@ public trait MathEnvironment {
 
 public var activeEnvironment: MathEnvironment = MathEnvironment.DefaultAccurate
 
-public val ee: MathEnvironment get() = activeEnvironment // Read-Only Shortcut to activeEnvironment
+// TODO: Make a "math shell" that contains a configurable environment, so each Calculatable belongs to a shell and not a sing´le environment

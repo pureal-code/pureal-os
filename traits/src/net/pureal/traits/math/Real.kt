@@ -15,7 +15,7 @@ public trait Real : Calculatable {
                     override val isApproximate : Boolean = isApprox
                 }
                 null -> throw IllegalArgumentException("Cannot create a real out of nothing")
-                else -> return real(ee.intReal(v), isApprox)
+                else -> return real(activeEnvironment.intReal(v), isApprox)
             }
         }
     }
@@ -44,7 +44,7 @@ public trait Real : Calculatable {
     fun matchWithThisPattern(other: Real) : Boolean = this == other // true if other matches the pattern defined by this
 
     final fun simplify() : Real {
-        return ee.simplifier.simplify(this)
+        return env.simplifier.simplify(this)
     }
 
     fun calculate(): Real {
@@ -75,21 +75,21 @@ public trait Real : Calculatable {
     override fun compareTo(other: Any?): Int = approximate().compareTo(other)
 
     override fun plus() = this
-    override fun minus(): Real = ee.subVal(0.toReal(), this)
+    override fun minus(): Real = env.subVal(0.toReal(), this)
 
 
-    override fun plus(other: Any?): Real = ee.addVal(this, real(other))
+    override fun plus(other: Any?): Real = env.addVal(this, real(other))
 
-    override fun minus(other: Any?): Real = ee.subVal(this, real(other))
+    override fun minus(other: Any?): Real = env.subVal(this, real(other))
 
-    override fun times(other: Any?): Real = ee.mulVal(this, real(other))
+    override fun times(other: Any?): Real = env.mulVal(this, real(other))
 
-    override fun div(other: Any?): Real = ee.divVal(this, real(other))
+    override fun div(other: Any?): Real = env.divVal(this, real(other))
 
     // TODO:
     override fun mod(other: Any?): Calculatable = approximate() % other
 
-    fun invert(): Real = ee.divVal(1.toReal(), this)
+    fun invert(): Real = env.divVal(1.toReal(), this)
 
 
     override fun toDouble(): Double = approximate().toDouble()

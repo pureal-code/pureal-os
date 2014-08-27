@@ -28,9 +28,14 @@ public abstract class Calculatable : Number(), Comparable<Any?> {
     abstract fun round(): Calculatable
 
     abstract fun abs(): Calculatable
+
+    final val env: MathEnvironment
+    {
+        env = activeEnvironment
+    }
 }
 
-fun Number.asCalculatable(): Calculatable = if(this is Calculatable) this; else ee.intReal(this)
+fun Number.asCalculatable(): Calculatable = if(this is Calculatable) this; else activeEnvironment.intReal(this)
 
 fun gcd(a: Number, b: Number): Calculatable {
     var a = a.asCalculatable().abs()
@@ -44,13 +49,13 @@ fun gcd(a: Number, b: Number): Calculatable {
         b = c
     }
     var i = 0
-    while(a > 0 && a!=b && i < 2 * ee.accuracy) {
+    while(a > 0 && a!=b && i < 2 * activeEnvironment.accuracy) {
         c = b % a
         b = a
         a = c
         i++
     }
-    if(i >= 2 * ee.accuracy) return 0.asCalculatable()
+    if(i >= 2 * activeEnvironment.accuracy) return 0.asCalculatable()
     return b
 }
 

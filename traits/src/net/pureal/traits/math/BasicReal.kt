@@ -222,11 +222,11 @@ public trait BasicReal : InternalReal {
             is BasicReal -> {
                 if (other.number == BigInteger.ZERO) throw ArithmeticException("A Division by Zero is not allowed")
                 val targetExp = exponent - other.exponent
-                val br1 = toExponent(exponent - activeEnvironment.accuracy)
+                val br1 = toExponent(exponent - env.accuracy)
                 val c = br1.number.divideAndRemainder(other.number)
-                if (activeEnvironment.requireExactCalculation && c[1] != BigInteger.ZERO)
+                if (env.requireExactCalculation && c[1] != BigInteger.ZERO)
                     throw RuntimeException("Accurate Division is not possible")
-                return basicReal(c[0], targetExp - activeEnvironment.accuracy).minimize()
+                return basicReal(c[0], targetExp - env.accuracy).minimize()
             }
             else -> throw IllegalArgumentException()
         }
@@ -252,7 +252,7 @@ public trait BasicReal : InternalReal {
 
     open fun minimize(): BasicReal {
         if (this.number == BigInteger.ZERO) return basicReal(this.number, 0)
-        var stepSize: Int = activeEnvironment.accuracy / 4
+        var stepSize: Int = env.accuracy / 4
         var powers: Long = 0
         var tmp: BigInteger = this.number
         var done: Boolean = false
