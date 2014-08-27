@@ -28,8 +28,8 @@ class ComposedSpecs : Spek() {{
 
             it("should return all elements") {
                 shouldEqual(2, e.count())
-                shouldEqual(c.shape, e.elementAt(0).shape)
-                shouldEqual(r.shape, e.elementAt(1).shape)
+                shouldEqual(c.shape, e.elementAt(0).element.shape)
+                shouldEqual(r.shape, e.elementAt(1).element.shape)
             }
         }
 
@@ -37,7 +37,7 @@ class ComposedSpecs : Spek() {{
             val e = x.elementsAt(vector(0, 0.59))
 
             it("should return the circle") {
-                shouldEqual(c.shape, e.single().shape)
+                shouldEqual(c.shape, e.single().element.shape)
             }
         }
     }
