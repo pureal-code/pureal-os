@@ -19,12 +19,12 @@ public trait MathEnvironment {
         }
         val DefaultAccurate = object : DefaultFunctionEnv() {
             override var accuracy: Int = 100
-            override var requireExactCalculation: Boolean = true
+            override var requireExact: Boolean = true
         }
     }
 
     var accuracy: Int
-    var requireExactCalculation: Boolean
+    var requireExact: Boolean
 
     val intReal: Constructor1<InternalReal, Any?>
     val addVal: Constructor2<RealBinaryOperation, Real, Real>
@@ -36,6 +36,6 @@ public trait MathEnvironment {
     // TODO: make up more things that should be controlled by the environment
 }
 
-public var activeEnvironment: MathEnvironment = MathEnvironment.DefaultAccurate
+public val activeEnvironment: MathEnvironment get() = activeShell.environment
 
 // TODO: Make a "math shell" that contains a configurable environment, so each Calculatable belongs to a shell and not a sing´le environment

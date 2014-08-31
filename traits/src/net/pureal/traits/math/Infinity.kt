@@ -48,7 +48,7 @@ public trait Infinity : InternalReal {
     override fun times(other: Any?): InternalReal
             = if (other !is Number || other == 0) throw IllegalArgumentException() else if (other.asCalculatable() >= 0) this else -this
 
-    override fun div(other: Any?): InternalReal
+    override fun div(other: Any?, requireExact: Boolean): InternalReal
             = if (other !is Number || other is Infinity) throw IllegalArgumentException() else if (other.asCalculatable() >= 0) this else -this
 
     override fun mod(other: Any?): InternalReal = InvalidateFun()

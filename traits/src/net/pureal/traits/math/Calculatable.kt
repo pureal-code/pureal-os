@@ -29,10 +29,11 @@ public abstract class Calculatable : Number(), Comparable<Any?> {
 
     abstract fun abs(): Calculatable
 
-    final val env: MathEnvironment
+    final val shell: MathShell
     {
-        env = activeEnvironment
+        shell = activeShell
     }
+    final val env: MathEnvironment get() = shell.environment
 }
 
 fun Number.asCalculatable(): Calculatable = if (this is Calculatable) this; else activeEnvironment.intReal(this)

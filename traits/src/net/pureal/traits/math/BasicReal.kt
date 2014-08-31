@@ -211,20 +211,21 @@ public trait BasicReal : InternalReal {
         }
     }
 
-    override fun div(other: Any?): BasicReal {
+    override fun div(other: Any?): BasicReal = div(other, env.requireExact)
+    override fun div(other: Any?, requireExact: Boolean): BasicReal {
         when (other) {
-            is Byte -> return this / basicInt(other)
-            is Short -> return this / basicInt(other)
-            is Int -> return this / basicInt(other)
-            is Long -> return this / basicInt(other)
-            is Double -> return this / basicReal(other)
-            is Float -> return this / basicReal(other)
+            is Byte -> return this.div(basicInt(other), requireExact)
+            is Short -> return this.div(basicInt(other), requireExact)
+            is Int -> return this.div(basicInt(other), requireExact)
+            is Long -> return this.div(basicInt(other), requireExact)
+            is Double -> return this.div(basicReal(other), requireExact)
+            is Float -> return this.div(basicReal(other), requireExact)
             is BasicReal -> {
                 if (other.number == BigInteger.ZERO) throw ArithmeticException("A Division by Zero is not allowed")
                 val targetExp = exponent - other.exponent
                 val br1 = toExponent(exponent - env.accuracy)
                 val c = br1.number.divideAndRemainder(other.number)
-                if (env.requireExactCalculation && c[1] != BigInteger.ZERO)
+                if (requireExact && c[1] != BigInteger.ZERO)
                     throw RuntimeException("Accurate Division is not possible")
                 return basicReal(c[0], targetExp - env.accuracy).minimize()
             }
