@@ -1,6 +1,23 @@
 package net.pureal.traits.math
 
+import net.pureal.traits.*
+
 public trait InternalReal : Calculatable {
+    public class object : Constructor1<InternalReal, Any?> {
+        override fun invoke(it: Any?): InternalReal {
+            when (it) {
+                null -> throw IllegalArgumentException()
+                is InternalReal -> return it
+                is String -> {
+                    val it = it.extractInnerString()
+                    if ("Infinity" in it)
+                        return if ("-" in it || "Negative" in it) NegativeInfinity else Infinity
+                    return basicReal(it)
+                }
+                else -> return invoke(it.toString())
+            }
+        }
+    }
 
     override fun toDouble(): Double
     override fun toFloat(): Float = toDouble().toFloat()

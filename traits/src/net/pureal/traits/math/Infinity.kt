@@ -62,3 +62,5 @@ public trait Infinity : InternalReal {
     override fun compareTo(other: Any?): Int
     override fun isInteger(): Boolean = false
 }
+
+val NegativeInfinity = Infinity.negativeInfinity

@@ -26,11 +26,11 @@ public class EqRotationSpecs : Spek() {{
             it("should be 0 - (2 + 4 + .5)") {
                 val b = real(0) - (real(2) + real(4) + real(.5))
                 shouldEqual(b, a.rotate())
-                shouldEqual(a.calculate(),a.rotate().calculate())
+                shouldEqual(a.calculate(), a.rotate().calculate())
             }
         }
         on("rotating -10 + 2 - (4 - 5 + 0) - (-5 - (10 - 3)") {
-            val a = real(-10) + real(2) -(real(4) - real(5) + real(0)) - (real(-5) - (real(10) - real(3)))
+            val a = real(-10) + real(2) - (real(4) - real(5) + real(0)) - (real(-5) - (real(10) - real(3)))
             it("should be (2 + 5 + 5 + 10) - (10 + 4 + 3)") {
                 val b = (real(2) + real(5) + real(5) + real(10)) - (real(10) + real(4) + real(3))
                 shouldEqual(b, a.rotate())

@@ -72,7 +72,7 @@ public class BasicRealSpecs : Spek() {{
 
 
         on("creating some invalid strings'") {
-            array(" 400,2", "23*E+8", "@202020", " -0 ").forEach {
+            array(" 400,2", "23*E+8", "@202020").forEach {
                 it("\"${it}\" should cause an exception") {
                     shouldThrow<IllegalArgumentException> { basicReal(it) }
                 }

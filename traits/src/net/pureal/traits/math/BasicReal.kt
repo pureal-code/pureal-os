@@ -3,8 +3,7 @@ package net.pureal.traits.math
 import java.math.BigInteger
 import java.lang.Math.*
 import kotlin.math.*
-import net.pureal.traits.Constructor1
-import net.pureal.traits.Constructor2
+import net.pureal.traits.*
 
 
 public trait BasicReal : InternalReal {
@@ -33,7 +32,7 @@ public trait BasicReal : InternalReal {
         }
 
         fun fromString(s: String): BasicReal {
-            var str: String = s.capitalize()
+            var str: String = s.capitalize().removeWhitespace()
             var estr: String
             // with regex - remove illegal characters and whitespace
             if (str.matches("[^0-9\\.\\-\\+E\\s]")) throw IllegalArgumentException("There are forbidden characters in the expression")

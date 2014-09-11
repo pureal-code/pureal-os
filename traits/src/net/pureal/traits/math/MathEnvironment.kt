@@ -6,7 +6,7 @@ import net.pureal.traits.*
 public trait MathEnvironment {
     class object {
         public abstract class DefaultFunctionEnv : MathEnvironment {
-            override val intReal: Constructor1<InternalReal, Any?> = BasicReal
+            override val intReal: Constructor1<InternalReal, Any?> = InternalReal
             override val addVal: Constructor2<RealBinaryOperation, Real, Real> = AdditionValue
             override val subVal: Constructor2<RealBinaryOperation, Real, Real> = SubtractionValue
             override val mulVal: Constructor2<RealBinaryOperation, Real, Real> = MultiplicationValue
