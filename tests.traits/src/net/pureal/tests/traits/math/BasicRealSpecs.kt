@@ -237,6 +237,14 @@ public class BasicRealSpecs : Spek() {{
             }
         }
     }
+    given("basic Reals for comparison tests with other types") {
+        on("testing if 1 < Infinity") {
+            it("should be true") {
+                shouldBeTrue(basicReal(1) < java.lang.Float.POSITIVE_INFINITY)
+            }
+        }
+
+    }
     given("basic Reals for rounding tests") {
         on("floor-ing some numbers") {
             it("should be 2 for 2.7") {

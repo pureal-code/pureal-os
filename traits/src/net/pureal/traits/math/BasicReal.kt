@@ -7,14 +7,14 @@ import net.pureal.traits.*
 
 
 public trait BasicReal : InternalReal {
-    public class object : Constructor1<BasicReal, Any?>, Constructor2<BasicReal, BigInteger, Long> {
+    public class object : Constructor1<InternalReal, Any?>, Constructor2<BasicReal, BigInteger, Long> {
         fun getLowestExponent(o1: BasicReal, o2: BasicReal): Long = min(o1.exponent, o2.exponent)
         fun exponentialFactor(exp: Long): BigInteger = BigInteger.TEN.pow(abs(exp.toInt()))
 
         override fun invoke(it: Any?): BasicReal {
             return when (it) {
                 is BasicReal -> it.minimize()
-                is String -> BasicReal.fromString(it)
+                is String -> BasicReal.fromString(it.extractInnerString().removeWhitespace().toUpperCase())
                 is Long -> basicReal(BigInteger(it), 0).minimize()
                 is Int -> basicReal(it.toLong())
                 is Short -> basicReal(it.toLong())
@@ -32,8 +32,9 @@ public trait BasicReal : InternalReal {
         }
 
         fun fromString(s: String): BasicReal {
-            var str: String = s.capitalize().removeWhitespace()
+            var str: String = s
             var estr: String
+
             // with regex - remove illegal characters and whitespace
             if (str.matches("[^0-9\\.\\-\\+E\\s]")) throw IllegalArgumentException("There are forbidden characters in the expression")
 
@@ -129,15 +130,8 @@ public trait BasicReal : InternalReal {
         return this.exponent - other.exponent
     }
 
-    override fun compareTo(other: Any?): Int {
+    override fun tryCompareTo(other: Calculatable): Int {
         when (other) {
-            is Byte -> return compareTo(basicReal(other))
-            is Short -> return compareTo(basicReal(other))
-            is Int -> return compareTo(basicReal(other))
-            is Long -> return compareTo(basicReal(other))
-            is Float -> return compareTo(basicReal(other))
-            is Double -> return compareTo(basicReal(other))
-            is BigInteger -> return compareTo(basicReal(other))
             is BasicReal -> {
                 if (this.signum() == 0) return -other.signum()
                 if (this.signum() != other.signum()) {
@@ -145,7 +139,6 @@ public trait BasicReal : InternalReal {
                 }
                 return (this - other).number.compareTo(BigInteger.ZERO)
             }
-            is InternalReal -> return other.compareTo(this)
             else -> throw IllegalArgumentException()
         }
     }
@@ -321,3 +314,18 @@ public trait BasicReal : InternalReal {
 }
 
 val basicReal = BasicReal
+
+val basicRealInf = object : Constructor1<InternalReal, Any?> {
+    override fun invoke(it: Any?): InternalReal {
+        when (it) {
+            is String -> {
+                val str = it.extractInnerString().removeWhitespace().toUpperCase()
+                if ("INFINITY" in str)
+                    return if ("-" in str || "NEGATIVE" in str) NegativeInfinity else Infinity
+                return BasicReal.fromString(str)
+            }
+            is Number -> return invoke(it.toString())
+            else -> throw IllegalArgumentException("Cannot create a BasicReal of given '{$it}'")
+        }
+    }
+}

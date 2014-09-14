@@ -6,13 +6,10 @@ public trait Infinity : InternalReal {
     public class object : Infinity, Calculatable() {
         public val positiveInfinity: Infinity = Infinity
         override fun toDouble() = java.lang.Double.POSITIVE_INFINITY
-        override fun compareTo(other: Any?): Int {
+        override fun tryCompareTo(other: Calculatable): Int {
             when (other) {
-                is Double -> return if (other == java.lang.Double.POSITIVE_INFINITY) 0; else -1
-                is Float -> return if (other == java.lang.Float.POSITIVE_INFINITY) 0; else -1
-                is InternalReal -> return compareTo(other.toDouble())
-                is Number -> return -1
-                else -> throw IllegalArgumentException()
+                is InternalReal -> return if (other.toDouble() == java.lang.Double.POSITIVE_INFINITY) 0 else 1
+                else -> return 1
             }
         }
         override fun minus() = Infinity.negativeInfinity
@@ -21,13 +18,10 @@ public trait Infinity : InternalReal {
 
         public val negativeInfinity: Infinity = object : Infinity, Calculatable() {
             override fun toDouble() = java.lang.Double.NEGATIVE_INFINITY
-            override fun compareTo(other: Any?): Int {
+            override fun tryCompareTo(other: Calculatable): Int {
                 when (other) {
-                    is Double -> return if (other == java.lang.Double.NEGATIVE_INFINITY) 0; else 1
-                    is Float -> return if (other == java.lang.Float.NEGATIVE_INFINITY) 0; else 1
-                    is InternalReal -> return compareTo(other.toDouble())
-                    is Number -> return -1
-                    else -> throw IllegalArgumentException()
+                    is InternalReal -> return if (other.toDouble() == java.lang.Double.NEGATIVE_INFINITY) 0 else -1
+                    else -> return -1
                 }
             }
             override fun minus() = Infinity.positiveInfinity
@@ -59,7 +53,7 @@ public trait Infinity : InternalReal {
 
     override fun abs(): InternalReal = Infinity
 
-    override fun compareTo(other: Any?): Int
+    override fun tryCompareTo(other: Calculatable): Int
     override fun isInteger(): Boolean = false
 }
 

@@ -9,10 +9,8 @@ public trait InternalReal : Calculatable {
                 null -> throw IllegalArgumentException()
                 is InternalReal -> return it
                 is String -> {
-                    val it = it.extractInnerString()
-                    if ("Infinity" in it)
-                        return if ("-" in it || "Negative" in it) NegativeInfinity else Infinity
-                    return basicReal(it)
+                    // Infinity check should be done by the intReal object, if others implement one with that functionality
+                    return activeEnvironment.intReal(it)
                 }
                 else -> return invoke(it.toString())
             }
@@ -66,3 +64,5 @@ public trait InternalReal : Calculatable {
     fun isInteger(): Boolean
 
 }
+
+val internalReal = InternalReal

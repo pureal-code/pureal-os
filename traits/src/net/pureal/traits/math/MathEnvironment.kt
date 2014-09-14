@@ -6,7 +6,7 @@ import net.pureal.traits.*
 public trait MathEnvironment {
     class object {
         public abstract class DefaultFunctionEnv : MathEnvironment {
-            override val intReal: Constructor1<InternalReal, Any?> = InternalReal
+            override val intReal: Constructor1<InternalReal, Any?> = basicRealInf
             override val addVal: Constructor2<RealBinaryOperation, Real, Real> = AdditionValue
             override val subVal: Constructor2<RealBinaryOperation, Real, Real> = SubtractionValue
             override val mulVal: Constructor2<RealBinaryOperation, Real, Real> = MultiplicationValue
@@ -37,5 +37,3 @@ public trait MathEnvironment {
 }
 
 public val activeEnvironment: MathEnvironment get() = activeShell.environment
-
-// TODO: Make a "math shell" that contains a configurable environment, so each Calculatable belongs to a shell and not a sing´le environment

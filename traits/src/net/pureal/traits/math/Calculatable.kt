@@ -2,7 +2,21 @@ package net.pureal.traits.math
 
 public abstract class Calculatable : Number(), Comparable<Any?> {
     // INHERITED STUFF
-    override abstract fun compareTo(other: Any?): Int
+    //TODO
+    final override fun compareTo(other: Any?): Int {
+        if (other == null) throw IllegalArgumentException()
+        val it = other.asCalculatable()
+        try {
+            return tryCompareTo(it)
+        } catch (e: IllegalArgumentException) {
+            try {
+                return -it.tryCompareTo(this)
+            } catch (e: IllegalArgumentException) {
+                return activeEnvironment.intReal(this).tryCompareTo(activeEnvironment.intReal(other))
+            }
+        }
+    }
+
     override fun equals(other: Any?): Boolean = compareTo(other) == 0
 
     override abstract fun toDouble(): Double
@@ -14,6 +28,8 @@ public abstract class Calculatable : Number(), Comparable<Any?> {
     override fun toChar(): Char = toLong().toChar()
 
     // WHAT IS IMPORTANT
+    abstract fun tryCompareTo(other: Calculatable): Int
+
     open fun plus(): Calculatable = this
 
     abstract fun minus(): Calculatable
@@ -36,7 +52,7 @@ public abstract class Calculatable : Number(), Comparable<Any?> {
     final val env: MathEnvironment get() = shell.environment
 }
 
-fun Number.asCalculatable(): Calculatable = if (this is Calculatable) this; else activeEnvironment.intReal(this)
+fun Any.asCalculatable(): Calculatable = if (this is Calculatable) this; else activeEnvironment.intReal(this)
 
 fun gcd(a: Number, b: Number): Calculatable {
     var a = a.asCalculatable().abs()

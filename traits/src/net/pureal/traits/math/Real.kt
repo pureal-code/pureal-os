@@ -15,7 +15,7 @@ public trait Real : Calculatable {
                     override val isApproximate: Boolean = isApprox
                 }
                 null -> throw IllegalArgumentException("Cannot create a real out of nothing")
-                else -> return real(activeEnvironment.intReal(v), isApprox)
+                else -> return real(internalReal(v), isApprox)
             }
         }
     }
@@ -72,7 +72,7 @@ public trait Real : Calculatable {
         return false
     }
 
-    override fun compareTo(other: Any?): Int = approximate().compareTo(other)
+    override fun tryCompareTo(other: Calculatable): Int = approximate().compareTo(other)
 
     override fun plus() = this
     override fun minus(): Real = env.subVal(0.toReal(), this)

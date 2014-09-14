@@ -34,8 +34,6 @@ public trait MultipleOfSet : RealSet, Set {
             return super<RealSet>.contains(other) && o equals 0
         } catch(e: UnsupportedOperationException) {
             return false
-        } catch(e: RuntimeException) {
-            return false
         }
     }
 

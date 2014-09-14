@@ -27,7 +27,7 @@ public trait BasicInt : BasicReal {
         }
     }
 
-    fun toBasicReal(): BasicReal = basicReal(this)
+    fun toBasicReal(): BasicReal = basicReal(this) as BasicReal
 
     override fun minus(): BasicInt = basicInt(-number)
 
