@@ -4,6 +4,10 @@ public abstract class Calculatable : Number(), Comparable<Any?> {
     // INHERITED STUFF
 
     final override fun compareTo(other: Any?): Int {
+        return compareTo(other, false)
+    }
+
+    final fun compareTo(other: Any?, inner: Boolean): Int {
         if (other == null) throw IllegalArgumentException()
         val it = other.asCalculatable()
         try {
@@ -12,7 +16,8 @@ public abstract class Calculatable : Number(), Comparable<Any?> {
             try {
                 return -it.tryCompareTo(this)
             } catch (e: IllegalArgumentException) {
-                return activeEnvironment.intReal(this).tryCompareTo(activeEnvironment.intReal(other))
+                if (!inner) return activeEnvironment.intReal(this).compareTo(activeEnvironment.intReal(other), true)
+                throw e
             }
         }
     }
