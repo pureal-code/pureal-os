@@ -224,7 +224,7 @@ public trait BasicReal : InternalReal {
             else -> throw IllegalArgumentException()
         }
     }
-    // TODO: do mod on the Calculatable class
+
     override fun mod(other: Any?): BasicReal {
         when (other) {
             is Byte -> return this % basicInt(other)
@@ -301,10 +301,10 @@ public trait BasicReal : InternalReal {
     }
 
     override fun floor(): BasicReal = if (isInteger()) this; else {
-        if (sign) (toExponent(0) - 1).minimize(); else toExponent(0).minimize() // TODO
+        if (sign) (toExponent(0) - 1).minimize(); else toExponent(0).minimize()
     }
     override fun ceil(): BasicReal = if (isInteger()) this; else {
-        if (sign) toExponent(0).minimize(); else (toExponent(0) + 1).minimize() // TODO
+        if (sign) toExponent(0).minimize(); else (toExponent(0) + 1).minimize()
     }
     override fun round(): BasicReal = if (isInteger()) this; else {
         if (this % basicInt(1) < basicReal(BigInteger(5), -1L)) floor(); else ceil()
@@ -324,6 +324,10 @@ val basicRealInf = object : Constructor1<InternalReal, Any?> {
                     return if ("-" in str || "NEGATIVE" in str) NegativeInfinity else Infinity
                 return BasicReal.fromString(str)
             }
+            is Long -> return basicReal(BigInteger(it), 0).minimize()
+            is Int -> return basicReal(it.toLong())
+            is Short -> return basicReal(it.toLong())
+            is Byte -> return basicReal(it.toLong())
             is Number -> return invoke(it.toString())
             else -> throw IllegalArgumentException("Cannot create a BasicReal of given '{$it}'")
         }

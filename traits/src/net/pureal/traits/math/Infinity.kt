@@ -7,10 +7,8 @@ public trait Infinity : InternalReal {
         public val positiveInfinity: Infinity = Infinity
         override fun toDouble() = java.lang.Double.POSITIVE_INFINITY
         override fun tryCompareTo(other: Calculatable): Int {
-            when (other) {
-                is InternalReal -> return if (other.toDouble() == java.lang.Double.POSITIVE_INFINITY) 0 else 1
-                else -> return 1
-            }
+            if (other.toDouble() == java.lang.Double.POSITIVE_INFINITY) return 0
+            return 1
         }
         override fun minus() = Infinity.negativeInfinity
         override fun toString() = "Infinity"
@@ -19,10 +17,8 @@ public trait Infinity : InternalReal {
         public val negativeInfinity: Infinity = object : Infinity, Calculatable() {
             override fun toDouble() = java.lang.Double.NEGATIVE_INFINITY
             override fun tryCompareTo(other: Calculatable): Int {
-                when (other) {
-                    is InternalReal -> return if (other.toDouble() == java.lang.Double.NEGATIVE_INFINITY) 0 else -1
-                    else -> return -1
-                }
+                if (other.toDouble() == java.lang.Double.NEGATIVE_INFINITY) return 0
+                return -1
             }
             override fun minus() = Infinity.positiveInfinity
             override fun toString() = "-Infinity"

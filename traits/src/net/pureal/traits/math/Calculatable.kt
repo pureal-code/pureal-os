@@ -2,7 +2,7 @@ package net.pureal.traits.math
 
 public abstract class Calculatable : Number(), Comparable<Any?> {
     // INHERITED STUFF
-    //TODO
+
     final override fun compareTo(other: Any?): Int {
         if (other == null) throw IllegalArgumentException()
         val it = other.asCalculatable()

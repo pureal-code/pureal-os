@@ -56,7 +56,7 @@ public trait Real : Calculatable {
     }
 
     override fun equals(other: Any?): Boolean {
-        // TODO: this is bullshit as well
+        // TODO: this is bullshit as well (EDIT: Still bullshit, not yet an idea how this should behave)
         when (other) {
             null -> return false
             is Real -> {
@@ -86,7 +86,6 @@ public trait Real : Calculatable {
 
     override fun div(other: Any?): Real = env.divVal(this, real(other))
 
-    // TODO:
     override fun mod(other: Any?): Calculatable = approximate() % other
 
     fun invert(): Real = env.divVal(1.toReal(), this)
@@ -104,7 +103,8 @@ public trait Real : Calculatable {
     override fun ceil(): Calculatable = approximate().ceil()
     override fun round(): Calculatable = approximate().round()
 
-    override fun abs(): Calculatable = approximate().abs() // TODO: we want an operator for this
+    // TODO: we want an operator for this, as we want to be able to solve abs equations
+    override fun abs(): Calculatable = approximate().abs()
 
     val isZero: Boolean get() = false
     // Means zero in the way it is written, not considering variables

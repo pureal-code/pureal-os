@@ -241,6 +241,8 @@ public class BasicRealSpecs : Spek() {{
         on("testing if 1 < Infinity") {
             it("should be true") {
                 shouldBeTrue(basicReal(1) < java.lang.Float.POSITIVE_INFINITY)
+                shouldBeTrue((-Infinity + 10000) equals java.lang.Double.NEGATIVE_INFINITY)
+                shouldBeTrue(NegativeInfinity < activeEnvironment.intReal("-2.2E+40"))
             }
         }
 
