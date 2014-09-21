@@ -7,21 +7,21 @@ import java.math.BigInteger
 import net.pureal.tests.traits.shouldThrow
 
 public class BasicRealSpecs : Spek() {{
-    private class to(val a: Number, val b: Number, val r: Number){}
-    given("Strings that are to be converted to BasicReal"){
+    private class to(val a: Number, val b: Number, val r: Number) {}
+    given("Strings that are to be converted to BasicReal") {
 
         on("creating a basic Real of '212'") {
             val br = basicReal("212")
             it("should be 212E+0") {
-                shouldEqual(0L,br.exponent)
+                shouldEqual(0L, br.exponent)
                 shouldEqual(BigInteger(212), br.number)
             }
         }
         on("creating a basic Real of '1.23'") {
             val br = basicReal("1.23")
             it("should be 123E-2") {
-                shouldEqual(-2L,br.exponent)
-                shouldEqual(net.pureal.traits.math.BigInteger(123),br.number)
+                shouldEqual(-2L, br.exponent)
+                shouldEqual(net.pureal.traits.math.BigInteger(123), br.number)
                 shouldBeFalse(br.sign)
             }
         }
@@ -32,16 +32,16 @@ public class BasicRealSpecs : Spek() {{
             val br2 = basicReal(str2)
             it("should be 0") {
                 shouldEqual(0L, br1.exponent)
-                shouldEqual(BigInteger(0),br1.number)
-                shouldEqual(0L,br2.exponent)
-                shouldEqual(BigInteger(0),br2.number)
+                shouldEqual(BigInteger(0), br1.number)
+                shouldEqual(0L, br2.exponent)
+                shouldEqual(BigInteger(0), br2.number)
             }
         }
         on("creating a basic Real of '-001010'") {
             val br = basicReal("-001010")
             it("should be -101E+1") {
-                shouldEqual(1L,br.exponent)
-                shouldEqual(BigInteger(-101),br.number)
+                shouldEqual(1L, br.exponent)
+                shouldEqual(BigInteger(-101), br.number)
                 shouldBeTrue(br.sign)
             }
         }
@@ -49,15 +49,15 @@ public class BasicRealSpecs : Spek() {{
             val br = basicReal("0.03302")
             it("should be 3302E-5") {
                 shouldEqual(-5L, br.exponent)
-                shouldEqual(BigInteger(3302),br.number)
+                shouldEqual(BigInteger(3302), br.number)
                 shouldBeFalse(br.sign)
             }
         }
         on("creating a basic Real of '6.0E-23'") {
             val br = basicReal("6.0E-23")
             it("should be 6E-23") {
-                shouldEqual(-23L,br.exponent)
-                shouldEqual(BigInteger(6),br.number)
+                shouldEqual(-23L, br.exponent)
+                shouldEqual(BigInteger(6), br.number)
                 shouldBeFalse(br.sign)
             }
         }
@@ -72,7 +72,7 @@ public class BasicRealSpecs : Spek() {{
 
 
         on("creating some invalid strings'") {
-            array(" 400,2", "23*E+8", "@202020", " -0 ").forEach {
+            array(" 400,2", "23*E+8", "@202020").forEach {
                 it("\"${it}\" should cause an exception") {
                     shouldThrow<IllegalArgumentException> { basicReal(it) }
                 }
@@ -88,7 +88,7 @@ public class BasicRealSpecs : Spek() {{
         }
 
         on("creating some strings and checking toMathematicalString()'") {
-            array("2990", "1.05", "-6E+20", "-1.01010101E-20", "-120030", ".022", "-.44","0").forEach {
+            array("2990", "1.05", "-6E+20", "-1.01010101E-20", "-120030", ".022", "-.44", "0").forEach {
                 it("should be a mathematical String \"${it}\" ") {
                     shouldEqual("${it}", basicReal(it).toMathematicalString())
                 }
@@ -237,10 +237,20 @@ public class BasicRealSpecs : Spek() {{
             }
         }
     }
+    given("basic Reals for comparison tests with other types") {
+        on("testing if 1 < Infinity") {
+            it("should be true") {
+                shouldBeTrue(basicReal(1) < java.lang.Float.POSITIVE_INFINITY)
+                shouldBeTrue((-Infinity + 10000) equals java.lang.Double.NEGATIVE_INFINITY)
+                shouldBeTrue(NegativeInfinity < activeEnvironment.intReal("-2.2E+40"))
+            }
+        }
+
+    }
     given("basic Reals for rounding tests") {
         on("floor-ing some numbers") {
             it("should be 2 for 2.7") {
-                shouldEqual(basicReal(2.7).floor(),2)
+                shouldEqual(basicReal(2.7).floor(), 2)
             }
             it("should be -12 for -11.01") {
                 shouldEqual(basicReal("-11.01").floor(), -12)
@@ -251,7 +261,7 @@ public class BasicRealSpecs : Spek() {{
         }
         on("ceil-ing some numbers") {
             it("should be 3 for 2.7") {
-                shouldEqual(basicReal(2.7).ceil(),3)
+                shouldEqual(basicReal(2.7).ceil(), 3)
             }
             it("should be -11 for -11.01") {
                 shouldEqual(basicReal("-11.01").ceil(), -11)
@@ -262,7 +272,7 @@ public class BasicRealSpecs : Spek() {{
         }
         on("round-ing some numbers") {
             it("should be 3 for 2.7") {
-                shouldEqual(basicReal(2.7).round(),3)
+                shouldEqual(basicReal(2.7).round(), 3)
             }
             it("should be -11 for -11.01") {
                 shouldEqual(basicReal("-11.01").round(), -11)
@@ -273,24 +283,24 @@ public class BasicRealSpecs : Spek() {{
         }
     }
     given("numbers for gcd tests") {
-        array(to(4,2,2), to(33,0,33), to(.3,2,.1), to(36,36,36), to(20,44,4)).forEach {
+        array(to(4, 2, 2), to(33, 0, 33), to(.3, 2, .1), to(36, 36, 36), to(20, 44, 4)).forEach {
             on("calculating the gcd of ${it.a} and ${it.b}") {
                 it("should be ${it.r}") {
-                    shouldEqual(it.r.asCalculatable(),gcd(it.a,it.b))
+                    shouldEqual(it.r.asCalculatable(), gcd(it.a, it.b))
                 }
             }
         }
     }
     given("numbers for lcm tests") {
-        array(to(4,2,4), to(33,0,0), to(.3,2,6), to(36,36,36), to(20,44,220)).forEach {
+        array(to(4, 2, 4), to(33, 0, 0), to(.3, 2, 6), to(36, 36, 36), to(20, 44, 220)).forEach {
             on("calculating the lcm of ${it.a} and ${it.b}") {
                 it("should be ${it.r}") {
-                    shouldEqual(it.r.asCalculatable(),lcm(it.a,it.b))
+                    shouldEqual(it.r.asCalculatable(), lcm(it.a, it.b))
                 }
             }
         }
     }
 
 
-
-}}
+}
+}

@@ -1,6 +1,21 @@
 package net.pureal.traits.math
 
+import net.pureal.traits.*
+
 public trait InternalReal : Calculatable {
+    public class object : Constructor1<InternalReal, Any?> {
+        override fun invoke(it: Any?): InternalReal {
+            when (it) {
+                null -> throw IllegalArgumentException()
+                is InternalReal -> return it
+                is String -> {
+                    // Infinity check should be done by the intReal object, if others implement one with that functionality
+                    return activeEnvironment.intReal(it)
+                }
+                else -> return invoke(it.toString())
+            }
+        }
+    }
 
     override fun toDouble(): Double
     override fun toFloat(): Float = toDouble().toFloat()
@@ -25,9 +40,13 @@ public trait InternalReal : Calculatable {
     override fun plus(other: Any?): InternalReal
     override fun minus(other: Any?): InternalReal
     override fun times(other: Any?): InternalReal
-    override fun div(other: Any?): InternalReal
+
+    fun div(other: Any?, requireExact: Boolean): InternalReal
+    override fun div(other: Any?): InternalReal = div(other, env.requireExact)
+
     override fun mod(other: Any?): InternalReal
-    /// throws RuntimeException for other == 0
+    /// div with requireExact is to be overridden
+    /// they throw RuntimeException for other == 0
 
     override fun minus(): InternalReal
     override fun plus() = this
@@ -45,3 +64,5 @@ public trait InternalReal : Calculatable {
     fun isInteger(): Boolean
 
 }
+
+val internalReal = InternalReal

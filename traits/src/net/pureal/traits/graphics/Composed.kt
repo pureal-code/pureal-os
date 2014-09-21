@@ -8,7 +8,7 @@ trait TransformedElement<T> {
     val transform: Transform2
 }
 
-fun transformedElement<T>(element : Element<T>, transform : Transform2 = Transforms2.identity) : TransformedElement<T> = object : TransformedElement<T> {
+fun transformedElement<T>(element: Element<T>, transform: Transform2 = Transforms2.identity): TransformedElement<T> = object : TransformedElement<T> {
     override val element = element
     override val transform = transform
 }

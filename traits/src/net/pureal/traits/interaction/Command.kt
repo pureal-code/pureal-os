@@ -3,7 +3,7 @@ package net.pureal.traits.interaction
 trait Command {
     val name: String
 
-    override fun equals(other: Any?) = if(other is Command) name == other.name else false
+    override fun equals(other: Any?) = if (other is Command) name == other.name else false
 }
 
 fun command(name: String) = object : Command {

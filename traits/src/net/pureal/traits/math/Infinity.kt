@@ -6,14 +6,9 @@ public trait Infinity : InternalReal {
     public class object : Infinity, Calculatable() {
         public val positiveInfinity: Infinity = Infinity
         override fun toDouble() = java.lang.Double.POSITIVE_INFINITY
-        override fun compareTo(other: Any?): Int {
-            when (other) {
-                is Double -> return if (other == java.lang.Double.POSITIVE_INFINITY) 0; else -1
-                is Float -> return if (other == java.lang.Float.POSITIVE_INFINITY) 0; else -1
-                is InternalReal -> return compareTo(other.toDouble())
-                is Number -> return -1
-                else -> throw IllegalArgumentException()
-            }
+        override fun tryCompareTo(other: Calculatable): Int {
+            if (other.toDouble() == java.lang.Double.POSITIVE_INFINITY) return 0
+            return 1
         }
         override fun minus() = Infinity.negativeInfinity
         override fun toString() = "Infinity"
@@ -21,14 +16,9 @@ public trait Infinity : InternalReal {
 
         public val negativeInfinity: Infinity = object : Infinity, Calculatable() {
             override fun toDouble() = java.lang.Double.NEGATIVE_INFINITY
-            override fun compareTo(other: Any?): Int {
-                when (other) {
-                    is Double -> return if (other == java.lang.Double.NEGATIVE_INFINITY) 0; else 1
-                    is Float -> return if (other == java.lang.Float.NEGATIVE_INFINITY) 0; else 1
-                    is InternalReal -> return compareTo(other.toDouble())
-                    is Number -> return -1
-                    else -> throw IllegalArgumentException()
-                }
+            override fun tryCompareTo(other: Calculatable): Int {
+                if (other.toDouble() == java.lang.Double.NEGATIVE_INFINITY) return 0
+                return -1
             }
             override fun minus() = Infinity.positiveInfinity
             override fun toString() = "-Infinity"
@@ -42,14 +32,14 @@ public trait Infinity : InternalReal {
     override fun toLong(): Long = InvalidateFun()
 
 
-    override fun plus(other: Any?): InternalReal = if(-this == other) throw IllegalArgumentException() else this
-    override fun minus(other: Any?): InternalReal = if(this == other) throw IllegalArgumentException() else this
+    override fun plus(other: Any?): InternalReal = if (-this == other) throw IllegalArgumentException() else this
+    override fun minus(other: Any?): InternalReal = if (this == other) throw IllegalArgumentException() else this
 
     override fun times(other: Any?): InternalReal
-            = if(other !is Number || other == 0) throw IllegalArgumentException() else if(other.asCalculatable() >= 0) this else -this
+            = if (other !is Number || other == 0) throw IllegalArgumentException() else if (other.asCalculatable() >= 0) this else -this
 
-    override fun div(other: Any?): InternalReal
-            = if(other !is Number || other is Infinity) throw IllegalArgumentException() else if(other.asCalculatable() >= 0) this else -this
+    override fun div(other: Any?, requireExact: Boolean): InternalReal
+            = if (other !is Number || other is Infinity) throw IllegalArgumentException() else if (other.asCalculatable() >= 0) this else -this
 
     override fun mod(other: Any?): InternalReal = InvalidateFun()
 
@@ -59,6 +49,8 @@ public trait Infinity : InternalReal {
 
     override fun abs(): InternalReal = Infinity
 
-    override fun compareTo(other: Any?): Int
+    override fun tryCompareTo(other: Calculatable): Int
     override fun isInteger(): Boolean = false
 }
+
+val NegativeInfinity = Infinity.negativeInfinity

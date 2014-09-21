@@ -17,8 +17,8 @@ class Vector3Specs : Spek() {{
     }
 
     given("two unit 3 vectors in x- and z-direction") {
-        val eX = vector(1,0,0)
-        val eY = vector(0,0,1)
+        val eX = vector(1, 0, 0)
+        val eY = vector(0, 0, 1)
 
         on("getting the dot product of the two") {
             val p = eX * eY
@@ -32,10 +32,11 @@ class Vector3Specs : Spek() {{
             val p = eX.crossProduct(eY)
 
             it("should be (0 -1 0)") {
-                shouldEqual(vector(0,-1,0),p)
+                shouldEqual(vector(0, -1, 0), p)
             }
         }
 
     }
 
-}}
+}
+}

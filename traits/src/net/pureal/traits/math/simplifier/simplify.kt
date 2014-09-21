@@ -4,7 +4,7 @@ import net.pureal.traits.math.*
 
 fun simplify(r: Real): Real {
     // TODO: do it, yeah
-    var r: Real= r
+    var r: Real = r
     var r_back: Real
     do {
         r_back = r

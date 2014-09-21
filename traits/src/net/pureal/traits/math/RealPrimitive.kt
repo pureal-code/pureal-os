@@ -20,6 +20,9 @@ public trait RealPrimitive : Real {
     }
 
     override fun minus(): Real = real(-value)
+
+    override val isPositive: Boolean get() = value > 0
+    override val isZero: Boolean get() = value equals 0
 }
 
 

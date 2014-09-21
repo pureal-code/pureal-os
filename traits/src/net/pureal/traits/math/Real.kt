@@ -11,21 +11,40 @@ public trait Real : Calculatable {
             when (v) {
                 is Real -> return v
                 is InternalReal -> return object : RealPrimitive, Calculatable() {
-                    override val value : InternalReal = v
-                    override val isApproximate : Boolean = isApprox
+                    override val value: InternalReal = v
+                    override val isApproximate: Boolean = isApprox
                 }
                 null -> throw IllegalArgumentException("Cannot create a real out of nothing")
-                else -> return real(ee.intReal(v), isApprox)
+                else -> return real(internalReal(v), isApprox)
             }
         }
     }
 
+    val subReals: Array<Real> get() = array()
+
+    fun replaceSubReals(a: Array<Real>): Real = this
+
+    fun filterRecursive(successCond: (Real) -> Boolean): Array<Real> {
+        if (successCond(this)) return array(this)
+        var a: Array<Real> = array()
+        for (i in subReals.indices) a += subReals[i].filterRecursive(successCond)
+        return a
+    }
+
+    fun filterRecursiveCond(continueCond: (Real) -> Boolean, successCond: (Real) -> Boolean): Array<Real> {
+        if (!continueCond(this)) return array()
+        if (successCond(this)) return array(this)
+        var a: Array<Real> = array()
+        for (i in subReals.indices) a += subReals[i].filterRecursiveCond(continueCond, successCond)
+        return a
+    }
+
     val isApproximate: Boolean get() = false
 
-    fun matchWithThisPattern(other: Real) : Boolean = this == other // true if other matches the pattern defined by this
+    fun matchWithThisPattern(other: Real): Boolean = this == other // true if other matches the pattern defined by this
 
-    final fun simplify() : Real {
-        return ee.simplifier.simplify(this)
+    final fun simplify(): Real {
+        return env.simplifier.simplify(this)
     }
 
     fun calculate(): Real {
@@ -37,7 +56,7 @@ public trait Real : Calculatable {
     }
 
     override fun equals(other: Any?): Boolean {
-        // TODO: this is bullshit as well
+        // TODO: this is bullshit as well (EDIT: Still bullshit, not yet an idea how this should behave)
         when (other) {
             null -> return false
             is Real -> {
@@ -53,24 +72,23 @@ public trait Real : Calculatable {
         return false
     }
 
-    override fun compareTo(other: Any?): Int = approximate().compareTo(other)
+    override fun tryCompareTo(other: Calculatable): Int = approximate().compareTo(other)
 
     override fun plus() = this
-    override fun minus(): Real = ee.subVal(0.toReal(), this)
+    override fun minus(): Real = env.subVal(0.toReal(), this)
 
 
-    override fun plus(other: Any?): Real = ee.addVal(this, real(other))
+    override fun plus(other: Any?): Real = env.addVal(this, real(other))
 
-    override fun minus(other: Any?): Real = ee.subVal(this, real(other))
+    override fun minus(other: Any?): Real = env.subVal(this, real(other))
 
-    override fun times(other: Any?): Real = ee.mulVal(this, real(other))
+    override fun times(other: Any?): Real = env.mulVal(this, real(other))
 
-    override fun div(other: Any?): Real = ee.divVal(this, real(other))
+    override fun div(other: Any?): Real = env.divVal(this, real(other))
 
-    // TODO:
     override fun mod(other: Any?): Calculatable = approximate() % other
 
-    fun invert(): Real = ee.divVal(1.toReal(), this)
+    fun invert(): Real = env.divVal(1.toReal(), this)
 
 
     override fun toDouble(): Double = approximate().toDouble()
@@ -85,7 +103,15 @@ public trait Real : Calculatable {
     override fun ceil(): Calculatable = approximate().ceil()
     override fun round(): Calculatable = approximate().round()
 
-    override fun abs(): Calculatable = approximate().abs() // TODO: we want an operator for this
+    // TODO: we want an operator for this, as we want to be able to solve abs equations
+    override fun abs(): Calculatable = approximate().abs()
+
+    val isZero: Boolean get() = false
+    // Means zero in the way it is written, not considering variables
+    val isPositive: Boolean get() = true
+    // Means positive in the way it is written, not considering variables (if it CAN be positive)
+    final val isNegative: Boolean get() = !isPositive && !isZero
+    // Means negative in the way it is written, not considering variables
 }
 
 val real = Real

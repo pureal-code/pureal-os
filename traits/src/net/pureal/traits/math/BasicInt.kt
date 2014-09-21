@@ -8,10 +8,10 @@ import net.pureal.traits.Constructor1
 public trait BasicInt : BasicReal {
     public class object : Constructor1<BasicInt, Any?> {
         override fun invoke(it: Any?): BasicInt {
-            return when(it) {
+            return when (it) {
                 is BasicInt -> basicInt(it.number)
                 is BasicReal -> {
-                    if(!it.isInteger()) throw IllegalArgumentException("The given BasicReal is not integer");
+                    if (!it.isInteger()) throw IllegalArgumentException("The given BasicReal is not integer");
                     else basicInt(it.number * it.exponentialFactor())
                 }
                 is String -> basicInt(BigInteger(it))
@@ -27,7 +27,7 @@ public trait BasicInt : BasicReal {
         }
     }
 
-    fun toBasicReal(): BasicReal = basicReal(this)
+    fun toBasicReal(): BasicReal = basicReal(this) as BasicReal
 
     override fun minus(): BasicInt = basicInt(-number)
 

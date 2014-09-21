@@ -3,19 +3,18 @@ package net.pureal.traits.math
 import java.math.BigInteger
 import java.lang.Math.*
 import kotlin.math.*
-import net.pureal.traits.Constructor1
-import net.pureal.traits.Constructor2
+import net.pureal.traits.*
 
 
 public trait BasicReal : InternalReal {
-    public class object : Constructor1<BasicReal, Any?>, Constructor2<BasicReal, BigInteger, Long> {
+    public class object : Constructor1<InternalReal, Any?>, Constructor2<BasicReal, BigInteger, Long> {
         fun getLowestExponent(o1: BasicReal, o2: BasicReal): Long = min(o1.exponent, o2.exponent)
         fun exponentialFactor(exp: Long): BigInteger = BigInteger.TEN.pow(abs(exp.toInt()))
 
         override fun invoke(it: Any?): BasicReal {
-            return when(it) {
+            return when (it) {
                 is BasicReal -> it.minimize()
-                is String -> BasicReal.fromString(it)
+                is String -> BasicReal.fromString(it.extractInnerString().removeWhitespace().toUpperCase())
                 is Long -> basicReal(BigInteger(it), 0).minimize()
                 is Int -> basicReal(it.toLong())
                 is Short -> basicReal(it.toLong())
@@ -32,9 +31,10 @@ public trait BasicReal : InternalReal {
             override val exponent: Long = exp
         }
 
-        fun fromString(s : String) : BasicReal {
-            var str: String = s.capitalize()
+        fun fromString(s: String): BasicReal {
+            var str: String = s
             var estr: String
+
             // with regex - remove illegal characters and whitespace
             if (str.matches("[^0-9\\.\\-\\+E\\s]")) throw IllegalArgumentException("There are forbidden characters in the expression")
 
@@ -130,15 +130,8 @@ public trait BasicReal : InternalReal {
         return this.exponent - other.exponent
     }
 
-    override fun compareTo(other: Any?): Int {
+    override fun tryCompareTo(other: Calculatable): Int {
         when (other) {
-            is Byte -> return compareTo(basicReal(other))
-            is Short -> return compareTo(basicReal(other))
-            is Int -> return compareTo(basicReal(other))
-            is Long -> return compareTo(basicReal(other))
-            is Float -> return compareTo(basicReal(other))
-            is Double -> return compareTo(basicReal(other))
-            is BigInteger -> return compareTo(basicReal(other))
             is BasicReal -> {
                 if (this.signum() == 0) return -other.signum()
                 if (this.signum() != other.signum()) {
@@ -146,7 +139,6 @@ public trait BasicReal : InternalReal {
                 }
                 return (this - other).number.compareTo(BigInteger.ZERO)
             }
-            is InternalReal -> return other.compareTo(this)
             else -> throw IllegalArgumentException()
         }
     }
@@ -211,27 +203,28 @@ public trait BasicReal : InternalReal {
         }
     }
 
-    override fun div(other: Any?): BasicReal {
+    override fun div(other: Any?): BasicReal = div(other, env.requireExact)
+    override fun div(other: Any?, requireExact: Boolean): BasicReal {
         when (other) {
-            is Byte -> return this / basicInt(other)
-            is Short -> return this / basicInt(other)
-            is Int -> return this / basicInt(other)
-            is Long -> return this / basicInt(other)
-            is Double -> return this / basicReal(other)
-            is Float -> return this / basicReal(other)
+            is Byte -> return this.div(basicInt(other), requireExact)
+            is Short -> return this.div(basicInt(other), requireExact)
+            is Int -> return this.div(basicInt(other), requireExact)
+            is Long -> return this.div(basicInt(other), requireExact)
+            is Double -> return this.div(basicReal(other), requireExact)
+            is Float -> return this.div(basicReal(other), requireExact)
             is BasicReal -> {
                 if (other.number == BigInteger.ZERO) throw ArithmeticException("A Division by Zero is not allowed")
                 val targetExp = exponent - other.exponent
-                val br1 = toExponent(exponent - activeEnvironment.accuracy)
+                val br1 = toExponent(exponent - env.accuracy)
                 val c = br1.number.divideAndRemainder(other.number)
-                if (activeEnvironment.requireExactCalculation && c[1] != BigInteger.ZERO)
+                if (requireExact && c[1] != BigInteger.ZERO)
                     throw RuntimeException("Accurate Division is not possible")
-                return basicReal(c[0], targetExp - activeEnvironment.accuracy).minimize()
+                return basicReal(c[0], targetExp - env.accuracy).minimize()
             }
             else -> throw IllegalArgumentException()
         }
     }
-    // TODO: do mod on the Calculatable class
+
     override fun mod(other: Any?): BasicReal {
         when (other) {
             is Byte -> return this % basicInt(other)
@@ -252,7 +245,7 @@ public trait BasicReal : InternalReal {
 
     open fun minimize(): BasicReal {
         if (this.number == BigInteger.ZERO) return basicReal(this.number, 0)
-        var stepSize: Int = activeEnvironment.accuracy / 4
+        var stepSize: Int = env.accuracy / 4
         var powers: Long = 0
         var tmp: BigInteger = this.number
         var done: Boolean = false
@@ -307,17 +300,36 @@ public trait BasicReal : InternalReal {
         }
     }
 
-    override fun floor(): BasicReal = if(isInteger()) this; else {
-        if(sign) (toExponent(0)-1).minimize(); else toExponent(0).minimize() // TODO
+    override fun floor(): BasicReal = if (isInteger()) this; else {
+        if (sign) (toExponent(0) - 1).minimize(); else toExponent(0).minimize()
     }
-    override fun ceil(): BasicReal = if(isInteger()) this; else {
-        if(sign) toExponent(0).minimize(); else (toExponent(0)+1).minimize() // TODO
+    override fun ceil(): BasicReal = if (isInteger()) this; else {
+        if (sign) toExponent(0).minimize(); else (toExponent(0) + 1).minimize()
     }
-    override fun round(): BasicReal = if(isInteger()) this; else {
-        if(this % basicInt(1) < basicReal(BigInteger(5),-1L)) floor(); else ceil()
+    override fun round(): BasicReal = if (isInteger()) this; else {
+        if (this % basicInt(1) < basicReal(BigInteger(5), -1L)) floor(); else ceil()
     }
 
-    override fun abs(): BasicReal = if(sign) -this; else this
+    override fun abs(): BasicReal = if (sign) -this; else this
 }
 
 val basicReal = BasicReal
+
+val basicRealInf = object : Constructor1<InternalReal, Any?> {
+    override fun invoke(it: Any?): InternalReal {
+        when (it) {
+            is String -> {
+                val str = it.extractInnerString().removeWhitespace().toUpperCase()
+                if ("INFINITY" in str)
+                    return if ("-" in str || "NEGATIVE" in str) NegativeInfinity else Infinity
+                return BasicReal.fromString(str)
+            }
+            is Long -> return basicReal(BigInteger(it), 0).minimize()
+            is Int -> return basicReal(it.toLong())
+            is Short -> return basicReal(it.toLong())
+            is Byte -> return basicReal(it.toLong())
+            is Number -> return invoke(it.toString())
+            else -> throw IllegalArgumentException("Cannot create a BasicReal of given '{$it}'")
+        }
+    }
+}

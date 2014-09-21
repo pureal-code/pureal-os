@@ -11,20 +11,20 @@ public trait IntegerSet : MultipleOfSet {
         override val highClosed: Boolean = false
 
         public val Full: IntegerSet = IntegerSet
-        public val PositiveAndZero: RealSet = invoke(0,Infinity)
-        public val Positive: RealSet = invoke(1,Infinity)
-        public val NegativeAndZero: RealSet = invoke(-Infinity,0)
-        public val Negative: RealSet = invoke(-Infinity,1)
+        public val PositiveAndZero: RealSet = invoke(0, Infinity)
+        public val Positive: RealSet = invoke(1, Infinity)
+        public val NegativeAndZero: RealSet = invoke(-Infinity, 0)
+        public val Negative: RealSet = invoke(-Infinity, 1)
 
         override fun invoke(lEnd: Number, hEnd: Number): IntegerSet {
             var le = lEnd.asCalculatable()
             var he = hEnd.asCalculatable()
-            if(le > he) {
+            if (le > he) {
                 val tmp = le
                 le = he
                 he = tmp
             }
-            return object: IntegerSet {
+            return object : IntegerSet {
                 override val lowEnd: Calculatable = le
                 override val highEnd: Calculatable = he
             }
@@ -43,7 +43,7 @@ public trait IntegerSet : MultipleOfSet {
         return false
     }
 
-    final override val factor: Calculatable get() = ee.intReal(1)
+    final override val factor: Calculatable get() = activeEnvironment.intReal(1)
 }
 
 val integerSet = IntegerSet

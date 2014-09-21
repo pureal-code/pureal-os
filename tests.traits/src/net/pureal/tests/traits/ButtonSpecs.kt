@@ -8,7 +8,7 @@ import net.pureal.traits.math.rectangle
 
 class ButtonSpecs : Spek() {{
     given("a button") {
-        val b = button(shape = rectangle(size = vector(0.04, 0.01)), fill=Fills.solid(Colors.black))
+        val b = button(shape = rectangle(size = vector(0.04, 0.01)), fill = Fills.solid(Colors.black))
 
         enum class State {
             neverClicked
