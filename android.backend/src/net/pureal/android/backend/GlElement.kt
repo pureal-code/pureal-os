@@ -42,25 +42,29 @@ fun glTransformedElement(element : GlElement, transform : Transform2 = Transform
 fun glTransformedElement(element : TransformedElement<*>, screen : GlScreen) = glTransformedElement(glElement(element.element, screen), element.transform)
 
 class GlComposed(override val original: Composed<*>, screen: GlScreen) : GlElement(original, screen), Composed<Any?> {
-    val elements = (original mapObservable { glTransformedElement(it, screen) }).toArrayList()
-    override fun iterator() = elements.iterator()
-    override val added = trigger<GlTransformedElement>()
-    override val removed = trigger<GlTransformedElement>();
-    {
-        original.added addObserver {(addedElement) ->
-            val glElement = glTransformedElement(addedElement, screen)
-            elements.add(glElement)
-            added(glElement)
-        }
-        original.removed addObserver {(removedElement) ->
-            val glElement = (elements.singleOrNull { element -> element.element.original === removedElement })
-            if (glElement != null) {
-                elements.remove(glElement)
-                removed(glElement)
+    val e = (original.elements mapObservable { glTransformedElement(it, screen) }).toArrayList()
+    override val elements = object : ObservableIterable<TransformedElement<*>> {
+        override fun iterator() = e.iterator()
+        override val added = trigger<GlTransformedElement>()
+        override val removed = trigger<GlTransformedElement>();
+
+        {
+            original.elements.added addObserver {(addedElement) ->
+                val glElement = glTransformedElement(addedElement, screen)
+                e.add(glElement)
+                added(glElement)
+            }
+            original.elements.removed addObserver {(removedElement) ->
+                val glElement = (e.singleOrNull { element -> element.element.original === removedElement })
+                if (glElement != null) {
+                    e.remove(glElement)
+                    removed(glElement)
+                }
             }
         }
     }
-    override fun draw(parentTransform: Transform2) = elements.reverse() forEach { it.element.draw(it.transform before parentTransform) }
+
+    override fun draw(parentTransform: Transform2) = e.reverse() forEach { it.element.draw(it.transform before parentTransform) }
 }
 
 
