@@ -137,7 +137,7 @@ public trait BasicReal : InternalReal {
                 if (this.signum() != other.signum()) {
                     return this.signum() - other.signum()
                 }
-                return (this - other).number.compareTo(BigInteger.ZERO)
+                return (this tryMinus other).number.compareTo(BigInteger.ZERO)
             }
             else -> throw IllegalArgumentException()
         }
@@ -149,14 +149,14 @@ public trait BasicReal : InternalReal {
 
 
     /********* BASIC OPERATIONS *********/
-    override fun plus(other: Any?): BasicReal {
+    override fun tryPlus(other: Any?): BasicReal {
         when (other) {
-            is Byte -> return this + basicInt(other)
-            is Short -> return this + basicInt(other)
-            is Int -> return this + basicInt(other)
-            is Long -> return this + basicInt(other)
-            is Double -> return this + basicReal(other)
-            is Float -> return this + basicReal(other)
+            is Byte -> return this tryPlus basicInt(other)
+            is Short -> return this tryPlus basicInt(other)
+            is Int -> return this tryPlus basicInt(other)
+            is Long -> return this tryPlus basicInt(other)
+            is Double -> return this tryPlus basicReal(other)
+            is Float -> return this tryPlus basicReal(other)
             is BasicReal -> {
                 val minexp = getLowestExponent(this, other)
                 val br1 = this.toExponent(minexp)
@@ -167,14 +167,14 @@ public trait BasicReal : InternalReal {
         }
     }
 
-    override fun minus(other: Any?): BasicReal {
+    override fun tryMinus(other: Any?): BasicReal {
         when (other) {
-            is Byte -> return this - basicInt(other)
-            is Short -> return this - basicInt(other)
-            is Int -> return this - basicInt(other)
-            is Long -> return this - basicInt(other)
-            is Double -> return this - basicReal(other)
-            is Float -> return this - basicReal(other)
+            is Byte -> return this tryMinus basicInt(other)
+            is Short -> return this tryMinus basicInt(other)
+            is Int -> return this tryMinus basicInt(other)
+            is Long -> return this tryMinus basicInt(other)
+            is Double -> return this tryMinus basicReal(other)
+            is Float -> return this tryMinus basicReal(other)
             is BasicReal -> {
                 val minexp = getLowestExponent(this, other)
                 val br1 = this.toExponent(minexp)
@@ -185,14 +185,14 @@ public trait BasicReal : InternalReal {
         }
     }
 
-    override fun times(other: Any?): BasicReal {
+    override fun tryTimes(other: Any?): BasicReal {
         when (other) {
-            is Byte -> return this * basicInt(other)
-            is Short -> return this * basicInt(other)
-            is Int -> return this * basicInt(other)
-            is Long -> return this * basicInt(other)
-            is Double -> return this * basicReal(other)
-            is Float -> return this * basicReal(other)
+            is Byte -> return this tryTimes basicInt(other)
+            is Short -> return this tryTimes basicInt(other)
+            is Int -> return this tryTimes basicInt(other)
+            is Long -> return this tryTimes basicInt(other)
+            is Double -> return this tryTimes basicReal(other)
+            is Float -> return this tryTimes basicReal(other)
             is BasicReal -> {
                 return basicReal(
                         this.number * other.number,
@@ -203,15 +203,15 @@ public trait BasicReal : InternalReal {
         }
     }
 
-    override fun div(other: Any?): BasicReal = div(other, env.requireExact)
-    override fun div(other: Any?, requireExact: Boolean): BasicReal {
+    override fun tryDiv(other: Any?): BasicReal = tryDiv(other, env.requireExact)
+    override fun tryDiv(other: Any?, requireExact: Boolean): BasicReal {
         when (other) {
-            is Byte -> return this.div(basicInt(other), requireExact)
-            is Short -> return this.div(basicInt(other), requireExact)
-            is Int -> return this.div(basicInt(other), requireExact)
-            is Long -> return this.div(basicInt(other), requireExact)
-            is Double -> return this.div(basicReal(other), requireExact)
-            is Float -> return this.div(basicReal(other), requireExact)
+            is Byte -> return this.tryDiv(basicInt(other), requireExact)
+            is Short -> return this.tryDiv(basicInt(other), requireExact)
+            is Int -> return this.tryDiv(basicInt(other), requireExact)
+            is Long -> return this.tryDiv(basicInt(other), requireExact)
+            is Double -> return this.tryDiv(basicReal(other), requireExact)
+            is Float -> return this.tryDiv(basicReal(other), requireExact)
             is BasicReal -> {
                 if (other.number == BigInteger.ZERO) throw ArithmeticException("A Division by Zero is not allowed")
                 val targetExp = exponent - other.exponent
@@ -225,14 +225,14 @@ public trait BasicReal : InternalReal {
         }
     }
 
-    override fun mod(other: Any?): BasicReal {
+    override fun tryMod(other: Any?): BasicReal {
         when (other) {
-            is Byte -> return this % basicInt(other)
-            is Short -> return this % basicInt(other)
-            is Int -> return this % basicInt(other)
-            is Long -> return this % basicInt(other)
-            is Double -> return this % basicReal(other)
-            is Float -> return this % basicReal(other)
+            is Byte -> return this tryMod basicInt(other)
+            is Short -> return this tryMod basicInt(other)
+            is Int -> return this tryMod basicInt(other)
+            is Long -> return this tryMod basicInt(other)
+            is Double -> return this tryMod basicReal(other)
+            is Float -> return this tryMod basicReal(other)
             is BasicReal -> {
                 val minexp = getLowestExponent(this, other)
                 val br1 = this.toExponent(minexp)
@@ -301,10 +301,10 @@ public trait BasicReal : InternalReal {
     }
 
     override fun floor(): BasicReal = if (isInteger()) this; else {
-        if (sign) (toExponent(0) - 1).minimize(); else toExponent(0).minimize()
+        if (sign) (toExponent(0) tryMinus 1).minimize(); else toExponent(0).minimize()
     }
     override fun ceil(): BasicReal = if (isInteger()) this; else {
-        if (sign) toExponent(0).minimize(); else (toExponent(0) + 1).minimize()
+        if (sign) toExponent(0).minimize(); else (toExponent(0) tryPlus 1).minimize()
     }
     override fun round(): BasicReal = if (isInteger()) this; else {
         if (this % basicInt(1) < basicReal(BigInteger(5), -1L)) floor(); else ceil()

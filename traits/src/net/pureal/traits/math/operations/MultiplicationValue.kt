@@ -26,7 +26,7 @@ public trait MultiplicationValue : RealBinaryOperation {
         get() = false
 
     override fun approximate(): InternalReal {
-        return value1.approximate() * value2.approximate()
+        return value1.approximate() tryTimes value2.approximate()
     }
 
     override fun calculate(): Real {

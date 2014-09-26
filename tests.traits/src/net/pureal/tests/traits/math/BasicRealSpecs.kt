@@ -97,21 +97,21 @@ public class BasicRealSpecs : Spek() {{
     }
     given("basicReals that are to be added / substracted") {
         on("adding 2 + 200") {
-            val res = basicReal(2) + basicReal(200)
+            val res = (basicReal(2) + basicReal(200)) as BasicReal
             it("should be 202") {
                 shouldEqual(BigInteger(202), res.number)
                 shouldEqual(0L, res.exponent)
             }
         }
         on("adding 15 + .02 + 560") {
-            val res = basicReal("15") + basicReal(".02") + basicReal("560")
+            val res = (basicReal("15") + basicReal(".02") + basicReal("560")) as BasicReal
             it("should be 575.02") {
                 shouldEqual(net.pureal.traits.math.BigInteger(57502), res.number)
                 shouldEqual(-2L, res.exponent)
             }
         }
         on("adding 25.4 + (-33)") {
-            val res = basicReal(25.4) + basicReal(-33)
+            val res = (basicReal(25.4) + basicReal(-33)) as BasicReal
             it("should be -7.6") {
                 shouldEqual(BigInteger(-76), res.number)
                 shouldEqual(-1L, res.exponent)
@@ -119,7 +119,7 @@ public class BasicRealSpecs : Spek() {{
             }
         }
         on("subtracting -10 with -3000") {
-            val res = basicReal(-10) - basicReal(-3000)
+            val res = (basicReal(-10) - basicReal(-3000)) as BasicReal
             it("should be 299E+1") {
                 shouldEqual(BigInteger(299), res.number)
                 shouldEqual(+1L, res.exponent)
@@ -131,21 +131,21 @@ public class BasicRealSpecs : Spek() {{
     {
         on("multiplying .2 with -.03")
         {
-            val res = basicReal(".2") * basicReal("-.03")
+            val res = (basicReal(".2") * basicReal("-.03")) as BasicReal
             it("should be -6E-3") {
                 shouldEqual(BigInteger(-6), res.number)
                 shouldEqual(-3L, res.exponent)
             }
         }
         on("multiplying 2.4E+7 with 1.1E+4") {
-            val res = basicReal("2.4E+7") * basicReal("1.1E+4")
+            val res = (basicReal("2.4E+7") * basicReal("1.1E+4")) as BasicReal
             it("should be 2.64E+11") {
                 shouldEqual(BigInteger(264), res.number)
                 shouldEqual(+9L, res.exponent)
             }
         }
         on("multiplying 3001 with 0") {
-            val res = basicReal(3001) * basicReal(0)
+            val res = (basicReal(3001) * basicReal(0)) as BasicReal
             it("should be 0E+0") {
                 shouldEqual(BigInteger(0), res.number)
                 shouldEqual(0L, res.exponent)
@@ -154,21 +154,21 @@ public class BasicRealSpecs : Spek() {{
     }
     given("some basic Reals to divide") {
         on("dividing 2 by -5") {
-            val res = basicReal(2) / basicReal(-5)
+            val res = (basicReal(2) / basicReal(-5)) as BasicReal
             it("should be -4E-1") {
                 shouldEqual(BigInteger(-4), res.number)
                 shouldEqual(-1L, res.exponent)
             }
         }
         on("dividing 160 by .1") {
-            val res = basicReal("160") / basicReal(".1")
+            val res = (basicReal("160") / basicReal(".1")) as BasicReal
             it("should be 16E+2") {
                 shouldEqual(BigInteger(16), res.number)
                 shouldEqual(2L, res.exponent)
             }
         }
         on("dividing 63 by 9000") {
-            val res = basicReal(63) / basicReal(9000)
+            val res = (basicReal(63) / basicReal(9000)) as BasicReal
             it("should be 7E-3") {
                 shouldEqual(BigInteger(7), res.number)
                 shouldEqual(-3L, res.exponent)

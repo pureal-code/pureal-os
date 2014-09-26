@@ -32,16 +32,16 @@ public trait Infinity : InternalReal {
     override fun toLong(): Long = InvalidateFun()
 
 
-    override fun plus(other: Any?): InternalReal = if (-this == other) throw IllegalArgumentException() else this
-    override fun minus(other: Any?): InternalReal = if (this == other) throw IllegalArgumentException() else this
+    override fun tryPlus(other: Any?): InternalReal = if (-this == other) throw IllegalArgumentException() else this
+    override fun tryMinus(other: Any?): InternalReal = if (this == other) throw IllegalArgumentException() else this
 
-    override fun times(other: Any?): InternalReal
+    override fun tryTimes(other: Any?): InternalReal
             = if (other !is Number || other == 0) throw IllegalArgumentException() else if (other.asCalculatable() >= 0) this else -this
 
-    override fun div(other: Any?, requireExact: Boolean): InternalReal
+    override fun tryDiv(other: Any?, requireExact: Boolean): InternalReal
             = if (other !is Number || other is Infinity) throw IllegalArgumentException() else if (other.asCalculatable() >= 0) this else -this
 
-    override fun mod(other: Any?): InternalReal = InvalidateFun()
+    override fun tryMod(other: Any?): InternalReal = InvalidateFun()
 
     override fun floor(): InternalReal = this
     override fun ceil(): InternalReal = this

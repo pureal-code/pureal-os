@@ -3,9 +3,7 @@ package net.pureal.traits.math
 public abstract class Calculatable : Number(), Comparable<Any?> {
     // INHERITED STUFF
 
-    final override fun compareTo(other: Any?): Int {
-        return compareTo(other, false)
-    }
+    final override fun compareTo(other: Any?): Int = compareTo(other, false)
 
     final fun compareTo(other: Any?, inner: Boolean): Int {
         if (other == null) throw IllegalArgumentException()
@@ -38,11 +36,93 @@ public abstract class Calculatable : Number(), Comparable<Any?> {
     open fun plus(): Calculatable = this
 
     abstract fun minus(): Calculatable
-    abstract fun plus(other: Any?): Calculatable
-    abstract fun minus(other: Any?): Calculatable
-    abstract fun times(other: Any?): Calculatable
-    abstract fun div(other: Any?): Calculatable
-    abstract fun mod(other: Any?): Calculatable
+
+    open fun plus(other: Any?): Calculatable = plus(other, false)
+    // NOTE: plus is open so inherited classes can define its own return type: recommended implementations
+    // - return plus(other, false) as T
+    // - return super<Calculatable>.plus(other) as T
+    // same goes with minus, times etc
+    // But be careful, that the result may not always be of that type
+    final fun plus(other: Any?, inner: Boolean): Calculatable {
+        if (other == null) throw IllegalArgumentException()
+        val it = other.asCalculatable()
+        try {
+            return tryPlus(it)
+        } catch (e: IllegalArgumentException) {
+            try {
+                return it.tryPlus(this)
+            } catch (e: IllegalArgumentException) {
+                if (!inner) return activeEnvironment.intReal(this).plus(activeEnvironment.intReal(other), true)
+                throw e
+            }
+        }
+    }
+
+    open fun minus(other: Any?): Calculatable = minus(other, false)
+
+    final fun minus(other: Any?, inner: Boolean): Calculatable {
+        if (other == null) throw IllegalArgumentException()
+        val it = other.asCalculatable()
+        try {
+            return tryMinus(it)
+        } catch (e: IllegalArgumentException) {
+            try {
+                return -it.tryPlus(this)
+            } catch (e: IllegalArgumentException) {
+                if (!inner) return activeEnvironment.intReal(this).minus(activeEnvironment.intReal(other), true)
+                throw e
+            }
+        }
+    }
+
+    open fun times(other: Any?): Calculatable = times(other, false)
+
+    final fun times(other: Any?, inner: Boolean): Calculatable {
+        if (other == null) throw IllegalArgumentException()
+        val it = other.asCalculatable()
+        try {
+            return tryTimes(it)
+        } catch (e: IllegalArgumentException) {
+            try {
+                return it.tryTimes(this)
+            } catch (e: IllegalArgumentException) {
+                if (!inner) return activeEnvironment.intReal(this).times(activeEnvironment.intReal(other), true)
+                throw e
+            }
+        }
+    }
+
+    open fun div(other: Any?): Calculatable = div(other, false)
+
+    final fun div(other: Any?, inner: Boolean): Calculatable {
+        if (other == null) throw IllegalArgumentException()
+        val it = other.asCalculatable()
+        try {
+            return tryDiv(it)
+        } catch (e: IllegalArgumentException) {
+            if (!inner) return activeEnvironment.intReal(this).plus(activeEnvironment.intReal(other), true)
+            return activeEnvironment.intReal(1).tryDiv(it).tryTimes(this)
+        }
+    }
+
+    open fun mod(other: Any?): Calculatable = mod(other, false)
+
+    final fun mod(other: Any?, inner: Boolean): Calculatable {
+        if (other == null) throw IllegalArgumentException()
+        val it = other.asCalculatable()
+        try {
+            return tryMod(it)
+        } catch (e: IllegalArgumentException) {
+            if (!inner) return activeEnvironment.intReal(this).plus(activeEnvironment.intReal(other), true)
+            throw e
+        }
+    }
+
+    abstract fun tryPlus(other: Any?): Calculatable
+    abstract fun tryMinus(other: Any?): Calculatable
+    abstract fun tryTimes(other: Any?): Calculatable
+    abstract fun tryDiv(other: Any?): Calculatable
+    abstract fun tryMod(other: Any?): Calculatable
 
     abstract fun floor(): Calculatable
     abstract fun ceil(): Calculatable
@@ -88,3 +168,9 @@ fun lcm(a: Number, b: Number): Calculatable {
     if (g equals 0) return Infinity
     return a * b / g
 }
+
+fun Number.plus(other: Calculatable): Calculatable = other + this
+
+fun Number.minus(other: Calculatable): Calculatable = -other + this
+
+fun Number.times(other: Calculatable): Calculatable = other * this

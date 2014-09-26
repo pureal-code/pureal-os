@@ -27,7 +27,7 @@ public trait AdditionValue : RealBinaryOperation {
 
 
     override fun approximate(): InternalReal {
-        return value1.approximate() + value2.approximate()
+        return value1.approximate() tryPlus value2.approximate()
     }
 
 

@@ -26,7 +26,7 @@ public trait DivisionValue : RealBinaryOperation {
         get() = true
 
     override fun approximate(): InternalReal {
-        return value1.approximate() / value2.approximate()
+        return value1.approximate() tryDiv value2.approximate()
     }
 
 

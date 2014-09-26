@@ -26,7 +26,7 @@ public trait SubtractionValue : RealBinaryOperation {
         get() = true
 
     override fun approximate(): InternalReal {
-        return value1.approximate() - value2.approximate()
+        return value1.approximate() tryMinus value2.approximate()
     }
 
     override fun calculate(): Real {

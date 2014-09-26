@@ -37,14 +37,14 @@ public trait InternalReal : Calculatable {
         }
     }
 
-    override fun plus(other: Any?): InternalReal
-    override fun minus(other: Any?): InternalReal
-    override fun times(other: Any?): InternalReal
+    override fun tryPlus(other: Any?): InternalReal
+    override fun tryMinus(other: Any?): InternalReal
+    override fun tryTimes(other: Any?): InternalReal
 
-    fun div(other: Any?, requireExact: Boolean): InternalReal
-    override fun div(other: Any?): InternalReal = div(other, env.requireExact)
+    fun tryDiv(other: Any?, requireExact: Boolean): InternalReal
+    override fun tryDiv(other: Any?): InternalReal = tryDiv(other, env.requireExact)
 
-    override fun mod(other: Any?): InternalReal
+    override fun tryMod(other: Any?): InternalReal
     /// div with requireExact is to be overridden
     /// they throw RuntimeException for other == 0
 

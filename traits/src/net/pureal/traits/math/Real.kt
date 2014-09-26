@@ -77,16 +77,21 @@ public trait Real : Calculatable {
     override fun plus() = this
     override fun minus(): Real = env.subVal(0.toReal(), this)
 
+    override fun plus(other: Any?) = plus(other, false) as Real
+    override fun minus(other: Any?) = minus(other, false) as Real
+    override fun times(other: Any?) = times(other, false) as Real
+    override fun div(other: Any?) = div(other, false) as Real
 
-    override fun plus(other: Any?): Real = env.addVal(this, real(other))
 
-    override fun minus(other: Any?): Real = env.subVal(this, real(other))
+    override fun tryPlus(other: Any?): Real = env.addVal(this, real(other))
 
-    override fun times(other: Any?): Real = env.mulVal(this, real(other))
+    override fun tryMinus(other: Any?): Real = env.subVal(this, real(other))
 
-    override fun div(other: Any?): Real = env.divVal(this, real(other))
+    override fun tryTimes(other: Any?): Real = env.mulVal(this, real(other))
 
-    override fun mod(other: Any?): Calculatable = approximate() % other
+    override fun tryDiv(other: Any?): Real = env.divVal(this, real(other))
+
+    override fun tryMod(other: Any?): Calculatable = approximate() % other
 
     fun invert(): Real = env.divVal(1.toReal(), this)
 
