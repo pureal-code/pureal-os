@@ -118,6 +118,9 @@ public abstract class Calculatable : Number(), Comparable<Any?> {
         }
     }
 
+    open fun divideAndRemainder(other: Any?): Array<Calculatable> = array(this / other, this % other)
+    // may be optimized by inherited classes
+
     abstract fun tryPlus(other: Any?): Calculatable
     abstract fun tryMinus(other: Any?): Calculatable
     abstract fun tryTimes(other: Any?): Calculatable
@@ -170,7 +173,8 @@ fun lcm(a: Number, b: Number): Calculatable {
 }
 
 fun Number.plus(other: Calculatable): Calculatable = other + this
-
 fun Number.minus(other: Calculatable): Calculatable = -other + this
-
 fun Number.times(other: Calculatable): Calculatable = other * this
+fun Number.div(other: Calculatable): Calculatable = this.asCalculatable() / other
+fun Number.mod(other: Calculatable): Calculatable = this.asCalculatable() % other
+fun Number.divideAndRemainder(other: Calculatable): Array<Calculatable> = array(this / other, this % other)
