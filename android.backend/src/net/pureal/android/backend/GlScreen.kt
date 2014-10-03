@@ -99,8 +99,6 @@ class GlScreen (activity: Activity, onReady: (GlScreen) -> Unit) : GLSurfaceView
             MotionEvent.ACTION_MOVE -> pointer.move(location)
         }
 
-        println(location)
-
         return true
     }
 

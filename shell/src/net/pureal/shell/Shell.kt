@@ -51,7 +51,7 @@ takimata sanctus est Lorem ipsum dolor sit amet. AYA �¶Ѽ†◊²³"""
 
             val text = textElement("not a button!", defaultFont, 60, Fills.solid(Colors.white))
 
-            val size = vector(400, 200)
+            val size = vector(200, 200)
             fun b(x: Int, y: Int): TransformedElement<Any?> {
                 var color = randomColor()
                 return transformedElement(button(shape = rectangle(size), fill = object : Fill {
