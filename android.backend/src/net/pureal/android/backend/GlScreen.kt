@@ -9,6 +9,8 @@ import android.app.Activity
 import net.pureal.traits.graphics.*
 import net.pureal.traits.math.*
 import net.pureal.traits.*
+import android.view.MotionEvent
+import net.pureal.traits.interaction.*
 
 class GlScreen (activity: Activity, onReady: (GlScreen) -> Unit) : GLSurfaceView(activity), Screen {
     {
@@ -35,7 +37,7 @@ class GlScreen (activity: Activity, onReady: (GlScreen) -> Unit) : GLSurfaceView
     }
     private var glContent: GlComposed = GlComposed(composed(observableIterable(listOf())), this)
     override var content: Composed<*>
-        get() = glContent
+        get() = glContent.original
         set(value) {
             glContent = value as? GlComposed ?: GlComposed(value, this)
         }
@@ -87,6 +89,51 @@ class GlScreen (activity: Activity, onReady: (GlScreen) -> Unit) : GLSurfaceView
                     gl_FragColor = u_Color;
                 }
             """)
+
+     override fun onTouchEvent(event : MotionEvent) : Boolean {
+        val location = vector(event.getX(), event.getY()) - shape.halfSize
+
+        when(event.getAction()) {
+            MotionEvent.ACTION_DOWN -> { pointer.move(location) ; key.press() }
+            MotionEvent.ACTION_UP -> { pointer.move(location) ; key.release() }
+            MotionEvent.ACTION_MOVE -> pointer.move(location)
+        }
+
+        println(location)
+
+        return true
+    }
+
+    class TouchKey : Key {
+        override val definition: KeyDefinition = keyDefinition(Commands.Touch.touch)
+        override var isPressed: Boolean = false
+        override val pressed = trigger<Key>()
+        override val released = trigger<Key>()
+
+        fun press() {
+            isPressed = true
+            pressed(this)
+        }
+
+        fun release() {
+            isPressed = false
+            released(this)
+        }
+    }
+
+    class TouchPointer : Pointer {
+        override val moved = trigger<Pointer>()
+        override var location: Vector2 = zeroVector2
+
+        fun move(location : Vector2) {
+            this.location = location
+            moved(this)
+        }
+    }
+
+    val key = TouchKey()
+    val pointer = TouchPointer()
+    val pointerKeys : PointerKeys = pointerKeys(pointer, listOf(key))
 }
 
 

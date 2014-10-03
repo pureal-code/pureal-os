@@ -52,7 +52,7 @@ takimata sanctus est Lorem ipsum dolor sit amet. AYA �¶Ѽ†◊²³"""
             val button = button(shape = rectangle(vector(400, 200)), fill = object : Fill {
                 override fun colorAt(location: Vector2) = color
             }) {
-                color = Colors.green
+                color = color(Math.random(), Math.random(), Math.random())
            }
             return composed(observableIterable(listOf(
                     transformedElement(text, Transforms2.translation(vector(0, -100))),
@@ -65,10 +65,11 @@ takimata sanctus est Lorem ipsum dolor sit amet. AYA �¶Ѽ†◊²³"""
         registerInputs()
     }
 
-    fun registerInputs() = {
+    fun registerInputs() {
         pointers mapObservable {it.pressed} startKeepingAllObserved {p ->
             screen.content.elementsAt(p.pointer.location) forEach {
-                if (it is Clickable<*>) it.onClick(pointerKey(p.pointer relativeTo it.transform, p.key))
+                val element = it.element
+                if (element is Clickable<*>) element.onClick(pointerKey(p.pointer relativeTo it.transform, p.key))
             }
         }
     }
