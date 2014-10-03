@@ -30,7 +30,7 @@ class GlScreen (activity: Activity, onReady: (GlScreen) -> Unit) : GLSurfaceView
             }
             override fun onDrawFrame(gl: GL10?) {
                 GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT)
-                glContent.draw(Transforms2.scale(1f / this@GlScreen.getWidth().toFloat(), 1f / this@GlScreen.getHeight().toFloat()))
+                glContent.draw(Transforms2.scale(2f / this@GlScreen.getWidth().toFloat(), 2f / this@GlScreen.getHeight().toFloat()))
             }
         })
         //setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY)
@@ -91,7 +91,7 @@ class GlScreen (activity: Activity, onReady: (GlScreen) -> Unit) : GLSurfaceView
             """)
 
      override fun onTouchEvent(event : MotionEvent) : Boolean {
-        val location = vector(event.getX(), event.getY()) - shape.halfSize
+        val location = Transforms2.scale(1, -1)(vector(event.getX(), event.getY()) - shape.halfSize)
 
         when(event.getAction()) {
             MotionEvent.ACTION_DOWN -> { pointer.move(location) ; key.press() }
