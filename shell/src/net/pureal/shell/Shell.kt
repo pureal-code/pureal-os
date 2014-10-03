@@ -45,10 +45,23 @@ takimata sanctus est Lorem ipsum dolor sit amet. AYA �¶Ѽ†◊²³"""
             //val h = transformedElement(textElement("like a hardcore banana", font, size = 24, fill = Fills.solid(Colors.white)), Transforms2.scale(0.5) before Transforms2.translation(vector(0,-(screen.shape as Rectangle).size.y.toDouble() / 3.0)))
             return composed(observableIterable(listOf(t)))//k, h)))
         }
+
+        fun composedWithButton() : Composed<*> {
+            var color = Colors.red
+            val text = textElement("not a button!", defaultFont, 60, Fills.solid(Colors.white))
+            val button = button(shape = rectangle(vector(400, 200)), fill = object : Fill {
+                override fun colorAt(location: Vector2) = color
+            }) {
+                color = Colors.green
+           }
+            return composed(observableIterable(listOf(
+                    transformedElement(text, Transforms2.translation(vector(0, -100))),
+                    transformedElement(button, Transforms2.translation(vector(0, 100))))))
+        }
     }
 
     {
-        screen.content = exampleContent.someText(font = defaultFont)
+        screen.content = exampleContent.composedWithButton()
         registerInputs()
     }
 
