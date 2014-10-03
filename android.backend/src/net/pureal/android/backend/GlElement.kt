@@ -68,33 +68,45 @@ class GlComposed(override val original: Composed<*>, screen: GlScreen) : GlEleme
 open class GlColoredElement(override val original: ColoredElement<*>, screen: GlScreen) : GlElement(original, screen), ColoredElement<Any?> {
     override val shape: GlShape  get () = glShape
     override val fill: Fill get() = original.fill
+
+    open val shader = screen.flatShader
     override fun draw(parentTransform: Transform2) {
         val transform = parentTransform
+        val program = shader.useProgram()
 
-        val matrixHandle = GLES20.glGetUniformLocation(screen.program!!, "u_Matrix");
-        val m = transform.matrix
-        val glMatrix = floatArray(
-                m.a.toFloat(), m.d.toFloat(), 0f, m.g.toFloat(),
-                m.b.toFloat(), m.e.toFloat(), 0f, m.h.toFloat(),
-                0f, 0f, 1f, 0f,
-                m.c.toFloat(), m.f.toFloat(), 0f, m.i.toFloat())
-        GLES20.glUniformMatrix4fv(matrixHandle, 1, false, glMatrix, 0);
+        val matrixHandle = GLES20.glGetUniformLocation(program, "u_Matrix");
+        if (matrixHandle != -1) {
+            val m = transform.matrix
+            val glMatrix = floatArray(
+                    m.a.toFloat(), m.d.toFloat(), 0f, m.g.toFloat(),
+                    m.b.toFloat(), m.e.toFloat(), 0f, m.h.toFloat(),
+                    0f, 0f, 1f, 0f,
+                    m.c.toFloat(), m.f.toFloat(), 0f, m.i.toFloat())
+            GLES20.glUniformMatrix4fv(matrixHandle, 1, false, glMatrix, 0);
+        }
 
-        val positionHandle = GLES20.glGetAttribLocation(screen.program!!, "a_Position")
-        GLES20.glEnableVertexAttribArray(positionHandle)
-        GLES20.glVertexAttribPointer(positionHandle, 2, GLES20.GL_FLOAT, false, 0, vertexBuffer)
+        val positionHandle = GLES20.glGetAttribLocation(program, "a_Position")
+        if (positionHandle != -1) {
+            GLES20.glEnableVertexAttribArray(positionHandle)
+            GLES20.glVertexAttribPointer(positionHandle, 2, GLES20.GL_FLOAT, false, 0, vertexBuffer)
+        }
 
-        val texCoordHandle = GLES20.glGetAttribLocation(screen.program!!, "a_TexCoord")
-        GLES20.glEnableVertexAttribArray(texCoordHandle)
-        GLES20.glVertexAttribPointer(texCoordHandle, 2, GLES20.GL_FLOAT, false, 0, uvBuffer)
+        val texCoordHandle = GLES20.glGetAttribLocation(program, "a_TexCoord")
+        if (texCoordHandle != -1) {
+            GLES20.glEnableVertexAttribArray(texCoordHandle)
+            GLES20.glVertexAttribPointer(texCoordHandle, 2, GLES20.GL_FLOAT, false, 0, uvBuffer)
+        }
 
-        GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, shape.textureName)
-        val samplerHandle = GLES20.glGetUniformLocation(screen.program!!, "u_Texture")
-        GLES20.glUniform1i(samplerHandle, 0)
+        val textureName = shape.textureName
+        if (textureName != null) {
+            GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureName)
+            val samplerHandle = GLES20.glGetUniformLocation(program, "u_Texture")
+            GLES20.glUniform1i(samplerHandle, 0)
+        }
 
 
-        val colorHandle = GLES20.glGetUniformLocation(screen.program!!, "u_Color")
+        val colorHandle = GLES20.glGetUniformLocation(program, "u_Color")
         val color = fill.colorAt(vector(0, 0))
         GLES20.glUniform4fv(colorHandle, 1, floatArray(
                 color.r.toFloat(),
