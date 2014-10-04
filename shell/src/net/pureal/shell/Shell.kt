@@ -67,14 +67,17 @@ takimata sanctus est Lorem ipsum dolor sit amet. AYA �¶Ѽ†◊²³"""
         }
 
         fun keyboardText() : Composed<*> {
-            var text = "Hallo!"
             val textElement = object : TextElement {
                 override val font: Font = defaultFont
                 override val size: Number = 40
-                override val content: String get() = text
+                override var content: String = "Hallo"
                 override val fill: Fill = Fills.solid(Colors.white)
+                override val changed = trigger<Unit>()
             }
-            keys mapObservable { it.pressed } startKeepingAllObserved { text = it.definition.command.name }
+            keys mapObservable { it.pressed } startKeepingAllObserved {
+                textElement.content = it.definition.command.name
+                textElement.changed()
+            }
             return composed(observableIterable(listOf(transformedElement(textElement))))
         }
     }
