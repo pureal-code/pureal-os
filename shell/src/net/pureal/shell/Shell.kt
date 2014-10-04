@@ -51,7 +51,7 @@ takimata sanctus est Lorem ipsum dolor sit amet. AYA �¶Ѽ†◊²³"""
 
             val text = textElement("not a button!", defaultFont, 60, Fills.solid(Colors.white))
 
-            val size = vector(200, 200)
+            val size = vector(100, 100)
             fun b(x: Int, y: Int): TransformedElement<Any?> {
                 var color = randomColor()
                 return transformedElement(button(shape = rectangle(size), fill = object : Fill {
@@ -61,14 +61,26 @@ takimata sanctus est Lorem ipsum dolor sit amet. AYA �¶Ѽ†◊²³"""
                 }, Transforms2.translation(vector(x * size.x.toDouble(), y * size.y.toDouble())))
             }
 
-            val a = 5
+            val a = 3
             //transformedElement(text, Transforms2.translation(vector(0, -100)))
             return composed(observableIterable(-a..a flatMap { x -> -a..a map { y -> b(x, y) } }))
+        }
+
+        fun keyboardText() : Composed<*> {
+            var text = "Hallo!"
+            val textElement = object : TextElement {
+                override val font: Font = defaultFont
+                override val size: Number = 40
+                override val content: String get() = text
+                override val fill: Fill = Fills.solid(Colors.white)
+            }
+            keys mapObservable { it.pressed } startKeepingAllObserved { text = it.definition.command.name }
+            return composed(observableIterable(listOf(transformedElement(textElement))))
         }
     }
 
     {
-        screen.content = exampleContent.composedWithButton()
+        screen.content = exampleContent.keyboardText()
         registerInputs()
     }
 

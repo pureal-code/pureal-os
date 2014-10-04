@@ -11,6 +11,7 @@ import net.pureal.traits.math.*
 import net.pureal.traits.*
 import android.view.MotionEvent
 import net.pureal.traits.interaction.*
+import android.view.KeyEvent
 
 class GlScreen (activity: Activity, onReady: (GlScreen) -> Unit) : GLSurfaceView(activity), Screen {
     {
@@ -34,6 +35,9 @@ class GlScreen (activity: Activity, onReady: (GlScreen) -> Unit) : GLSurfaceView
             }
         })
         //setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY)
+        this.setFocusable(true);
+        this.setFocusableInTouchMode(true);
+
     }
     private var glContent: GlComposed = GlComposed(composed(observableIterable(listOf())), this)
     override var content: Composed<*>
@@ -94,16 +98,16 @@ class GlScreen (activity: Activity, onReady: (GlScreen) -> Unit) : GLSurfaceView
         val location = Transforms2.scale(1, -1)(vector(event.getX(), event.getY()) - shape.halfSize)
 
         when(event.getAction()) {
-            MotionEvent.ACTION_DOWN -> { pointer.move(location) ; key.press() }
-            MotionEvent.ACTION_UP -> { pointer.move(location) ; key.release() }
+            MotionEvent.ACTION_DOWN -> { pointer.move(location) ; touch.press() }
+            MotionEvent.ACTION_UP -> { pointer.move(location) ; touch.release() }
             MotionEvent.ACTION_MOVE -> pointer.move(location)
         }
 
         return true
     }
 
-    class TouchKey : Key {
-        override val definition: KeyDefinition = keyDefinition(Commands.Touch.touch)
+    class AndroidKey(val command: Command) : Key {
+        override val definition: KeyDefinition = keyDefinition(command)
         override var isPressed: Boolean = false
         override val pressed = trigger<Key>()
         override val released = trigger<Key>()
@@ -129,9 +133,20 @@ class GlScreen (activity: Activity, onReady: (GlScreen) -> Unit) : GLSurfaceView
         }
     }
 
-    val key = TouchKey()
+    val touch = AndroidKey(Commands.Touch.touch)
     val pointer = TouchPointer()
-    val pointerKeys : PointerKeys = pointerKeys(pointer, listOf(key))
+    val pointerKeys : PointerKeys = pointerKeys(pointer, listOf(touch))
+
+    val keyboard = observableList<Key>()
+
+    override fun onKeyDown(keyCode: Int, event : KeyEvent) : Boolean {
+        val key = AndroidKey(Commands.Keyboard.character(event.getKeyCharacterMap()!!.getDisplayLabel(keyCode)))
+        keyboard.add(key)
+        key.press()
+        key.release()
+        keyboard.remove(key)
+        return true
+    }
 }
 
 

@@ -30,7 +30,7 @@ fun <T> ObservableIterable<Observable<T>>.stopKeepingAllObserved(observer: (T)->
 
 trait ObservableList<T> : ObservableIterable<T>, MutableList<T>
 
-fun observableListOf<T>(vararg values: T) : ObservableList<T> {
+fun observableList<T>(vararg values: T) : ObservableList<T> {
     val elements = ArrayList(values map {it})
     return object : MutableList<T> by elements, ObservableList<T> {
         override val removed = trigger<T>()
