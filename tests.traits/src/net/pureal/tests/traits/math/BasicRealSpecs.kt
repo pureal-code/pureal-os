@@ -258,6 +258,9 @@ public class BasicRealSpecs : Spek() {{
             it("should be 2.4E4 for 2.4E4") {
                 shouldEqual(basicReal("2.4E4").floor(), 24000)
             }
+            it("should be 0 for 0.5") {
+                shouldEqual(basicReal(".5").floor(), 0)
+            }
         }
         on("ceil-ing some numbers") {
             it("should be 3 for 2.7") {

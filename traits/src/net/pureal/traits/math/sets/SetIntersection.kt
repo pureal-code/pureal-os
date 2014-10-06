@@ -61,11 +61,20 @@ public trait SetIntersection : Set {
 
         if (le > he) return EmptySet
         if (le == he && !(lc && hc)) return EmptySet
-        var f: Calculatable? = null
-        if (t_ss1 is MultipleOfSet) f = t_ss1.factor
-        if (t_ss2 is MultipleOfSet) f = if (f == null) t_ss2.factor; else t_ss2.factor * f
-        if (f == null) return realSet(le, he, lc, hc)
-        return multipleOfSet(f!!, realSet(le, he, lc, hc))
+        if (t_ss1 is MultipleOfSet) {
+            if (t_ss2 is MultipleOfSet) {
+                // TODO: some tricky calculations
+                if ((t_ss1.offset - t_ss2.offset) % gcd(t_ss1.factor, t_ss2.factor) != 0.asCalculatable()) return EmptySet
+                val f: Calculatable = lcm(t_ss1.factor, t_ss2.factor)
+                val o: Calculatable = 0.asCalculatable() // TODO: Finish this, no plan right now
+                return multipleOfSet(f, o, realSet(le, he, lc, hc))
+            } else {
+                return multipleOfSet(t_ss1.factor, t_ss1.offset, realSet(le, he, lc, hc))
+            }
+        } else if (t_ss2 is MultipleOfSet) {
+            return multipleOfSet(t_ss2.factor, t_ss2.offset, realSet(le, he, lc, hc))
+        } else return realSet(le, he, lc, hc)
+        return EmptySet
     }
 
     override fun hasCommonElementsWith(other: Set): Boolean {

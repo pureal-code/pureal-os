@@ -92,6 +92,31 @@ public class SetSpecs : Spek() {{
             }
         }
     }
+    given("a uneven set between 0 and 100") {
+        val s = multipleOfSet(2, 1, realSet(0, 100))
+        on("checking if a set intersection of uneven sets with [0,100] are the same") {
+            it("should be true for RealSet") {
+                shouldEqual(s, setIntersection(multipleOfSet(2, 1, RealSet), realSet(0, 100)).simplifySets())
+            }
+            it("should be true for IntegerSet") {
+                shouldEqual(s, setIntersection(multipleOfSet(2, 1, RealSet), integerSet(0, 100)).simplifySets())
+            }
+        }
+        on("checking numbers that should be in that set") {
+            array<Number>(1, activeEnvironment.intReal(51), 97.0).forEach {
+                it("$it should be in that set") {
+                    shouldBeTrue(it in s)
+                }
+            }
+        }
+        on("checking numbers that should NOT be in that set") {
+            array<Number>(0, activeEnvironment.intReal(100), 101, -1, Infinity * 2 + 1).forEach {
+                it("$it should NOT be in that set") {
+                    shouldBeTrue(it !in s)
+                }
+            }
+        }
+    }
 
 
 }

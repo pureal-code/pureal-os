@@ -12,7 +12,7 @@ public trait MultipleOfSet : RealSet, Set {
             val factor = factor.asCalculatable().abs()
             // to make 0 <= offset < factor
             val off = offset divideAndRemainder factor
-            if (factor is Infinity) return EmptySet
+            if (factor is Infinity || offset is Infinity) return EmptySet
             var le = lEnd.asCalculatable() + off[0]
             var he = hEnd.asCalculatable() + off[0]
             if (le > he) {
@@ -30,10 +30,17 @@ public trait MultipleOfSet : RealSet, Set {
             }
         }
         override fun invoke(factor: Number, lEnd: Number, hEnd: Number): Set = invoke(factor, 0, lEnd, hEnd)
-        override fun invoke(factor: Number, s: RealSet): Set = invoke(factor, s.lowEnd, s.highEnd)
+        fun invoke(factor: Number, offset: Number, s: RealSet): Set {
+            var le = (s.lowEnd - offset) / factor
+            var he = (s.highEnd - offset) / factor
+            if (le !is Infinity && !s.lowClosed && le % 1 equals 0) le++
+            if (he !is Infinity && !s.highClosed && he % 1 equals 0) he--
+            return invoke(factor, offset, le, he)
+        }
+        override fun invoke(factor: Number, s: RealSet): Set = invoke(factor, 0, s)
     }
 
-    override fun toString(): String = "multipleOfSet(${factor}, ${lowEnd / factor}, ${highEnd / factor})"
+    override fun toString(): String = "multipleOfSet(${factor}, ${offset}, ${(lowEnd - offset) / factor}, ${(highEnd - offset) / factor})"
 
     override fun contains(other: Number): Boolean {
         try {
