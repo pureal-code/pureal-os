@@ -1,7 +1,7 @@
 package net.pureal.traits
 
 trait Observable<out T> {
-    protected val observers: MutableSet<(T) -> Unit> get() = hashSetOf()
+    protected val observers: MutableSet<(T) -> Unit>
     final fun addObserver(observer: (T) -> Unit) {
         observers.add(observer)
     }
@@ -16,6 +16,7 @@ trait Observable<out T> {
 }
 
 fun observable<T, I>(observables: Iterable<Observable<I>>, transform: (I) -> T) = object : Observable<T> {
+    override val observers = hashSetOf<(T) -> Unit>();
     {
         for (observable in observables) {
             observable addObserver { notifyObservers(transform(it)) }

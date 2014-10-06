@@ -15,7 +15,7 @@ fun transformedElement<T>(element: Element<T>, transform: Transform2 = Transform
 
 trait Composed<T> : Element<T> {
     fun elementsAt(location: Vector2): Iterable<TransformedElement<*>> = elements flatMap {
-        val transformedLocation = it transform location
+        val transformedLocation = it.transform.inverse()(location)
         val contains = it.element.shape.contains(transformedLocation)
 
         if (!contains) listOf<TransformedElement<*>>() else if (it is Composed<*>) it.elementsAt(transformedLocation) map {x -> transformedElement(it, it.transform before x.transform)} else listOf(it)}

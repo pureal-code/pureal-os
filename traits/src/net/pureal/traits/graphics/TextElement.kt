@@ -40,7 +40,7 @@ fun textInput(text: String = "", bound: Rectangle, font: Font, fontFill: Fill, s
     private fun cursor() = coloredElement(rectangle(vector(0,0)), fontFill)
     private fun background() = coloredElement(bound, backgroundFill)
 
-    override val elements = observableListOf<TransformedElement<*>>()
+    override val elements = observableList<TransformedElement<*>>()
 
     private fun refresh() {
         //TODO elements.setTo(textElement(), cursor(), background())

@@ -13,6 +13,7 @@ import android.opengl.GLUtils
 
 //TODO: override val original (runtime compiler barf)
 class GlTextElement(val originalText: TextElement, screen: GlScreen) : TextElement, GlColoredElement(originalText, screen) {
+    override val shader = screen.fontShader
     override val shape: GlShape get() = super<GlColoredElement>.shape
     override val font: GlFont get() = glFont(originalText.font)
     override val size: Number get() = originalText.size
