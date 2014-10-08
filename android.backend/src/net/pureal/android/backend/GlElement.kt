@@ -158,6 +158,7 @@ open class GlColoredElement(override val original: ColoredElement<*>, screen: Gl
     }
     {
         changed addObserver {
+            //TODO synchronize with GL Thread!!!
             glShape = glShape(original.shape)
             vertexBuffer = buildVertexBuffer()
             uvBuffer = buildUvBuffer()

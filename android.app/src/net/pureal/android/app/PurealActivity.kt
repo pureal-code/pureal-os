@@ -15,7 +15,7 @@ class PurealActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val screen = GlScreen(this) {
-            Shell(it, observableIterable(listOf(it.pointerKeys)), it.keyboard, GlFont(getResources()!!));
+            Shell(it, observableIterable(listOf(it.touchPointerKeys)), it.keyboard, GlFont(getResources()!!));
         }
         setContentView(screen);
         getWindow()!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
