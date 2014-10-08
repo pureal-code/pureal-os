@@ -21,6 +21,8 @@ trait Composed<T> : Element<T> {
         if (!contains) listOf<TransformedElement<*>>() else if (it is Composed<*>) it.elementsAt(transformedLocation) map {x -> transformedElement(it, it.transform before x.transform)} else listOf(it)}
 
     val elements : ObservableIterable<TransformedElement<*>>
+
+    fun elementsRecursively() : Iterable<Element<*>>  = elements flatMap { if(it is Composed<*>) it.elementsRecursively() + it else listOf(it) }
 }
 
 fun composed<T>(

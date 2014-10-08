@@ -31,26 +31,37 @@ fun <T> ObservableIterable<Observable<T>>.stopKeepingAllObserved(observer: (T)->
 trait ObservableList<T> : ObservableIterable<T>, MutableList<T>
 
 fun observableList<T>(vararg values: T) : ObservableList<T> {
-    val elements = ArrayList(values map {it})
-    return object : MutableList<T> by elements, ObservableList<T> {
-        override val removed = trigger<T>()
-        override val added = trigger<T>()
 
-        override fun add(e: T) : Boolean {
-            elements.add(e)
-            added(e)
+}
 
-            return true
-        }
+class ObservableArrayList : ArrayList(values map {it}), : MutableList<T> by elements, ObservableList<T> {
+override val removed = trigger<T>()
+override val added = trigger<T>()
 
-        override fun remove(o: Any?) : Boolean {
-            if(!elements.remove(o)) return false
+override fun add(e: T) : Boolean {
+    elements.add(e)
+    added(e)
 
-            removed(o as T)
+    return true
+}
 
-            return true
-        }
+override fun remove(o: Any?) : Boolean {
+    if(!elements.remove(o)) return false
 
-        override fun removeAll(c : Collection<Any?>) = c.fold(initial=false) {(removedAny, it) -> remove(it) or removedAny}
-    }
+    removed(o as T)
+
+    return true
+}
+
+override fun removeAll(c : Collection<Any?>) = c.fold(initial=false) {(removedAny, it) -> remove(it) or removedAny}
+
+override fun clear() {
+    removeAll(this)
+}
+
+fun setTo(newElements : Iterable<T>) {
+    clear()
+
+    newElements forEach { add(it) }
+}
 }

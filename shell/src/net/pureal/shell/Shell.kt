@@ -83,7 +83,7 @@ takimata sanctus est Lorem ipsum dolor sit amet. AYA �¶Ѽ†◊²³"""
     }
 
     {
-        screen.content = exampleContent.keyboardText()
+        screen.content = exampleContent.someText(defaultFont)
         registerInputs()
     }
 
@@ -92,6 +92,13 @@ takimata sanctus est Lorem ipsum dolor sit amet. AYA �¶Ѽ†◊²³"""
             screen.content.elementsAt(p.pointer.location) forEach {
                 val element = it.element
                 if (element is Clickable<*>) element.onClick(pointerKey(p.pointer relativeTo it.transform, p.key))
+            }
+        }
+
+        keys mapObservable { it.pressed } startKeepingAllObserved { p ->
+            screen.content.elements forEach {
+                val element = it.element
+                if (element is KeysElement<*>) element.onKeyPressed(p)
             }
         }
     }
