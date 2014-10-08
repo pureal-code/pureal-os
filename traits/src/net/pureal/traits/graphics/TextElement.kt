@@ -8,7 +8,7 @@ import net.pureal.traits.interaction.PointersElement
 trait TextElement : ColoredElement<String> {
     val font: Font
     val size: Number
-    override val shape: Shape get() = font.shape(content).transformed(Transforms2.scale(size))
+    override val shape: Shape get() = font shape content scaled size
 }
 
 fun textElement(content: String, font: Font, size: Number, fill: Fill) = object : TextElement {
@@ -18,8 +18,17 @@ fun textElement(content: String, font: Font, size: Number, fill: Fill) = object 
     override val fill = fill
 }
 
+trait GlyphShape : BoundedShape {
+    val character: Char
+}
+
+trait TextShape : BoundedShape {
+    val text: String
+    fun get(index: Int): GlyphShape
+}
+
 trait Font {
-    fun shape(text: String): Shape
+    fun shape(text: String): TextShape
 }
 
 trait TextInput : Composed<String>, KeysElement<String>, PointersElement<String> {
@@ -37,7 +46,7 @@ fun textInput(text: String = "", bound: Rectangle, font: Font, fontFill: Fill, s
     override var text = text
 
     private fun textElement() = graphics.textElement(text, font, size, fontFill)
-    private fun cursor() = coloredElement(rectangle(vector(0,0)), fontFill)
+    private fun cursor() = coloredElement(rectangle(vector(0, 0)), fontFill)
     private fun background() = coloredElement(bound, backgroundFill)
 
     override val elements = observableList<TransformedElement<*>>()
