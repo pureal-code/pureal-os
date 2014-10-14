@@ -63,10 +63,22 @@ public trait SetIntersection : Set {
         if (le == he && !(lc && hc)) return EmptySet
         if (t_ss1 is MultipleOfSet) {
             if (t_ss2 is MultipleOfSet) {
-                // TODO: some tricky calculations
-                if ((t_ss1.offset - t_ss2.offset) % gcd(t_ss1.factor, t_ss2.factor) != 0.asCalculatable()) return EmptySet
+                val g: Calculatable
+                try {
+                    g = gcd(t_ss1.factor, t_ss2.factor)
+                    if (g equals 0) return EmptySet
+                } catch (e: IllegalArgumentException) {
+                    return EmptySet
+                }
+                if ((t_ss1.offset - t_ss2.offset) % g != 0.asCalculatable()) return EmptySet
                 val f: Calculatable = lcm(t_ss1.factor, t_ss2.factor)
-                val o: Calculatable = 0.asCalculatable() // TODO: Finish this, no plan right now
+                // o1 + f1 * m = o2 + f2 * n = o
+                var o: Calculatable = t_ss1.offset + f
+                while (o > t_ss1.offset) {
+                    if ((o - t_ss2.offset) % t_ss2.factor equals 0) break
+                    o -= t_ss1.offset
+                }
+                // TODO: This isn't an elegant solution, but working for now
                 return multipleOfSet(f, o, realSet(le, he, lc, hc))
             } else {
                 return multipleOfSet(t_ss1.factor, t_ss1.offset, realSet(le, he, lc, hc))

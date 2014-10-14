@@ -286,7 +286,7 @@ public class BasicRealSpecs : Spek() {{
         }
     }
     given("numbers for gcd tests") {
-        array(to(4, 2, 2), to(33, 0, 33), to(.3, 2, .1), to(36, 36, 36), to(20, 44, 4)).forEach {
+        array(to(4, 2, 2), to(33, 0, 33), to(.3, 2, .1), to(36, 36, 36), to(20, 44, 4), to(.6, .9, .3)).forEach {
             on("calculating the gcd of ${it.a} and ${it.b}") {
                 it("should be ${it.r}") {
                     shouldEqual(it.r.asCalculatable(), gcd(it.a, it.b))
@@ -295,7 +295,7 @@ public class BasicRealSpecs : Spek() {{
         }
     }
     given("numbers for lcm tests") {
-        array(to(4, 2, 4), to(33, 0, 0), to(.3, 2, 6), to(36, 36, 36), to(20, 44, 220)).forEach {
+        array(to(4, 2, 4), to(33, 0, 0), to(.3, 2, 6), to(36, 36, 36), to(20, 44, 220), to(.6, .9, 1.8)).forEach {
             on("calculating the lcm of ${it.a} and ${it.b}") {
                 it("should be ${it.r}") {
                     shouldEqual(it.r.asCalculatable(), lcm(it.a, it.b))
