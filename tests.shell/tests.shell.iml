@@ -11,7 +11,5 @@
     <orderEntry type="library" name="Spek" level="project" />
     <orderEntry type="module" module-name="shell" />
     <orderEntry type="module" module-name="traits" />
-    <orderEntry type="library" name="KotlinCompiler" level="project" />
   </component>
 </module>
-

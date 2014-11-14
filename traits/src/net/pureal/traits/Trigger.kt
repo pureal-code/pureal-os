@@ -11,5 +11,5 @@ fun trigger<T>() = object : Trigger<T> {
 }
 
 fun Trigger<Unit>.invoke() {
-    invoke(Unit.VALUE)
+    invoke(Unit)
 }
