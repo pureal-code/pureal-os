@@ -31,37 +31,36 @@ fun <T> ObservableIterable<Observable<T>>.stopKeepingAllObserved(observer: (T)->
 trait ObservableList<T> : ObservableIterable<T>, MutableList<T>
 
 fun observableList<T>(vararg values: T) : ObservableList<T> {
-
+    return null!!
 }
 
-class ObservableArrayList : ArrayList(values map {it}), : MutableList<T> by elements, ObservableList<T> {
-override val removed = trigger<T>()
-override val added = trigger<T>()
+class ObservableArrayList<T>(vararg val elements : T) : ArrayList<T>(elements map {it}), ObservableList<T> {
+    override val removed = trigger<T>()
+    override val added = trigger<T>()
+    override fun add(e: T) : Boolean {
+        super<ArrayList>.add(e)
+        added(e)
 
-override fun add(e: T) : Boolean {
-    elements.add(e)
-    added(e)
+        return true
+    }
 
-    return true
-}
+    override fun remove(o: Any?) : Boolean {
+        if(!super<ArrayList>.remove(o)) return false
 
-override fun remove(o: Any?) : Boolean {
-    if(!elements.remove(o)) return false
+        removed(o as T)
 
-    removed(o as T)
+        return true
+    }
 
-    return true
-}
+    override fun removeAll(c : Collection<Any?>) = c.fold(initial=false) {(removedAny, it) -> remove(it) or removedAny}
 
-override fun removeAll(c : Collection<Any?>) = c.fold(initial=false) {(removedAny, it) -> remove(it) or removedAny}
+    override fun clear() {
+        removeAll(this)
+    }
 
-override fun clear() {
-    removeAll(this)
-}
+    fun setTo(newElements : Iterable<T>) {
+        clear()
 
-fun setTo(newElements : Iterable<T>) {
-    clear()
-
-    newElements forEach { add(it) }
-}
+        newElements forEach { add(it) }
+    }
 }

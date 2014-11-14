@@ -1,6 +1,6 @@
 package net.pureal.shell
 
-import org.spek.Spek
+import org.jetbrains.spek.api.*
 
 class ShellSpecs : Spek() {{
 

@@ -1,7 +1,6 @@
 package net.pureal.tests.traits.math
 
-
-import org.spek.*
+import org.jetbrains.spek.api.*
 import net.pureal.traits.math.*
 import java.math.BigInteger
 import net.pureal.tests.traits.shouldThrow

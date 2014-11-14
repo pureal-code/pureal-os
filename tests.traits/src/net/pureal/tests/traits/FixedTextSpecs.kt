@@ -1,6 +1,6 @@
 package net.pureal.tests.traits
 
-import org.spek.*
+import org.jetbrains.spek.api.*
 import net.pureal.traits.*
 import net.pureal.tests.traits.*
 import net.pureal.traits.math.rectangle

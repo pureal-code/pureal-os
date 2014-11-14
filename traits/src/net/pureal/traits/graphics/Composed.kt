@@ -22,7 +22,7 @@ trait Composed<T> : Element<T> {
 
     val elements : ObservableIterable<TransformedElement<*>>
 
-    fun elementsRecursively() : Iterable<Element<*>>  = elements flatMap { if(it is Composed<*>) it.elementsRecursively() + it else listOf(it) }
+    //fun elementsRecursively() : Iterable<Element<*>>  = elements flatMap { if(it is Composed<*>) it.elementsRecursively() + it else listOf(it) }
 }
 
 fun composed<T>(
@@ -35,7 +35,7 @@ fun composed<T>(
     override val changed = changed
 }
 
-fun composed(elements: ObservableIterable<TransformedElement<*>>, changed: Observable<Unit> = observable<Unit>()) = composed(Unit.VALUE, elements, changed)
+fun composed(elements: ObservableIterable<TransformedElement<*>>, changed: Observable<Unit> = observable<Unit>()) = composed(Unit, elements, changed)
 
 fun observableIterable<T>(
         elements: Iterable<T>,

@@ -1,19 +1,20 @@
 package net.pureal.tests.traits
 
-import org.spek.*
+import org.jetbrains.spek.api.*
 import net.pureal.traits.*
 import net.pureal.traits.graphics.*
 import net.pureal.traits.interaction.*
 import net.pureal.traits.math.rectangle
 
+enum class State {
+    neverClicked
+    clicked
+}
+
 class ButtonSpecs : Spek() {{
     given("a button") {
         val b = button(shape = rectangle(size = vector(0.04, 0.01)), fill = Fills.solid(Colors.black))
 
-        enum class State {
-            neverClicked
-            clicked
-        }
 
         var s = State.neverClicked
 

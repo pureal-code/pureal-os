@@ -1,6 +1,6 @@
 package net.pureal.tests.traits.math
 
-import org.spek.*
+import org.jetbrains.spek.api.*
 import net.pureal.traits.*
 import kotlin.test.assertEquals
 import net.pureal.traits.math.*

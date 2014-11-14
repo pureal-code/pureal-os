@@ -43,6 +43,6 @@ fun textInput(text: String = "", bound: Rectangle, font: Font, fontFill: Fill, s
     override val elements = observableList<TransformedElement<*>>()
 
     private fun refresh() {
-        elements.setTo(textElement(), cursor(), background())
+        //elements.setTo(textElement(), cursor(), background())
     }
 }

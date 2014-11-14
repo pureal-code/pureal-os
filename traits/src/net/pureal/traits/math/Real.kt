@@ -2,6 +2,7 @@ package net.pureal.traits.math
 
 import net.pureal.traits.Constructor1
 import net.pureal.traits.Constructor2
+import sun.reflect.generics.reflectiveObjects.NotImplementedException
 
 public trait Real : Calculatable {
 
@@ -27,7 +28,7 @@ public trait Real : Calculatable {
     fun filterRecursive(successCond: (Real) -> Boolean): Array<Real> {
         if (successCond(this)) return array(this)
         var a: Array<Real> = array()
-        for (i in subReals.indices) a += subReals[i].filterRecursive(successCond)
+        throw NotImplementedException() // TODO FIX for (i in subReals.indices) a += subReals[i].filterRecursive(successCond)
         return a
     }
 
@@ -35,7 +36,7 @@ public trait Real : Calculatable {
         if (!continueCond(this)) return array()
         if (successCond(this)) return array(this)
         var a: Array<Real> = array()
-        for (i in subReals.indices) a += subReals[i].filterRecursiveCond(continueCond, successCond)
+        throw NotImplementedException() // TODO FIX for (i in subReals.indices) a += subReals[i].filterRecursiveCond(continueCond, successCond)
         return a
     }
 
