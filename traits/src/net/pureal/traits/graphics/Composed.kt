@@ -33,7 +33,7 @@ fun composed<T>(
     override val changed = changed
 }
 
-fun composed(elements: ObservableIterable<TransformedElement<*>>, changed: Observable<Unit> = observable<Unit>()) = composed(Unit.VALUE, elements, changed)
+fun composed(elements: ObservableIterable<TransformedElement<*>>, changed: Observable<Unit> = observable<Unit>()) = composed(Unit, elements, changed)
 
 fun observableIterable<T>(
         elements: Iterable<T>,

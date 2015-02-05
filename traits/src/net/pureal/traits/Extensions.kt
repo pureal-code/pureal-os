@@ -6,6 +6,7 @@ fun <T> Array<T>.replaceElements(fn: (T) -> T): Array<T> {
     return t
 }
 
+
 fun String.extractInnerString(c1: Char, c2: Char): String {
     val begin = this.indexOf(c1)
     val end = this.lastIndexOf(c2)

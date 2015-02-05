@@ -46,7 +46,7 @@ fun observableList<T>(vararg values: T) : ObservableList<T> {
         override fun remove(o: Any?) : Boolean {
             if(!elements.remove(o)) return false
 
-            removed(o as T)
+            removed(o as? T)
 
             return true
         }
