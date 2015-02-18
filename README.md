@@ -1,3 +1,3 @@
 pureal-os
 =========
-Making a Kotlin calculator for Android 
+We want to make a Kotlin IDE+calculator for Android. 
