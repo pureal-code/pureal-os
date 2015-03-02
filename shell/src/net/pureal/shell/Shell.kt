@@ -16,9 +16,9 @@ class Shell(val screen: Screen, val pointers: ObservableIterable<PointerKeys>, v
                     fill = Fills.solid(Colors.white),
                     onClick = { println("This is da fucking Pureal logo!") })
 
-            fun star(count: Int) = count.indices map { transformedElement(logoRect(it * 3.14159 * 2 / count - Math.PI / 2)) }
+            fun star(count: Int): List<TransformedElement<*>> = count.indices map { transformedElement(logoRect(it * 3.14159 * 2 / count - Math.PI / 2)) }
 
-            return composed(elements = observableIterable(star(7)))
+            return composed(observableIterable(star(7)))
         }
 
         fun someText(font: Font): Composed<*> {
@@ -43,7 +43,7 @@ takimata sanctus est Lorem ipsum dolor sit amet. AYA �¶Ѽ†◊²³"""
             )
             //val k = transformedElement(textElement("Kotlin rocks!", font, size = 24, fill = Fills.solid(Colors.white)), Transforms2.rotation(-Math.PI / 10))
             //val h = transformedElement(textElement("like a hardcore banana", font, size = 24, fill = Fills.solid(Colors.white)), Transforms2.scale(0.5) before Transforms2.translation(vector(0,-(screen.shape as Rectangle).size.y.toDouble() / 3.0)))
-            return composed(observableIterable(listOf(t)))//k, h)))
+            return composed(observableIterable(listOf<TransformedElement<*>>(t)))//k, h)))
         }
 
         fun composedWithButton(): Composed<*> {
@@ -63,7 +63,7 @@ takimata sanctus est Lorem ipsum dolor sit amet. AYA �¶Ѽ†◊²³"""
 
             val a = 3
             //transformedElement(text, Transforms2.translation(vector(0, -100)))
-            return composed(observableIterable(-a..a flatMap { x -> -a..a map { y -> b(x, y) } }))
+            return composed(observableIterable(-a..a flatMap { x -> -a..a map { y -> b(x, y) : TransformedElement<*> } }))
         }
 
         fun keyboardText() : Composed<*> {
@@ -78,7 +78,7 @@ takimata sanctus est Lorem ipsum dolor sit amet. AYA �¶Ѽ†◊²³"""
                 textElement.content = it.definition.command.name
                 textElement.changed()
             }
-            return composed(observableIterable(listOf(transformedElement(textElement))))
+            return composed(observableIterable(listOf<TransformedElement<*>>(transformedElement(textElement))))
         }
     }
 

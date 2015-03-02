@@ -45,8 +45,8 @@ class GlComposed(override val original: Composed<*>, screen: GlScreen) : GlEleme
     val e = (original.elements mapObservable { glTransformedElement(it, screen) }).toArrayList()
     override val elements = object : ObservableIterable<TransformedElement<*>> {
         override fun iterator() = e.iterator()
-        override val added = trigger<GlTransformedElement>()
-        override val removed = trigger<GlTransformedElement>();
+        override val added = trigger<TransformedElement<*>>()
+        override val removed = trigger<TransformedElement<*>>();
 
         {
             original.elements.added addObserver {(addedElement) ->

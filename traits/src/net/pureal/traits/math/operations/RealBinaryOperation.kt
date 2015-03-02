@@ -15,7 +15,7 @@ public trait RealBinaryOperation : Real {
 
     private val constructor: Constructor2<RealBinaryOperation, Real, Real>
 
-    override fun replaceSubReals(vararg a: Real): Real {
+    override fun replaceSubReals(a: Array<Real>): Real {
         assert(a.size == 2)
         return constructor(a[0], a[1])
     }

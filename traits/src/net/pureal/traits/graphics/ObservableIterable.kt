@@ -5,7 +5,7 @@ import net.pureal.traits.observable
 import java.util.ArrayList
 import net.pureal.traits.trigger
 
-trait ObservableIterable<out T> : Iterable<T> {
+trait ObservableIterable<T> : Iterable<T> {
     val added: Observable<T>
     val removed: Observable<T>
 
