@@ -4,7 +4,7 @@ import net.pureal.traits.math.*
 import net.pureal.traits.*
 
 public trait IntegerSet : MultipleOfSet {
-    public class object : IntegerSet, Constructor2<IntegerSet, Number, Number> {
+    public companion object : IntegerSet, Constructor2<IntegerSet, Number, Number> {
         override val lowEnd: Calculatable = -Infinity
         override val highEnd: Calculatable = Infinity
         override val lowClosed: Boolean = false

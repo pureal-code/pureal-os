@@ -82,7 +82,7 @@ takimata sanctus est Lorem ipsum dolor sit amet. AYA �¶Ѽ†◊²³"""
         }
     }
 
-    {
+    init {
         screen.content = exampleContent.someText(defaultFont)
         registerInputs()
     }

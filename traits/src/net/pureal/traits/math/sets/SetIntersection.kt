@@ -4,7 +4,7 @@ import net.pureal.traits.math.*
 import net.pureal.traits.Constructor2
 
 public trait SetIntersection : net.pureal.traits.math.Set {
-    class object : Constructor2<SetIntersection, net.pureal.traits.math.Set, net.pureal.traits.math.Set> {
+    companion object : Constructor2<SetIntersection, net.pureal.traits.math.Set, net.pureal.traits.math.Set> {
         override fun invoke(ss1: net.pureal.traits.math.Set, ss2: net.pureal.traits.math.Set): SetIntersection = object : SetIntersection {
             override val superset1: net.pureal.traits.math.Set = ss1
             override val superset2: net.pureal.traits.math.Set = ss2

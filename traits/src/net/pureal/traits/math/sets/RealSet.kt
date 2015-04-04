@@ -5,7 +5,7 @@ import net.pureal.traits.*
 
 public trait RealSet : net.pureal.traits.math.Set {
 
-    public class object : RealSet, Constructor4<RealSet, Number, Number, Boolean, Boolean>, Constructor2<RealSet, Number, Number> {
+    public companion object : RealSet, Constructor4<RealSet, Number, Number, Boolean, Boolean>, Constructor2<RealSet, Number, Number> {
 
         override fun invoke(le: Number, he: Number) = invoke(le, he, true, true)
 

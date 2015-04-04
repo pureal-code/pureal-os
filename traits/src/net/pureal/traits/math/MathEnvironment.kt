@@ -4,7 +4,7 @@ import net.pureal.traits.math.operations.*
 import net.pureal.traits.*
 
 public trait MathEnvironment {
-    class object {
+    companion object {
         public abstract class DefaultFunctionEnv : MathEnvironment {
             override val intReal: Constructor1<InternalReal, Any?> = basicRealInf
             override val addVal: Constructor2<RealBinaryOperation, Real, Real> = AdditionValue

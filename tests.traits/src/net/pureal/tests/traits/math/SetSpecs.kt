@@ -4,7 +4,7 @@ import org.jetbrains.spek.api.*
 import net.pureal.traits.math.*
 import net.pureal.traits.math.sets.*
 
-public class SetSpecs : Spek() {{
+public class SetSpecs : Spek() {init {
     given("some integers to test") {
         array<Number>(0, 205, 1.2E4, -40, basicReal("42")).forEach {
             on("checking if $it is an Integer") {

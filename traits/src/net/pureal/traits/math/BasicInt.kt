@@ -6,7 +6,7 @@ import java.lang.Math.*
 import net.pureal.traits.Constructor1
 
 public trait BasicInt : BasicReal {
-    public class object : Constructor1<BasicInt, Any?> {
+    public companion object : Constructor1<BasicInt, Any?> {
         override fun invoke(it: Any?): BasicInt {
             return when (it) {
                 is BasicInt -> basicInt(it.number)

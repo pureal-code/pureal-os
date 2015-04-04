@@ -5,7 +5,7 @@ import net.pureal.traits.*
 import net.pureal.traits.graphics.*
 import net.pureal.traits.math.*
 
-class FillSpecs : Spek() {{
+class FillSpecs : Spek() {init {
     given("a solid fill") {
         val x = Fills.solid(Colors.blue)
 

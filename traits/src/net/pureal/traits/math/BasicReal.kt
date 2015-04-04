@@ -7,7 +7,7 @@ import net.pureal.traits.*
 
 
 public trait BasicReal : InternalReal {
-    public class object : Constructor1<InternalReal, Any?>, Constructor2<BasicReal, BigInteger, Long> {
+    public companion object : Constructor1<InternalReal, Any?>, Constructor2<BasicReal, BigInteger, Long> {
         fun getLowestExponent(o1: BasicReal, o2: BasicReal): Long = min(o1.exponent, o2.exponent)
         fun exponentialFactor(exp: Long): BigInteger = BigInteger.TEN.pow(abs(exp.toInt()))
 

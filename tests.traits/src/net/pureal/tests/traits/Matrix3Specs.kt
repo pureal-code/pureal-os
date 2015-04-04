@@ -4,7 +4,7 @@ import org.jetbrains.spek.api.*
 import net.pureal.traits.*
 import net.pureal.tests.traits.*
 
-class Matrix3Specs : Spek() {{
+class Matrix3Specs : Spek() {init {
     given("an arbitrary 3 square matrix") {
         val m = matrix(
                 1, -1, 4,

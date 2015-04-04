@@ -4,7 +4,7 @@ import net.pureal.traits.math.*
 import net.pureal.traits.*
 
 public trait MultipleOfSet : RealSet, net.pureal.traits.math.Set {
-    public class object :
+    public companion object :
             Constructor4<net.pureal.traits.math.Set, Number, Number, Number, Number>,
             Constructor3<net.pureal.traits.math.Set, Number, Number, Number>,
             Constructor2<net.pureal.traits.math.Set, Number, RealSet> {

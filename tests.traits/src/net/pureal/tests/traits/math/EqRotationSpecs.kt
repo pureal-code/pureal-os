@@ -6,7 +6,7 @@ import net.pureal.traits.*
 import net.pureal.tests.traits.*
 import net.pureal.traits.math.simplifier.rotate
 
-public class EqRotationSpecs : Spek() {{
+public class EqRotationSpecs : Spek() {init {
     given("reals for addition/subtration rotation") {
         on("rotating 5 + 70 + .8") {
             val a = real(5) + real(70) + real(.8)

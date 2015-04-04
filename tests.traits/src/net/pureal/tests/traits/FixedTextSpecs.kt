@@ -11,7 +11,7 @@ import net.pureal.traits.graphics.Fills
 import net.pureal.traits.graphics.Colors
 import net.pureal.traits.math.Shape
 
-class FixedTextSpecs : Spek() {{
+class FixedTextSpecs : Spek() {init {
     given("a fixed text element") {
         val s = "Kotlin rocks on the rocks!"
         val x = textElement(

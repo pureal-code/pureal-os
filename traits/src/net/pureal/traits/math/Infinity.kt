@@ -3,7 +3,7 @@ package net.pureal.traits.math
 import net.pureal.traits.InvalidateFun
 
 public trait Infinity : InternalReal {
-    public class object : Infinity, Calculatable() {
+    public companion object : Infinity, Calculatable() {
         public val positiveInfinity: Infinity = Infinity
         override fun toDouble() = java.lang.Double.POSITIVE_INFINITY
         override fun tryCompareTo(other: Calculatable): Int {

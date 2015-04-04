@@ -4,7 +4,7 @@ import org.jetbrains.spek.api.*
 import net.pureal.traits.*
 import net.pureal.traits.math.*
 
-class EllipseSpecs : Spek() {{
+class EllipseSpecs : Spek() {init {
     given("an ellipse") {
         val x = ellipse(vector(1, 3))
 

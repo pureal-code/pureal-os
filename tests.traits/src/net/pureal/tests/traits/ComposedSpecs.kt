@@ -5,7 +5,7 @@ import net.pureal.traits.*
 import net.pureal.traits.graphics.*
 import net.pureal.traits.math.*
 
-class ComposedSpecs : Spek() {{
+class ComposedSpecs : Spek() {init {
     given("a composed element of a rectangle and a circle") {
         val c = coloredElement(shape = circle(0.6), fill = Fills.solid(Colors.red))
         val r = coloredElement(shape = rectangle(vector(1, 1)), fill = Fills.solid(Colors.blue))

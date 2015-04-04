@@ -3,7 +3,7 @@ package net.pureal.traits.math
 import net.pureal.traits.*
 
 public trait MathShell {
-    public class object : Constructor<MathShell>, Constructor1<MathShell, MathEnvironment> {
+    public companion object : Constructor<MathShell>, Constructor1<MathShell, MathEnvironment> {
         override fun invoke(e: MathEnvironment): MathShell = object : MathShell {
             override var environment: MathEnvironment = e
         }

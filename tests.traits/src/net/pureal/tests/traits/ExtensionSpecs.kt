@@ -3,7 +3,7 @@ package net.pureal.tests.traits
 import org.jetbrains.spek.api.*
 import net.pureal.traits.*
 
-public class ExtensionSpecs : Spek() {{
+public class ExtensionSpecs : Spek() {init {
     given("a [2 3 4] array") {
         val a = array(2, 3, 4)
         on("testing the replaceElements function") {

@@ -134,7 +134,7 @@ public abstract class Calculatable : Number(), Comparable<Any?> {
     abstract fun abs(): Calculatable
 
     final val shell: MathShell
-    {
+    init {
         shell = activeShell
     }
     final val env: MathEnvironment get() = shell.environment

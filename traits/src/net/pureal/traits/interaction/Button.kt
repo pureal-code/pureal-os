@@ -19,7 +19,7 @@ fun button(
     override val fill = fill
     override val changed = changed
 
-    {
+    init {
         content addObserver { onClick() }
     }
 }

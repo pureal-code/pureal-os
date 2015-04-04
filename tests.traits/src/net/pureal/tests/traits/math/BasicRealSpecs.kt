@@ -5,7 +5,7 @@ import net.pureal.traits.math.*
 import java.math.BigInteger
 import net.pureal.tests.traits.shouldThrow
 
-public class BasicRealSpecs : Spek() {{
+public class BasicRealSpecs : Spek() {init {
     private class to(val a: Number, val b: Number, val r: Number) {}
     given("Strings that are to be converted to BasicReal") {
 

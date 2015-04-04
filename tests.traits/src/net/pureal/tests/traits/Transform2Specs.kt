@@ -3,7 +3,7 @@ package net.pureal.tests.traits
 import org.jetbrains.spek.api.*
 import net.pureal.traits.*
 
-class Transform2Specs : Spek() {{
+class Transform2Specs : Spek() {init {
     given("an identity transform") {
         val t = Transforms2.identity
 

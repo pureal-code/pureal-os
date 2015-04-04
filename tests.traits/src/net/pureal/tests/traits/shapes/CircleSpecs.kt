@@ -4,7 +4,7 @@ import org.jetbrains.spek.api.*
 import net.pureal.traits.*
 import net.pureal.traits.math.*
 
-class CircleSpecs : Spek() {{
+class CircleSpecs : Spek() {init {
     given("a circle") {
         val x = circle(3)
 

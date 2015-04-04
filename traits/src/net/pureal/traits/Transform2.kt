@@ -48,7 +48,7 @@ object Transforms2 {
 }
 
 fun transform(matrix: Matrix3) = object : Transform2 {
-    {
+    init {
         if (!matrix.isInvertible) throw IllegalArgumentException("A transformation matrix must be invertible.")
     }
 

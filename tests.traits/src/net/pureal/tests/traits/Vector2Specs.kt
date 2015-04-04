@@ -3,7 +3,7 @@ package net.pureal.tests.traits.math
 import org.jetbrains.spek.api.*
 import net.pureal.traits.*
 
-class Vector2Specs : Spek() {{
+class Vector2Specs : Spek() {init {
     given("a 2 vector") {
         val x = vector(1.5, -4)
 

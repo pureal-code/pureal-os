@@ -5,7 +5,7 @@ import net.pureal.traits.*
 import kotlin.test.assertEquals
 import net.pureal.traits.math.*
 
-public class RealSpecs : Spek() {{
+public class RealSpecs : Spek() {init {
     given("the real numbers 2, 3 and 4") {
         val a = 2.toReal()
         val b = 3.toReal()

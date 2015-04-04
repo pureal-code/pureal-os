@@ -6,9 +6,9 @@ trait Matrix2 : Numbers {
     val c: Number
     val d: Number
 
-    fun times(other: Matrix2) = matrix2 {(x, y) -> other.column(y) * row(x) }
+    fun times(other: Matrix2) = matrix2 { x, y -> other.column(y) * row(x) }
     fun times(other: Vector2) = vector2 { other * row(it) }
-    fun times(other: Number) = matrix2 {(x, y) -> other.toDouble() * get(x, y).toDouble() }
+    fun times(other: Number) = matrix2 { x, y -> other.toDouble() * get(x, y).toDouble() }
     fun div(other: Number) = times(1.0 / other.toDouble())
 
     fun get(x: Int, y: Int): Number = when (y) {

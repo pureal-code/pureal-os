@@ -29,9 +29,9 @@ class GlFont(resources: Resources) : Font {
 
     val pages = HashMap<Int, Page>()
     val glyphs = HashMap<Char, Glyph>()
-    val kernings = HashMap<Int, HashMap<Int, Int>>();
+    val kernings = HashMap<Int, HashMap<Int, Int>>()
 
-    {
+    init {
         val stream = resources.openRawResource(R.raw.roboto_regular)
         try {
             val reader = InputStreamReader(stream, "UTF-8")
@@ -68,7 +68,7 @@ class GlFont(resources: Resources) : Font {
     }
     private val textureNames: IntArray = IntArray(1);
     val textureName : Int get() = textureNames[0]
-    {
+    init {
         GLES20.glGenTextures(textureNames.size, textureNames, 0);
         val bmp = BitmapFactory.decodeResource(resources, R.drawable.roboto_regular)!!;
 
@@ -106,7 +106,7 @@ class GlGlyphs(val font: GlFont, val text: String) : GlShape() {
     override val textureCoordinates = FloatArray(text.length * 2 * 4)
     override val drawOrder = ShortArray(text.length * 6)
     override val glVertexMode: Int = GLES20.GL_TRIANGLES
-    {
+    init {
         var ic = 0
         var it = 0
         var n : Short = 0

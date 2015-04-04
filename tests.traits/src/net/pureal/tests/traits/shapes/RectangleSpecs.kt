@@ -4,7 +4,7 @@ import org.jetbrains.spek.api.*
 import net.pureal.traits.*
 import net.pureal.traits.math.*
 
-class RectangleSpecs : Spek() {{
+class RectangleSpecs : Spek() {init {
     given("a rectangle") {
         val x = rectangle(vector(1, 3))
 

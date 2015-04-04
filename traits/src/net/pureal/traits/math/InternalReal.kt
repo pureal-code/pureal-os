@@ -3,7 +3,7 @@ package net.pureal.traits.math
 import net.pureal.traits.*
 
 public trait InternalReal : Calculatable {
-    public class object : Constructor1<InternalReal, Any?> {
+    public companion object : Constructor1<InternalReal, Any?> {
         override fun invoke(it: Any?): InternalReal {
             when (it) {
                 null -> throw IllegalArgumentException()

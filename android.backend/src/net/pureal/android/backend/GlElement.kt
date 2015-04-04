@@ -46,15 +46,15 @@ class GlComposed(override val original: Composed<*>, screen: GlScreen) : GlEleme
     override val elements = object : ObservableIterable<TransformedElement<*>> {
         override fun iterator() = e.iterator()
         override val added = trigger<TransformedElement<*>>()
-        override val removed = trigger<TransformedElement<*>>();
+        override val removed = trigger<TransformedElement<*>>()
 
-        {
-            original.elements.added addObserver {(addedElement) ->
+        init {
+            original.elements.added addObserver { addedElement ->
                 val glElement = glTransformedElement(addedElement, screen)
                 e.add(glElement)
                 added(glElement)
             }
-            original.elements.removed addObserver {(removedElement) ->
+            original.elements.removed addObserver { removedElement ->
                 val glElement = (e.singleOrNull { element -> element.element.original === removedElement })
                 if (glElement != null) {
                     e.remove(glElement)
@@ -131,32 +131,32 @@ open class GlColoredElement(override val original: ColoredElement<*>, screen: Gl
     private var drawListBuffer = buildDrawListBuffer()
     fun buildVertexBuffer(): FloatBuffer {
         // 4 bytes per float
-        val byteBuffer = ByteBuffer.allocateDirect(shape.vertexCoordinates.size * 4)!!
-        byteBuffer order ByteOrder.nativeOrder()!!;
-        val floatBuffer = byteBuffer.asFloatBuffer()!!
+        val byteBuffer = ByteBuffer.allocateDirect(shape.vertexCoordinates.size * 4)
+        byteBuffer order ByteOrder.nativeOrder()
+        val floatBuffer = byteBuffer.asFloatBuffer()
         floatBuffer put shape.vertexCoordinates
         floatBuffer position 0
         return floatBuffer
     }
     fun buildUvBuffer(): FloatBuffer {
         // 4 bytes per float
-        val byteBuffer = ByteBuffer.allocateDirect(shape.textureCoordinates.size * 4)!!
-        byteBuffer order ByteOrder.nativeOrder()!!;
-        val floatBuffer = byteBuffer.asFloatBuffer()!!
+        val byteBuffer = ByteBuffer.allocateDirect(shape.textureCoordinates.size * 4)
+        byteBuffer order ByteOrder.nativeOrder()
+        val floatBuffer = byteBuffer.asFloatBuffer()
         floatBuffer put shape.textureCoordinates
         floatBuffer position 0
         return floatBuffer
     }
     fun buildDrawListBuffer(): ShortBuffer {
         // 2 bytes per short
-        val byteBuffer = ByteBuffer.allocateDirect(shape.drawOrder.size * 2)!!
-        byteBuffer order ByteOrder.nativeOrder()!!;
-        val shortBuffer = byteBuffer.asShortBuffer()!!
+        val byteBuffer = ByteBuffer.allocateDirect(shape.drawOrder.size * 2)
+        byteBuffer order ByteOrder.nativeOrder()
+        val shortBuffer = byteBuffer.asShortBuffer()
         shortBuffer put shape.drawOrder
         shortBuffer position 0
         return shortBuffer
     }
-    {
+    init {
         changed addObserver {
             glShape = glShape(original.shape)
             vertexBuffer = buildVertexBuffer()

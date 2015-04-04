@@ -11,7 +11,7 @@ enum class State {
     clicked
 }
 
-class ButtonSpecs : Spek() {{
+class ButtonSpecs : Spek() {init {
     given("a button") {
         val b = button(shape = rectangle(size = vector(0.04, 0.01)), fill = Fills.solid(Colors.black))
 

@@ -5,7 +5,7 @@ import net.pureal.traits.Constructor2
 
 public trait AdditionValue : RealBinaryOperation {
 
-    public class object : Constructor2<AdditionValue, Real, Real> {
+    public companion object : Constructor2<AdditionValue, Real, Real> {
         override fun invoke(a: Real, b: Real): AdditionValue = object : AdditionValue, Calculatable() {
             override val subReals: Array<Real> = array(a, b)
         }

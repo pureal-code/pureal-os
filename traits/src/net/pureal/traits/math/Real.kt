@@ -6,7 +6,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException
 
 public trait Real : Calculatable {
 
-    public class object : Constructor1<Real, Any?>, Constructor2<Real, Any?, Boolean> {
+    public companion object : Constructor1<Real, Any?>, Constructor2<Real, Any?, Boolean> {
         override fun invoke(it: Any?): Real = invoke(it, false)
         override fun invoke(v: Any?, isApprox: Boolean): Real {
             when (v) {

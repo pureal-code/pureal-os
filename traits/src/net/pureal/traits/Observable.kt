@@ -16,8 +16,9 @@ trait Observable<T> {
 }
 
 fun observable<T, I>(observables: Iterable<Observable<I>>, transform: (I) -> T) = object : Observable<T> {
-    override val observers = hashSetOf<(T) -> Unit>();
-    {
+    override val observers = hashSetOf<(T) -> Unit>()
+
+    init {
         for (observable in observables) {
             observable addObserver { notifyObservers(transform(it)) }
         }

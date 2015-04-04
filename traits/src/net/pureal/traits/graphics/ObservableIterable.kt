@@ -50,7 +50,7 @@ class ObservableArrayList<T>(val elements : Iterable<T>) : ArrayList<T>(elements
         return true
     }
 
-    override fun removeAll(c : Collection<Any?>) = c.fold(initial=false) {(removedAny, it) -> remove(it) or removedAny}
+    override fun removeAll(c : Collection<Any?>) = c.fold(initial=false) { removedAny, it -> remove(it) or removedAny}
 
     override fun clear() {
         removeAll(this)

@@ -4,7 +4,7 @@ import org.jetbrains.spek.api.*
 import net.pureal.traits.*
 import net.pureal.traits.math.*
 
-class ShapeSpecs : Spek() {{
+class ShapeSpecs : Spek() {init {
     given("a translated rectangle translated") {
         val x = rectangle(vector(1, 3)).transformed(Transforms2.translation(vector(5, 5)))
 

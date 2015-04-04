@@ -3,7 +3,7 @@ package net.pureal.tests.traits.math
 import org.jetbrains.spek.api.*
 import net.pureal.traits.*
 
-class Matrix2Specs : Spek() {{
+class Matrix2Specs : Spek() {init {
     given("a 2 square matrix") {
         val m = matrix(1, 2.0, -4, 3)
 
