@@ -33,12 +33,12 @@ public trait IntegerSet : MultipleOfSet {
 
     override fun toString(): String = "integerSet(${lowEnd},${highEnd})"
 
-    override fun contains(other: Set): Boolean {
+    override fun contains(other: net.pureal.traits.math.Set): Boolean {
         // TODO
         return false
     }
 
-    override fun hasCommonElementsWith(other: Set): Boolean {
+    override fun hasCommonElementsWith(other: net.pureal.traits.math.Set): Boolean {
         // TODO
         return false
     }

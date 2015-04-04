@@ -3,7 +3,7 @@ package net.pureal.traits.math.sets
 import net.pureal.traits.math.*
 import net.pureal.traits.*
 
-public trait RealSet : Set {
+public trait RealSet : net.pureal.traits.math.Set {
 
     public class object : RealSet, Constructor4<RealSet, Number, Number, Boolean, Boolean>, Constructor2<RealSet, Number, Number> {
 
@@ -46,7 +46,7 @@ public trait RealSet : Set {
 
     override fun toString(): String = "realSet(${lowEnd},${highEnd},${lowClosed},${highClosed})"
 
-    override fun contains(other: Set): Boolean {
+    override fun contains(other: net.pureal.traits.math.Set): Boolean {
         when (other) {
             is SetUnion -> return contains(other.subset1) && contains(other.subset2)
             is SetIntersection -> {
@@ -66,7 +66,7 @@ public trait RealSet : Set {
         return (if (highClosed) o <= highEnd; else o < highEnd) && (if (lowClosed) o >= lowEnd; else o > lowEnd)
     }
 
-    override fun hasCommonElementsWith(other: Set): Boolean {
+    override fun hasCommonElementsWith(other: net.pureal.traits.math.Set): Boolean {
         // TODO
         return false
     }

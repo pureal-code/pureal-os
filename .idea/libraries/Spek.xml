@@ -3,13 +3,12 @@
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/hamcrest-core-1.3.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/junit-4.11.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/spek-0.1.142.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spek-0.1-SNAPSHOT.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
       <root url="jar://$PROJECT_DIR$/lib/hamcrest-core-1.3-sources.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/junit-4.11-sources.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/spek-0.1.142-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

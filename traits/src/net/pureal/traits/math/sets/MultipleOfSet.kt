@@ -3,12 +3,12 @@ package net.pureal.traits.math.sets
 import net.pureal.traits.math.*
 import net.pureal.traits.*
 
-public trait MultipleOfSet : RealSet, Set {
+public trait MultipleOfSet : RealSet, net.pureal.traits.math.Set {
     public class object :
-            Constructor4<Set, Number, Number, Number, Number>,
-            Constructor3<Set, Number, Number, Number>,
-            Constructor2<Set, Number, RealSet> {
-        override fun invoke(factor: Number, offset: Number, lEnd: Number, hEnd: Number): Set {
+            Constructor4<net.pureal.traits.math.Set, Number, Number, Number, Number>,
+            Constructor3<net.pureal.traits.math.Set, Number, Number, Number>,
+            Constructor2<net.pureal.traits.math.Set, Number, RealSet> {
+        override fun invoke(factor: Number, offset: Number, lEnd: Number, hEnd: Number): net.pureal.traits.math.Set {
             val factor = factor.asCalculatable().abs()
             // to make 0 <= offset < factor
             val off = offset divideAndRemainder factor
@@ -29,8 +29,8 @@ public trait MultipleOfSet : RealSet, Set {
                 override val highEnd = he
             }
         }
-        override fun invoke(factor: Number, lEnd: Number, hEnd: Number): Set = invoke(factor, 0, lEnd, hEnd)
-        override fun invoke(factor: Number, s: RealSet): Set = invoke(factor, s.lowEnd, s.highEnd)
+        override fun invoke(factor: Number, lEnd: Number, hEnd: Number): net.pureal.traits.math.Set = invoke(factor, 0, lEnd, hEnd)
+        override fun invoke(factor: Number, s: RealSet): net.pureal.traits.math.Set = invoke(factor, s.lowEnd, s.highEnd)
     }
 
     override fun toString(): String = "multipleOfSet(${factor}, ${lowEnd / factor}, ${highEnd / factor})"
@@ -44,11 +44,11 @@ public trait MultipleOfSet : RealSet, Set {
         }
     }
 
-    override fun contains(other: Set): Boolean {
+    override fun contains(other: net.pureal.traits.math.Set): Boolean {
         if (other is MultipleOfSet)
             return lowEnd <= other.lowEnd && highEnd >= other.lowEnd
                     && other.factor % factor equals 0 && (other.offset - offset) % factor equals 0
-        return super<Set>.contains(other)
+        return super<net.pureal.traits.math.Set>.contains(other)
     }
 
     val factor: Calculatable

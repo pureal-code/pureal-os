@@ -3,22 +3,22 @@ package net.pureal.traits.math.sets
 import net.pureal.traits.math.*
 import net.pureal.traits.Constructor2
 
-public trait SetIntersection : Set {
-    class object : Constructor2<SetIntersection, Set, Set> {
-        override fun invoke(ss1: Set, ss2: Set): SetIntersection = object : SetIntersection {
-            override val superset1: Set = ss1
-            override val superset2: Set = ss2
+public trait SetIntersection : net.pureal.traits.math.Set {
+    class object : Constructor2<SetIntersection, net.pureal.traits.math.Set, net.pureal.traits.math.Set> {
+        override fun invoke(ss1: net.pureal.traits.math.Set, ss2: net.pureal.traits.math.Set): SetIntersection = object : SetIntersection {
+            override val superset1: net.pureal.traits.math.Set = ss1
+            override val superset2: net.pureal.traits.math.Set = ss2
         }
     }
 
-    val superset1: Set
-    val superset2: Set
+    val superset1: net.pureal.traits.math.Set
+    val superset2: net.pureal.traits.math.Set
 
     override fun toString(): String = "setIntersection(${superset1},${superset2})"
 
-    fun simplifySets(): Set {
-        var s_ss1: Set = superset1
-        var s_ss2: Set = superset2
+    fun simplifySets(): net.pureal.traits.math.Set {
+        var s_ss1: net.pureal.traits.math.Set = superset1
+        var s_ss2: net.pureal.traits.math.Set = superset2
         when (s_ss1) {
             is SetIntersection -> s_ss1 = (s_ss1 as SetIntersection).simplifySets()
             is SetUnion -> s_ss1 = (s_ss1 as SetIntersection).simplifySets()
@@ -68,7 +68,7 @@ public trait SetIntersection : Set {
         return multipleOfSet(f!!, realSet(le, he, lc, hc))
     }
 
-    override fun hasCommonElementsWith(other: Set): Boolean {
+    override fun hasCommonElementsWith(other: net.pureal.traits.math.Set): Boolean {
         //TODO
         return false
     }

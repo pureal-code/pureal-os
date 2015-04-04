@@ -36,7 +36,7 @@ fun textInput(text: String = "", bound: Rectangle, font: Font, fontFill: Fill, s
     override var cursorPosition: Int = null!!
     override var text = text
 
-    private fun textElement() = graphics.textElement(text, font, size, fontFill)
+    private fun textElement() = textElement(text, font, size, fontFill)
     private fun cursor() = coloredElement(rectangle(vector(0,0)), fontFill)
     private fun background() = coloredElement(bound, backgroundFill)
 
