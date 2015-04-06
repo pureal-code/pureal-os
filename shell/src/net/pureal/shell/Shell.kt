@@ -1,9 +1,9 @@
 package net.pureal.shell
 
-import net.pureal.traits.interaction.*
-import net.pureal.traits.graphics.*
-import net.pureal.traits.math.*
 import net.pureal.traits.*
+import net.pureal.traits.graphics.*
+import net.pureal.traits.interaction.*
+import net.pureal.traits.math.rectangle
 import java.util.Date
 
 // TODO brings reference barf: import org.jetbrains.jet.codegen.*
@@ -21,7 +21,7 @@ class Shell(val screen: Screen, val pointers: ObservableIterable<PointerKeys>, v
             return composed(observableIterable(star(7)))
         }
 
-        fun someText(font: Font): Composed<*> {
+        fun someText(): Composed<*> {
             val text = """Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
 nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
 sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
@@ -36,7 +36,7 @@ dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
 et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
 takimata sanctus est Lorem ipsum dolor sit amet. AYA �¶Ѽ†◊²³"""
             val t = transformedElement(
-                    textElement(text, font, size = 60, fill = Fills.solid(Colors.white)),
+                    textElement(text, defaultFont, size = 60, fill = Fills.solid(Colors.white)),
                     object : Transform2 {
                         override val matrix: Matrix3 get() = (Transforms2.translation(vector(-1000, 400)) before Transforms2.rotation(Date().getTime() * 0.0005) before Transforms2.scale(.2 + Math.pow(1 + Math.pow(Math.sin(Date().getTime() * 0.0002), 5.0), 5.0))).matrix
                     }
@@ -58,7 +58,15 @@ takimata sanctus est Lorem ipsum dolor sit amet. AYA �¶Ѽ†◊²³"""
                     override fun colorAt(location: Vector2) = color
                 }) {
                     color = randomColor()
-                }, Transforms2.translation(vector(x * size.x.toDouble(), y * size.y.toDouble())))
+                }, object : Transform2 {
+                    override val matrix: Matrix3 get() = (
+                                    Transforms2.rotation(Date().getTime() * -0.0003) before
+                                    Transforms2.translation(vector(x * size.x.toDouble(), y * size.y.toDouble())) before
+                                    Transforms2.rotation(Date().getTime() * 0.0005) before
+                                    Transforms2.scale(.2 + Math.pow(1 + Math.pow(Math.sin(Date().getTime() * 0.0002), 5.0), 5.0))
+                            ).matrix
+                }
+                )
             }
 
             val a = 3
@@ -82,8 +90,9 @@ takimata sanctus est Lorem ipsum dolor sit amet. AYA �¶Ѽ†◊²³"""
         }
     }
 
+
     init {
-        screen.content = exampleContent.someText(defaultFont)
+        screen.content = exampleContent.composedWithButton()
         registerInputs()
     }
 
