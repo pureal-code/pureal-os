@@ -9,7 +9,7 @@ import java.util.Date
 // TODO brings reference barf: import org.jetbrains.jet.codegen.*
 
 class Shell(val screen: Screen, val pointers: ObservableIterable<PointerKeys>, val keys: ObservableIterable<Key>, defaultFont: Font) {
-    private val exampleContent = object : Any() {
+    private val exampleContent = object {
         fun rotatedScaledRectangles(): Composed<*> {
             fun logoRect(angle: Number) = button(
                     shape = rectangle(vector(300, 100)) transformed (Transforms2.translation(vector(-70, 60)) before Transforms2.rotation(angle) before Transforms2.scale(0.5 * angle.toDouble())),
@@ -60,7 +60,7 @@ takimata sanctus est Lorem ipsum dolor sit amet. AYA �¶Ѽ†◊²³"""
                     color = randomColor()
                 }, object : Transform2 {
                     override val matrix: Matrix3 get() = (
-                                    Transforms2.rotation(Date().getTime() * -0.0003) before
+                                    Transforms2.rotation(Date().getTime() * -0.0003 + Math.sin(Date().getTime() * 0.005) / 5) before
                                     Transforms2.translation(vector(x * size.x.toDouble(), y * size.y.toDouble())) before
                                     Transforms2.rotation(Date().getTime() * 0.0005) before
                                     Transforms2.scale(.2 + Math.pow(1 + Math.pow(Math.sin(Date().getTime() * 0.0002), 5.0), 5.0))
@@ -69,7 +69,7 @@ takimata sanctus est Lorem ipsum dolor sit amet. AYA �¶Ѽ†◊²³"""
                 )
             }
 
-            val a = 3
+            val a = 2
             //transformedElement(text, Transforms2.translation(vector(0, -100)))
             return composed(observableIterable(-a..a flatMap { x -> -a..a map { y -> b(x, y) : TransformedElement<*> } }))
         }
@@ -89,7 +89,6 @@ takimata sanctus est Lorem ipsum dolor sit amet. AYA �¶Ѽ†◊²³"""
             return composed(observableIterable(listOf<TransformedElement<*>>(transformedElement(textElement))))
         }
     }
-
 
     init {
         screen.content = exampleContent.composedWithButton()
