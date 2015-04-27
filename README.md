@@ -1,3 +1,3 @@
-pureal-os
+Pureal
 =========
-We want to make an easy to use IDE+calculator optimized for mobile and web. It will be Kotlin-based and available for Android and the web. 
+Primitive graphics (rectangles, transformations etc.), text rendering (super fast) and interaction (touch, buttons) already work. A layout engine is not yet implemented.
